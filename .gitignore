@@ -48,3 +48,6 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /.data/
+/migration/logs/media-*.jsonl
+/test-results/
+/playwright-report/

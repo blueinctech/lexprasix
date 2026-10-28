@@ -36,8 +36,8 @@ const nextConfig: NextConfig = {
     localPatterns: [{ pathname: "/media/**" }, { pathname: "/brand/**" }],
   },
   experimental: {
-    // Uploads go straight to storage; actions only carry form answers.
-    serverActions: { bodySizeLimit: "1mb" },
+    // Uploads go straight to storage; actions carry form answers and long article HTML.
+    serverActions: { bodySizeLimit: "4mb" },
   },
   async headers() {
     const security = [

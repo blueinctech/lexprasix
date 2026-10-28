@@ -4,6 +4,7 @@ import { z } from "zod";
 // save; src/components/blocks renders them. Rich text is sanitised HTML.
 
 const id = z.string().min(1).max(40);
+const EMBED_HOSTS = ["www.youtube.com", "youtube.com", "www.youtube-nocookie.com", "player.vimeo.com", "www.google.com", "maps.google.com"];
 const link = z.object({ label: z.string().trim().max(60).default(""), href: z.string().trim().max(300).default("") });
 
 export const blockSchemas = {
@@ -59,7 +60,13 @@ export const blockSchemas = {
   contactForm: z.object({ id, type: z.literal("contactForm"), heading: z.string().trim().max(160).default(""), text: z.string().trim().max(400).default("") }),
   calendly: z.object({ id, type: z.literal("calendly"), heading: z.string().trim().max(160).default(""), text: z.string().trim().max(400).default("") }),
   reviews: z.object({ id, type: z.literal("reviews"), heading: z.string().trim().max(160).default(""), text: z.string().trim().max(400).default("") }),
-  embed: z.object({ id, type: z.literal("embed"), title: z.string().trim().min(1).max(120), url: z.url() }),
+  embed: z.object({
+    id,
+    type: z.literal("embed"),
+    title: z.string().trim().min(1).max(120),
+    // https only, from known embed providers (also enforced by the CSP frame-src).
+    url: z.url({ protocol: /^https$/ }).refine((u) => EMBED_HOSTS.includes(new URL(u).hostname), { error: "Use a YouTube, Vimeo or Google Maps embed link" }),
+  }),
 };
 
 export type BlockType = keyof typeof blockSchemas;

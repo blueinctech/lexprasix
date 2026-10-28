@@ -1,9 +1,9 @@
 import "server-only";
 import { createReadStream } from "node:fs";
-import { mkdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { Readable } from "node:stream";
-import { DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { CopyObjectCommand, DeleteObjectCommand, GetObjectCommand, HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { ConfigurationError, isDev, mediaBaseUrl } from "@/lib/env";
 import { hmac } from "@/lib/security/crypto";
@@ -145,4 +145,41 @@ export async function createDownloadUrl(key: string, filename: string): Promise<
 /** Local dev only: stream a stored file. */
 export function localStream(store: Store, key: string): ReadableStream {
   return Readable.toWeb(createReadStream(localPath(store, key))) as ReadableStream;
+}
+
+// ---------------------------------------------------------------- public media uploads (admin)
+
+/** Browser upload target for a public media file (presigned PUT, or the dev route). */
+export async function createMediaUploadTarget(key: string, contentType: string): Promise<{ url: string; headers: Record<string, string> }> {
+  assertConfigured();
+  if (usesS3()) {
+    const url = await getSignedUrl(client(), new PutObjectCommand({ Bucket: bucket("media"), Key: safeKey(key), ContentType: contentType }), { expiresIn: 600 });
+    return { url, headers: { "Content-Type": contentType } };
+  }
+  const sig = hmac("local-media-upload", key).slice(0, 32);
+  return { url: `/admin/api/media/upload/local/?key=${encodeURIComponent(key)}&sig=${sig}`, headers: { "Content-Type": contentType } };
+}
+
+export function verifyLocalMediaUploadSig(key: string, sig: string): boolean {
+  return isDev && !usesS3() && sig === hmac("local-media-upload", key).slice(0, 32);
+}
+
+/** Server-side copy within a store (used to promote a verified replacement file). */
+export async function copyObject(store: Store, fromKey: string, toKey: string, contentType?: string): Promise<void> {
+  assertConfigured();
+  if (usesS3()) {
+    await client().send(
+      new CopyObjectCommand({
+        Bucket: bucket(store),
+        CopySource: `${bucket(store)}/${encodeURIComponent(safeKey(fromKey)).replace(/%2F/g, "/")}`,
+        Key: safeKey(toKey),
+        ...(contentType ? { ContentType: contentType, MetadataDirective: "REPLACE" } : {}),
+        ...(store === "media" ? { CacheControl: "public, max-age=31536000, immutable" } : {}),
+      }),
+    );
+    return;
+  }
+  const to = localPath(store, toKey);
+  await mkdir(path.dirname(to), { recursive: true });
+  await copyFile(localPath(store, fromKey), to);
 }

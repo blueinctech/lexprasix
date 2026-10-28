@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { after } from "next/server";
+import { recordRedirectHit } from "@/lib/redirect-hits";
 import { DocumentView, PageView, PostView } from "@/components/content/views";
 import { getDocument, getPageByPath, getPost, getRedirect, getSettings, resolveRootSlug, rootSlugs } from "@/lib/content/queries";
 import { buildMetadata } from "@/lib/seo";
@@ -50,6 +52,7 @@ export default async function CatchAllPage({ params }: Props) {
   const path = `/${segments.map(decodeURIComponent).join("/")}/`.toLowerCase();
   const target = await getRedirect(path);
   if (target) {
+    after(() => recordRedirectHit(path));
     if (target.statusCode === 302 || target.statusCode === 307) redirect(target.destination);
     permanentRedirect(target.destination);
   }

@@ -10,7 +10,7 @@ Every user-facing and back-office feature found on the current site, and how the
 | 2 | "Free consultation" CTA in header | Link to `/contact-us/` | CTA label/target in site settings (default: `/book-appointment/`) | Improve |
 | 3 | Homepage | Elementor | New design; sections fed by CMS (services, posts, reviews, steps) | Improve |
 | 4 | Services index and 13 service pages | Elementor template-builder | `services` content type; FAQs, related services, CTA | Keep URLs / Improve |
-| 5 | 22 legal-document intake pages | Elementor + Gravity Forms | `documents` content type + linked form definition; multi-step form | Keep URLs / Improve |
+| 5 | 23 legal-document intake pages | Elementor + Gravity Forms | `documents` content type + linked form definition; multi-step form | Keep URLs / Improve |
 | 6 | Legal Forms and Corporate Filings index pages | Elementor list / empty page | Generated listings grouped by category | Improve |
 | 7 | Blog index with pagination | WordPress | `/blog/`, `/blog/page/N/` | Keep |
 | 8 | Blog post | Theme single | New reading template: TOC, author, dates, categories, tags, related posts, share, enquiry CTA | Improve |

@@ -34,7 +34,7 @@ See `WORDPRESS_PLUGIN_AUDIT.md` for the replacement plan. Detected: Yoast SEO, C
 
 | Type | Count | Notes |
 |---|---|---|
-| Pages | 54 published | 13 services, 22 legal-document intake pages, 4 WooCommerce, 2 legacy, rest core pages |
+| Pages | 54 published | 13 services, 23 legal-document intake pages, 4 WooCommerce, 2 legacy, rest core pages |
 | Posts | 286 published | All at root `/{slug}/`. 2019–2026; ~1 per week since 2022. 281 have featured images |
 | Categories | 25 (18 with posts) | `blog` holds 278 posts; others are topical |
 | Tags | 123 (87 with posts) | Empty tags already 404 |
@@ -42,7 +42,7 @@ See `WORDPRESS_PLUGIN_AUDIT.md` for the replacement plan. Detected: Yoast SEO, C
 | Media | 844 files, ~264 MB | 446 PNG, 320 JPEG, 70 SVG, 3 ZIP, 1 PPTX, 2 video, 1 audio, 1 TXT. 197 have alt text |
 | Comments | 494 public | On 64 posts. All type `comment` |
 | Products | 1 (WooCommerce) | "Essential Tax Guide For Businesses in Nigeria (eBook)" |
-| Forms | 23 | 22 Gravity Forms + 1 Contact Form 7 |
+| Forms | 23 | 23 Gravity Forms + 1 Contact Form 7 |
 
 ## 4. Page types found
 
@@ -51,7 +51,7 @@ See `WORDPRESS_PLUGIN_AUDIT.md` for the replacement plan. Detected: Yoast SEO, C
 | Homepage | 1 | `/` |
 | About | 1 | `/about-us/` |
 | Services index + 13 service details | 14 | `/service/`, `/service/company-formation-and-restructuring/` |
-| Legal document / filing intake (form pages) | 22 | `/company-registration/`, `/non-disclosure-agreements/` |
+| Legal document / filing intake (form pages) | 23 | `/company-registration/`, `/non-disclosure-agreements/` |
 | Document index pages | 2 | `/legal-forms/`, `/corporate-filings/` (empty page, used as a menu parent) |
 | Booking | 1 | `/book-appointment/` (Calendly) |
 | Contact | 1 | `/contact-us/` (CF7 + three offices) |
@@ -95,7 +95,7 @@ The homepage states: "Join 2k+ Satisfied Clients", "4.9/5 (348+ Reviews)", "250+
 | Form | Engine | Where | Notes |
 |---|---|---|---|
 | Contact | CF7 #930 | `/contact-us/` | Name, email, phone (number field), message; Akismet honeypot |
-| 22 legal-document / filing intake forms | Gravity Forms #1, 3–8, 10–25 | One per document page | Mostly multi-page (5 sections typical). 8 to 147 fields. 27 file-upload fields across them. No payment/product fields. No conditional logic in the rendered output |
+| 23 legal-document / filing intake forms | Gravity Forms #1, 3–8, 10–25 | One per document page | Mostly multi-page (5 sections typical). 8 to 147 fields. 27 file-upload fields across them. No payment/product fields. No conditional logic in the rendered output |
 | Booking | Calendly | `/book-appointment/`, homepage | `calendly.com/lexpraxisng-info/30min` (30-minute call) |
 | Live chat | Tawk.to | All pages | Property `69a7f54bd9992f1c3736409c` |
 | Ebook purchase | WooCommerce | `/shop/`, `/product/…` | Gateway, price and delivery method **(needs admin)**. Store API reports `USD 3,000.00`, which is probably a currency misconfiguration |

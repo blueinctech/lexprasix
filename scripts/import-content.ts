@@ -529,6 +529,8 @@ const REDIRECTS = [
   { source: "/home-full-width/", destination: "/", note: "Legacy theme demo page" },
   { source: "/practice-areas/", destination: "/service/", note: "Legacy practice areas page" },
   { source: "/author/blueinchost/", destination: "/blog/", note: "Admin account with no posts" },
+  // Linked from two posts; already a dead link on the WordPress site.
+  { source: "/appointment-booking/", destination: "/book-appointment/", note: "Dead link in old posts" },
 ];
 await db.insert(s.redirects).values(REDIRECTS).onConflictDoNothing();
 

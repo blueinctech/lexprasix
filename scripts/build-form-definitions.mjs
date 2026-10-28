@@ -50,7 +50,12 @@ for (const file of (await readdir(SRC)).filter((f) => /^gf-\d+\.json$/.test(f)))
     const field = { kind: "field", id: `f${f.id}`, type, label, required: Boolean(f.required) };
     if (f.description) field.description = f.description;
     if (f.placeholder) field.placeholder = f.placeholder;
-    if (f.choices?.length) field.choices = [...new Set(f.choices.map(clean).filter((c) => c && !/^choose /i.test(c)))];
+    if (f.choices?.length) field.choices = [...new Set(f.choices.map(clean).filter((c) => c && c !== "*" && !/^choose /i.test(c)))];
+    // A single-box checkbox with no real options is an acknowledgement ("Yes I understand").
+    if (type === "checkbox" && !field.choices?.length) {
+      field.type = "consent";
+      delete field.choices;
+    }
     if (type === "file") {
       const acc = (f.accept || "").split(",").map((a) => a.trim().toLowerCase()).filter(Boolean).map((a) => (a.startsWith(".") ? a : `.${a}`));
       field.accept = acc.length ? acc : [".pdf", ".jpg", ".jpeg", ".png", ".doc", ".docx"];

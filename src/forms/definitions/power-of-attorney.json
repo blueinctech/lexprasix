@@ -180,10 +180,9 @@
         {
           "kind": "field",
           "id": "f75",
-          "type": "checkbox",
+          "type": "consent",
           "label": "Yes I Understand.",
-          "required": true,
-          "choices": []
+          "required": true
         },
         {
           "kind": "note",

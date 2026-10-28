@@ -36,7 +36,7 @@ Launch requires every **Must** item verified, with evidence recorded in `QA_REPO
 
 | ID | Criterion | Level |
 |---|---|---|
-| M1 | Destination counts match source for posts (286), service pages (13), document pages (22), core pages, categories (18 used), tags (87 used), authors (6), media in use | Must |
+| M1 | Destination counts match source for posts (286), service pages (13), document pages (23), core pages, categories (18 used), tags (87 used), authors (6), media in use | Must |
 | M2 | Every migrated image and file loads from the new storage (0 references to the old server's uploads in content) | Must |
 | M3 | Per-post spot check of 20 random posts: title, body, headings, tables, images, dates, author, categories, tags match | Must |
 | M4 | Every intentional omission is listed with a reason in `MIGRATION_REPORT.md` | Must |
@@ -46,7 +46,7 @@ Launch requires every **Must** item verified, with evidence recorded in `QA_REPO
 
 | ID | Criterion | Level |
 |---|---|---|
-| B1 | Contact form and all 22 intake forms validate on the server, store the submission, and show a confirmation | Must |
+| B1 | Contact form and all 23 intake forms validate on the server, store the submission, and show a confirmation | Must |
 | B2 | Uploaded client documents go to private storage and are only reachable through signed links from the admin | Must |
 | B3 | Staff notification and client confirmation emails are delivered from the verified domain (checked in a real inbox) | Must |
 | B4 | Email failures show in the admin with status and retry; no duplicate sends on retry | Must |

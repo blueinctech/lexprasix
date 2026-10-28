@@ -29,7 +29,7 @@ The live WordPress site stays untouched and online until the owner approves the 
 | `authors` | Public author profiles (name, slug, bio, photo) | WP users with posts (6) |
 | `pages` | Core pages with typed blocks, parent, template | WP pages |
 | `services` | 13 services: summary, body, FAQs, related, CTA, order | `/service/*` pages |
-| `documents` | 22 legal-document/filing pages: intro, what you get, form ID, group (Corporate filings / Agreements) | Form pages |
+| `documents` | 23 legal-document/filing pages: intro, what you get, form ID, group (Corporate filings / Agreements) | Form pages |
 | `posts` | Articles: HTML, excerpt, featured image, author, dates, status, schedule | WP posts (286) |
 | `categories`, `tags`, join tables | Taxonomies with descriptions and SEO | WP terms |
 | `comments` | Read-only archive (pending decision) | WP comments (494) |
