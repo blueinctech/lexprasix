@@ -10,7 +10,7 @@ import { hashPassword } from "../../src/lib/auth/password";
 // and stores them in .data/e2e-users.json (git-ignored). Runs against the same
 // database as the app under test.
 export default async function globalSetup() {
-  config({ path: ".env.local", quiet: true });
+  config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
   const { db, close } = await createDatabase(process.env.DATABASE_URL!, { max: 1 });
   const [author] = await db.select({ id: authors.id }).from(authors).limit(1);
   const accounts: Record<string, { email: string; password: string }> = {};

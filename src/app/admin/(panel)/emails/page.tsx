@@ -6,6 +6,7 @@ import { Badge, Card, EmptyState, formatDateTime, PageTitle, Pager } from "@/com
 import { getDb } from "@/db";
 import { emailOutbox, emailStatus } from "@/db/schema";
 import { requireUserPage } from "@/lib/auth/current";
+import { emailProvider } from "@/lib/email/provider";
 
 export const metadata: Metadata = { title: "Email log" };
 
@@ -25,7 +26,8 @@ export default async function EmailsPage({ searchParams }: { searchParams: Promi
     db.select().from(emailOutbox).where(where).orderBy(desc(emailOutbox.createdAt)).limit(PAGE).offset((page - 1) * PAGE),
     db.select({ status: emailOutbox.status, n: count() }).from(emailOutbox).groupBy(emailOutbox.status),
   ]);
-  const provider = process.env.RESEND_API_KEY ? "Resend" : process.env.NODE_ENV === "production" ? "NOT CONFIGURED" : "development (written to .data/mail)";
+  const configured = emailProvider();
+  const provider = configured === "ses" ? `Amazon SES (${process.env.SES_REGION})` : configured === "resend" ? "Resend" : process.env.NODE_ENV === "production" ? "NOT CONFIGURED" : "development (written to .data/mail)";
 
   return (
     <>

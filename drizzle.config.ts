@@ -1,7 +1,7 @@
 import { config } from "dotenv";
 import { defineConfig } from "drizzle-kit";
 
-config({ path: ".env.local", quiet: true });
+config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
 config({ quiet: true });
 
 // `generate` needs no database; `migrate` and `studio` use the direct (unpooled) Neon connection.

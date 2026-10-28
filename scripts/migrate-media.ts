@@ -13,7 +13,7 @@ import { config } from "dotenv";
 import { createDatabase } from "../src/db/client";
 import * as s from "../src/db/schema";
 
-config({ path: ".env.local", quiet: true });
+config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
 config({ quiet: true });
 // storage.ts is written for the app; its "server-only" guard is a no-op outside Next bundling.
 const storage = await import("../src/lib/storage");

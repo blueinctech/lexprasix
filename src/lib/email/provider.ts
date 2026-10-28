@@ -1,11 +1,12 @@
 import "server-only";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { SendEmailCommand, SESv2Client } from "@aws-sdk/client-sesv2";
 import { Resend } from "resend";
 import { ConfigurationError, isDev } from "@/lib/env";
 
-// Transactional email transport. Resend in production; in local development
-// without RESEND_API_KEY, messages are written to .data/mail/ so they can be
+// Transactional email transport: Amazon SES (SES_* variables) or Resend
+// (RESEND_API_KEY). In local development without either, messages are written to .data/mail/ so they can be
 // opened and checked. Production without a key fails loudly (the outbox marks
 // the email "failed" and shows the reason in the admin) — it never pretends to send.
 
@@ -22,16 +23,26 @@ export type OutgoingEmail = {
 export type SendResult = { ok: true; messageId: string } | { ok: false; error: string; retryable: boolean };
 
 let client: Resend | null = null;
+let sesClient: SESv2Client | null = null;
 
 export function emailFrom(): string {
   return process.env.EMAIL_FROM || "LexPraxis Solicitors <no-reply@lexpraxisng.com>";
 }
 
+/** Which transport is configured: Amazon SES, Resend, or none. */
+export function emailProvider(): "ses" | "resend" | null {
+  if (process.env.SES_REGION && process.env.SES_ACCESS_KEY_ID && process.env.SES_SECRET_ACCESS_KEY) return "ses";
+  if (process.env.RESEND_API_KEY) return "resend";
+  return null;
+}
+
 export async function sendViaProvider(email: OutgoingEmail): Promise<SendResult> {
+  const provider = emailProvider();
+  if (provider === "ses") return sendViaSes(email);
   const key = process.env.RESEND_API_KEY;
   if (!key) {
     if (isDev) return writeDevMail(email);
-    throw new ConfigurationError("RESEND_API_KEY", "Email sending");
+    throw new ConfigurationError("SES_ACCESS_KEY_ID", "Email sending");
   }
   client ??= new Resend(key);
   const { data, error } = await client.emails.send(
@@ -52,6 +63,38 @@ export async function sendViaProvider(email: OutgoingEmail): Promise<SendResult>
     return { ok: false, error: error?.message ?? "Unknown provider error", retryable };
   }
   return { ok: true, messageId: data.id };
+}
+
+// Amazon SES. SES has no idempotency key; the outbox's conditional claim
+// (one row sent by one worker) is what prevents duplicates.
+async function sendViaSes(email: OutgoingEmail): Promise<SendResult> {
+  sesClient ??= new SESv2Client({
+    region: process.env.SES_REGION!,
+    credentials: { accessKeyId: process.env.SES_ACCESS_KEY_ID!, secretAccessKey: process.env.SES_SECRET_ACCESS_KEY! },
+  });
+  try {
+    const res = await sesClient.send(
+      new SendEmailCommand({
+        FromEmailAddress: emailFrom(),
+        Destination: { ToAddresses: email.to },
+        ReplyToAddresses: email.replyTo ? [email.replyTo] : undefined,
+        ...(process.env.SES_CONFIGURATION_SET ? { ConfigurationSetName: process.env.SES_CONFIGURATION_SET } : {}),
+        Content: {
+          Simple: {
+            Subject: { Data: email.subject, Charset: "UTF-8" },
+            Body: { Text: { Data: email.text, Charset: "UTF-8" }, Html: { Data: email.html, Charset: "UTF-8" } },
+          },
+        },
+      }),
+    );
+    return { ok: true, messageId: res.MessageId ?? "ses" };
+  } catch (err) {
+    const e = err as { name?: string; message?: string; $metadata?: { httpStatusCode?: number } };
+    const status = e.$metadata?.httpStatusCode ?? 0;
+    // Throttling and server errors are worth retrying; rejected/unverified addresses are not.
+    const retryable = status === 0 || status === 429 || status >= 500 || /Throttl|TooManyRequests/i.test(e.name ?? "");
+    return { ok: false, error: `${e.name ?? "SES error"}: ${(e.message ?? "").slice(0, 300)}`, retryable };
+  }
 }
 
 async function writeDevMail(email: OutgoingEmail): Promise<SendResult> {

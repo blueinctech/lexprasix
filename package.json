@@ -21,10 +21,18 @@
     "db:local:stop": "node_modules/@embedded-postgres/windows-x64/native/bin/pg_ctl stop -D ./.data/postgres -m fast",
     "admin:create": "tsx scripts/create-admin.ts",
     "migrate:report": "tsx scripts/migration-report.ts",
-    "migrate:media": "tsx --conditions=react-server scripts/migrate-media.ts"
+    "migrate:media": "tsx --conditions=react-server scripts/migrate-media.ts",
+    "check:services": "tsx scripts/check-services.ts",
+    "prod:check": "node scripts/with-env.mjs .env.prod.local tsx scripts/check-services.ts",
+    "prod:db:migrate": "node scripts/with-env.mjs .env.prod.local tsx scripts/migrate.ts",
+    "prod:migrate:content": "node scripts/with-env.mjs .env.prod.local tsx scripts/import-content.ts",
+    "prod:migrate:media": "node scripts/with-env.mjs .env.prod.local tsx --conditions=react-server scripts/migrate-media.ts",
+    "prod:migrate:report": "node scripts/with-env.mjs .env.prod.local tsx scripts/migration-report.ts",
+    "prod:admin:create": "node scripts/with-env.mjs .env.prod.local tsx scripts/create-admin.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1158.0",
+    "@aws-sdk/client-sesv2": "^3.1158.0",
     "@aws-sdk/s3-request-presigner": "^3.1158.0",
     "@electric-sql/pglite": "^0.5.12",
     "@tiptap/extension-image": "^3.32.0",

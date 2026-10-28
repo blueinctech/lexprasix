@@ -9,7 +9,7 @@ import { count, sql } from "drizzle-orm";
 import { createDatabase } from "../src/db/client";
 import * as s from "../src/db/schema";
 
-config({ path: ".env.local", quiet: true });
+config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
 config({ quiet: true });
 
 const report = JSON.parse(await readFile("migration/logs/import-report.json", "utf8"));

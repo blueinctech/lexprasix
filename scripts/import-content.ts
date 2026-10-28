@@ -14,7 +14,7 @@ import type { AnyBlock } from "../src/lib/blocks";
 import { DEFAULT_SETTINGS } from "../src/lib/settings-schema";
 import { plainText, readingMinutes, sanitizeRichHtml } from "../src/lib/sanitize";
 
-config({ path: ".env.local", quiet: true });
+config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
 config({ quiet: true });
 
 const EXPORT = "migration/wp-export";

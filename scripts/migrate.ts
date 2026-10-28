@@ -3,7 +3,7 @@
 import { config } from "dotenv";
 import { runMigrations } from "../src/db/client";
 
-config({ path: ".env.local", quiet: true });
+config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
 config({ quiet: true });
 
 const url = process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL;

@@ -7,7 +7,7 @@ import { eq } from "drizzle-orm";
 import { createDatabase } from "../src/db/client";
 import { authTokens, users } from "../src/db/schema";
 
-config({ path: ".env.local", quiet: true });
+config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
 config({ quiet: true });
 
 const args = Object.fromEntries(process.argv.slice(2).join(" ").split("--").filter(Boolean).map((a) => { const [k, ...v] = a.trim().split(" "); return [k, v.join(" ").replace(/^"|"$/g, "")]; }));
