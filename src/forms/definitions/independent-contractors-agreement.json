@@ -1,0 +1,302 @@
+{
+  "id": "independent-contractors-agreement",
+  "title": "Independent Contractors Agreement",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f248",
+          "type": "text",
+          "label": "Name",
+          "required": true,
+          "description": "User's full name",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f257",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f256",
+          "type": "tel",
+          "label": "Phone",
+          "required": true,
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Contractor details.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f203",
+          "type": "radio",
+          "label": "1. The contractor is;",
+          "required": true,
+          "choices": [
+            "An individual",
+            "A company"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f204",
+          "type": "text",
+          "label": "2. Name of the contractor (in full). NB; If company is registered, the registered name of the company.",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f205",
+          "type": "text",
+          "label": "Company registered name (If registered).",
+          "required": false,
+          "placeholder": "Enter company registered name here."
+        },
+        {
+          "kind": "field",
+          "id": "f206",
+          "type": "text",
+          "label": "3. Address of the Contractor. NB; If company is registered, the registered name of the company.",
+          "required": false,
+          "placeholder": "Enter contractor address here."
+        },
+        {
+          "kind": "field",
+          "id": "f208",
+          "type": "text",
+          "label": "Company registered name (If registered).",
+          "required": false,
+          "placeholder": "Enter company registered name here."
+        }
+      ]
+    },
+    {
+      "title": "Client details.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f211",
+          "type": "radio",
+          "label": "4. The client is;",
+          "required": true,
+          "choices": [
+            "An individual",
+            "A company"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f212",
+          "type": "text",
+          "label": "5. Name of Client.",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f213",
+          "type": "text",
+          "label": "6. Address of Client.",
+          "required": true,
+          "placeholder": "Enter client address here."
+        }
+      ]
+    },
+    {
+      "title": "Location.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f216",
+          "type": "text",
+          "label": "7. Where will the work be done?",
+          "required": true,
+          "placeholder": "Enter location here."
+        }
+      ]
+    },
+    {
+      "title": "Service details.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f218",
+          "type": "text",
+          "label": "8. What is the contractor hired to do? E.g Design a website.",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Price/cost of service.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f221",
+          "type": "tel",
+          "label": "9. How much will the client be paid?",
+          "required": true,
+          "placeholder": "Enter amount in figures here."
+        },
+        {
+          "kind": "field",
+          "id": "f222",
+          "type": "text",
+          "label": "Amount in words",
+          "required": true,
+          "placeholder": "Enter amount in words here."
+        },
+        {
+          "kind": "field",
+          "id": "f246",
+          "type": "radio",
+          "label": "10 (a). Will the money be paid in full or installments?",
+          "required": true,
+          "choices": [
+            "Full",
+            "Installments"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f223",
+          "type": "text",
+          "label": "(b). If in installments, please state in details the mode of installments.",
+          "required": true,
+          "placeholder": "Please indicate here."
+        },
+        {
+          "kind": "field",
+          "id": "f225",
+          "type": "radio",
+          "label": "(c). If in full, when will it be paid?",
+          "required": true,
+          "choices": [
+            "Before completion of service.",
+            "After completion of service."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Intellectual property.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f227",
+          "type": "radio",
+          "label": "11. Who will own any intellectual property created under this contract?",
+          "required": true,
+          "choices": [
+            "Client will receive complete ownership.",
+            "Contractor will retain complete ownership."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Confidentiality.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f229",
+          "type": "radio",
+          "label": "12 (a). Will the contractor have a duty to not reveal confidential information?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f230",
+          "type": "radio",
+          "label": "(b) If yes, for what period?",
+          "required": true,
+          "choices": [
+            "Indefinitely.",
+            "Until the end of the agreement."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Witnesses.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f232",
+          "type": "radio",
+          "label": "13. How many witnesses do you intend to sign this agreement?",
+          "required": true,
+          "choices": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f233",
+          "type": "text",
+          "label": "Witness 1",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f235",
+          "type": "text",
+          "label": "Witness 1 address.",
+          "required": true,
+          "placeholder": "Enter witness 1 address here."
+        },
+        {
+          "kind": "field",
+          "id": "f237",
+          "type": "text",
+          "label": "Occupation",
+          "required": true,
+          "placeholder": "Enter witness 1 occupation here"
+        },
+        {
+          "kind": "field",
+          "id": "f234",
+          "type": "text",
+          "label": "Witness 2",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f236",
+          "type": "text",
+          "label": "Witness 2 address.",
+          "required": false,
+          "placeholder": "Enter witness 2 address here."
+        },
+        {
+          "kind": "field",
+          "id": "f238",
+          "type": "text",
+          "label": "Occupation",
+          "required": false,
+          "placeholder": "Enter witness 2 occupation here"
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 20
+  }
+}

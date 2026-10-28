@@ -1,0 +1,258 @@
+{
+  "id": "partnership-agreement",
+  "title": "Partnership Agreement",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f95",
+          "type": "text",
+          "label": "Name",
+          "required": true,
+          "description": "User's Full Name",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f98",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f97",
+          "type": "tel",
+          "label": "Phone Number",
+          "required": true,
+          "description": "Please enter a number from 0 to 11.",
+          "role": "phone"
+        },
+        {
+          "kind": "field",
+          "id": "f87",
+          "type": "text",
+          "label": "1. State your full names",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f59",
+          "type": "text",
+          "label": "2. State your address (Permanent address is preferable).",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f61",
+          "type": "text",
+          "label": "3. What is the name of your proposed partner(s)?",
+          "required": true,
+          "placeholder": "(Full names please)."
+        },
+        {
+          "kind": "field",
+          "id": "f60",
+          "type": "text",
+          "label": "4. State the permanent address of your proposed partner.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f63",
+          "type": "text",
+          "label": "5. What is the name of the business?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f68",
+          "type": "text",
+          "label": "6. What is the address of the business?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f67",
+          "type": "textarea",
+          "label": "7. Describe briefly the nature of the business.",
+          "required": true,
+          "width": "full"
+        },
+        {
+          "kind": "field",
+          "id": "f70",
+          "type": "radio",
+          "label": "8. Is the business registered at the Corporate Affairs Commission?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f71",
+          "type": "text",
+          "label": "If not, by what means is it registered?.",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f72",
+          "type": "text",
+          "label": "9. Do you have a limited time frame for the Partnership to last?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f73",
+          "type": "text",
+          "label": "10. How much or what percentage do you intend to contribute to the capital of the business?",
+          "required": true,
+          "placeholder": "(state in words and figures)."
+        },
+        {
+          "kind": "field",
+          "id": "f74",
+          "type": "text",
+          "label": "11. How much or what percentage of the capital is your partner willing to contribute to the business capital?",
+          "required": true,
+          "placeholder": "(state in words and figures)"
+        },
+        {
+          "kind": "field",
+          "id": "f75",
+          "type": "text",
+          "label": "12. How much or what percentage of the net income of the business are you willing to have?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f76",
+          "type": "text",
+          "label": "13. How much or what percentage of the net income of the business is your proposed partner entitled to?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f77",
+          "type": "text",
+          "label": "14. What percentage or amount of net loss and liability is your proposed partner entitled to?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f78",
+          "type": "text",
+          "label": "15. What duration would you prefer to be your accounting year?",
+          "required": true,
+          "placeholder": "(ie one calendar year or six months)"
+        },
+        {
+          "kind": "field",
+          "id": "f79",
+          "type": "radio",
+          "label": "16. Do you have an existing partnership account?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f80",
+          "type": "text",
+          "label": "17. What is the name of the bank in charge of the partnership account?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f81",
+          "type": "text",
+          "label": "18. What is the signature mandate for accessing funds from the Partnership account?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f82",
+          "type": "text",
+          "label": "19. Will your proposed partner be equally involved in the daily running and decision making of the business?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f83",
+          "type": "radio",
+          "label": "20. Do you intend to include subsequent partners into the business in the future?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f84",
+          "type": "text",
+          "label": "21. Who decides who will include a subsequent partner in the future?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f85",
+          "type": "radio",
+          "label": "22. Do you have any preference as to how you wish to resolve a dispute with your proposed partner should any arise?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f92",
+          "type": "text",
+          "label": "If any please state below",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f86",
+          "type": "radio",
+          "label": "23. Do you have any additional information?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f88",
+          "type": "text",
+          "label": "If any please state below",
+          "required": true,
+          "placeholder": "Enter the information you wish to provide here."
+        },
+        {
+          "kind": "note",
+          "id": "n91",
+          "text": "Preview your submission {all_fields}",
+          "style": "subheading"
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 4
+  }
+}

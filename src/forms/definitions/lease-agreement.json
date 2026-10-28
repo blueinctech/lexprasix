@@ -1,0 +1,464 @@
+{
+  "id": "lease-agreement",
+  "title": "Lease Agreement",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f96",
+          "type": "text",
+          "label": "Name",
+          "required": true,
+          "description": "User's full name",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f100",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f99",
+          "type": "tel",
+          "label": "Phone Number",
+          "required": true,
+          "description": "Please enter a number from 0 to 11.",
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Section 1 : parties",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n26",
+          "text": "LESSOR (person giving out property as lease)",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f31",
+          "type": "text",
+          "label": "Name",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f28",
+          "type": "text",
+          "label": "Occupation",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f29",
+          "type": "text",
+          "label": "Address",
+          "required": true
+        },
+        {
+          "kind": "note",
+          "id": "n30",
+          "text": "LESSEE( person to whom the property is given out)",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f27",
+          "type": "text",
+          "label": "Name",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f32",
+          "type": "text",
+          "label": "Occupation",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f33",
+          "type": "text",
+          "label": "Address",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Section 2 : commencement",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f37",
+          "type": "date",
+          "label": "Please state the date of commencing this agreement.",
+          "required": true,
+          "placeholder": "dd/mm/yyyy"
+        }
+      ]
+    },
+    {
+      "title": "Section 3 : description of property",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f39",
+          "type": "text",
+          "label": "a. Name of the property (If any).",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f40",
+          "type": "textarea",
+          "label": "b. Detailed description of demised property.",
+          "required": true,
+          "width": "full"
+        },
+        {
+          "kind": "field",
+          "id": "f41",
+          "type": "select",
+          "label": "c. Is it part or all of the property leased.",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Section 4 : purpose of lease.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f43",
+          "type": "text",
+          "label": "Please state the purpose of the leased property. (eg for residential purposes)",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Section 5 : duration.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f45",
+          "type": "text",
+          "label": "How long is the lease supposed to last?",
+          "required": true,
+          "description": "NB: (A lease ought to operate for not less than 3 (three) years)."
+        }
+      ]
+    },
+    {
+      "title": "Section 6 : rent.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f49",
+          "type": "text",
+          "label": "a. Please state the amount to be paid as rent.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f51",
+          "type": "select",
+          "label": "b. Is the amount to be paid in advance or arrears?",
+          "required": true,
+          "choices": [
+            "Please Select",
+            "Advance",
+            "Arrears"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Section 7 : insurance",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f53",
+          "type": "text",
+          "label": "a. Who is responsible for insuring the property?",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f55",
+          "type": "select",
+          "label": "b. Are there any duties or liabilities to be considered in respect of the insurance policy?",
+          "required": false,
+          "choices": [
+            "Please Select",
+            "Yes",
+            "No"
+          ]
+        }
+      ],
+      "description": "If any"
+    },
+    {
+      "title": "Section 8 : rent review",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f57",
+          "type": "text",
+          "label": "Do you intend to increase or decrease rent in the future?",
+          "required": false
+        }
+      ],
+      "description": "Optional"
+    },
+    {
+      "title": "Section 9 : renewal of lease",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f59",
+          "type": "radio",
+          "label": "a. Is there an option for lessee to renew lease?",
+          "required": false,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f60",
+          "type": "text",
+          "label": "b. How many days, months or weeks will the lessee provide a notice to renew lease?",
+          "required": false
+        }
+      ],
+      "description": "Optional"
+    },
+    {
+      "title": "Section 10 : witness",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f62",
+          "type": "radio",
+          "label": "How many witnesses do you intend to attest the lease?",
+          "required": true,
+          "choices": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "kind": "note",
+          "id": "n63",
+          "text": "Please provide the details of the witnesses in the format below",
+          "style": "paragraph"
+        },
+        {
+          "kind": "field",
+          "id": "f73",
+          "type": "text",
+          "label": "Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f74",
+          "type": "text",
+          "label": "Occupation",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f75",
+          "type": "text",
+          "label": "Address",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f76",
+          "type": "file",
+          "label": "Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n89",
+          "text": "Second witness",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f77",
+          "type": "text",
+          "label": "Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f78",
+          "type": "text",
+          "label": "Occupation",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f79",
+          "type": "text",
+          "label": "Address",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f80",
+          "type": "file",
+          "label": "Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n91",
+          "text": "Second witness",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f81",
+          "type": "text",
+          "label": "Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f82",
+          "type": "text",
+          "label": "Occupation",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f83",
+          "type": "text",
+          "label": "Address",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f84",
+          "type": "file",
+          "label": "Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n92",
+          "text": "Third witness",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f85",
+          "type": "text",
+          "label": "Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f86",
+          "type": "text",
+          "label": "Occupation",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f87",
+          "type": "text",
+          "label": "Address",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f88",
+          "type": "file",
+          "label": "Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n94",
+          "text": "Please Preview Before Submission {all_fields}",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f97",
+          "type": "text",
+          "label": "Untitled",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 17
+  }
+}

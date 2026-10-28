@@ -1,0 +1,98 @@
+{
+  "id": "company-seal",
+  "title": "Company Seal",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f32",
+          "type": "text",
+          "label": "User Name",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f38",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f36",
+          "type": "tel",
+          "label": "Phone",
+          "required": true,
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "A. company information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f23",
+          "type": "radio",
+          "label": "1. Please choose one of the following;",
+          "required": false,
+          "choices": [
+            "i. I have an existing company.",
+            "ii. I’m currently incorporating my company with the Corporate Affairs Commission."
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f22",
+          "type": "text",
+          "label": "2. What is the name of your company?",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "B. accompanying documents.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f24",
+          "type": "text",
+          "label": "3. Registered company name (in full)",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f25",
+          "type": "text",
+          "label": "4. Company registration number.",
+          "required": true,
+          "description": "*Accompanying documents.",
+          "placeholder": "Enter your company registration number, RC or BN"
+        },
+        {
+          "kind": "note",
+          "id": "n30",
+          "text": "Preview your submissions {all_fields}",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f37",
+          "type": "email",
+          "label": "Email",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 7
+  }
+}

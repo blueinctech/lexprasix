@@ -47,3 +47,4 @@ next-env.d.ts
 /migration/media-cache/
 /test-results/
 /playwright-report/
+/.data/

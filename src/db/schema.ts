@@ -393,6 +393,27 @@ export const comments = pgTable(
   (t) => [index("comments_post_idx").on(t.postId, t.createdAt), uniqueIndex("comments_wp_idx").on(t.wpId)],
 );
 
+/** Client testimonials published by the firm (name and words as approved by the client). */
+export const testimonials = pgTable(
+  "testimonials",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    /** e.g. "Founder, Flourish Her Africa". */
+    role: text("role").notNull().default(""),
+    quote: text("quote").notNull(),
+    /** Where it was given: "website", "google", ... */
+    source: text("source").notNull().default("website"),
+    sourceUrl: text("source_url").notNull().default(""),
+    featured: boolean("featured").notNull().default(true),
+    sortOrder: integer("sort_order").notNull().default(0),
+    status: status(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index("testimonials_order_idx").on(t.status, t.sortOrder)],
+);
+
 /** Previous versions of editable records, written on every save. */
 export const revisions = pgTable(
   "revisions",

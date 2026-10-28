@@ -1,0 +1,361 @@
+{
+  "startedAt": "2026-10-28T12:31:20.198Z",
+  "source": {
+    "media": 844,
+    "authors": 7,
+    "categories": 25,
+    "tags": 123,
+    "posts": 286,
+    "comments": 494,
+    "services": 13,
+    "documents": 23,
+    "pages": 54
+  },
+  "imported": {
+    "media": 844,
+    "authors": 6,
+    "categories": 18,
+    "tags": 87,
+    "posts": 286,
+    "comments": 494,
+    "services": 13,
+    "documents": 23,
+    "testimonials": 5,
+    "pages": 12,
+    "legacyIds": 340
+  },
+  "skipped": [
+    {
+      "type": "author",
+      "wpId": 1,
+      "url": "https://lexpraxisng.com/author/blueinchost/",
+      "reason": "No published posts (redirected to /blog/)"
+    },
+    {
+      "type": "categories",
+      "wpId": 27,
+      "url": "https://lexpraxisng.com/category/advocacy/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "categories",
+      "wpId": 31,
+      "url": "https://lexpraxisng.com/category/copyright/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "categories",
+      "wpId": 2,
+      "url": "https://lexpraxisng.com/category/criminal-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "categories",
+      "wpId": 3,
+      "url": "https://lexpraxisng.com/category/family-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "categories",
+      "wpId": 4,
+      "url": "https://lexpraxisng.com/category/health-care-policy/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "categories",
+      "wpId": 5,
+      "url": "https://lexpraxisng.com/category/real-estate-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "categories",
+      "wpId": 6,
+      "url": "https://lexpraxisng.com/category/technology-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 50,
+      "url": "https://lexpraxisng.com/tag/fintech-2/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 54,
+      "url": "https://lexpraxisng.com/tag/how-to-remove-a-trustee-of-an-ngo/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 69,
+      "url": "https://lexpraxisng.com/tag/aml-cft-policy/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 70,
+      "url": "https://lexpraxisng.com/tag/arbitration/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 8,
+      "url": "https://lexpraxisng.com/tag/business/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 71,
+      "url": "https://lexpraxisng.com/tag/business-name-upgrade-cross-river-state-business/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 72,
+      "url": "https://lexpraxisng.com/tag/business-outsourcing/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 78,
+      "url": "https://lexpraxisng.com/tag/civil-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 83,
+      "url": "https://lexpraxisng.com/tag/court/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 9,
+      "url": "https://lexpraxisng.com/tag/criminal/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 10,
+      "url": "https://lexpraxisng.com/tag/criminal-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 11,
+      "url": "https://lexpraxisng.com/tag/crypto-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 88,
+      "url": "https://lexpraxisng.com/tag/defense/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 90,
+      "url": "https://lexpraxisng.com/tag/driver/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 91,
+      "url": "https://lexpraxisng.com/tag/dwi/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 92,
+      "url": "https://lexpraxisng.com/tag/ecowas/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 93,
+      "url": "https://lexpraxisng.com/tag/election/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 12,
+      "url": "https://lexpraxisng.com/tag/family/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 13,
+      "url": "https://lexpraxisng.com/tag/family-law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 14,
+      "url": "https://lexpraxisng.com/tag/firm/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 15,
+      "url": "https://lexpraxisng.com/tag/health-care/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 112,
+      "url": "https://lexpraxisng.com/tag/how-to-start-a-venture-capital-firm-in-nigeria-examples-of-venture-capital-firms-in-nigeria-what-is-a-venture-capital-firm-investment-securities-and-exchange-commission/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 113,
+      "url": "https://lexpraxisng.com/tag/in-nigeria/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 118,
+      "url": "https://lexpraxisng.com/tag/jury/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 16,
+      "url": "https://lexpraxisng.com/tag/laq/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 17,
+      "url": "https://lexpraxisng.com/tag/law/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 18,
+      "url": "https://lexpraxisng.com/tag/law-nft/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 122,
+      "url": "https://lexpraxisng.com/tag/legal-practice/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 130,
+      "url": "https://lexpraxisng.com/tag/power-of-attorney/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 133,
+      "url": "https://lexpraxisng.com/tag/property/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 19,
+      "url": "https://lexpraxisng.com/tag/real-estate/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 134,
+      "url": "https://lexpraxisng.com/tag/residence-permit/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 20,
+      "url": "https://lexpraxisng.com/tag/technology/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 141,
+      "url": "https://lexpraxisng.com/tag/temporary-work-permit/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 21,
+      "url": "https://lexpraxisng.com/tag/tips/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "tags",
+      "wpId": 144,
+      "url": "https://lexpraxisng.com/tag/trial/",
+      "reason": "Empty term (already unlisted on the live site)"
+    },
+    {
+      "type": "page",
+      "wpId": 1886,
+      "url": "https://lexpraxisng.com/checkout/",
+      "reason": "WooCommerce: awaiting decision on the ebook shop"
+    },
+    {
+      "type": "page",
+      "wpId": 1885,
+      "url": "https://lexpraxisng.com/cart/",
+      "reason": "WooCommerce: awaiting decision on the ebook shop"
+    },
+    {
+      "type": "page",
+      "wpId": 1884,
+      "url": "https://lexpraxisng.com/shop/",
+      "reason": "WooCommerce: awaiting decision on the ebook shop"
+    },
+    {
+      "type": "page",
+      "wpId": 13,
+      "url": "https://lexpraxisng.com/my-account-2/",
+      "reason": "WooCommerce: awaiting decision on the ebook shop"
+    },
+    {
+      "type": "page",
+      "wpId": 4414,
+      "url": "https://lexpraxisng.com/home-full-width/",
+      "reason": "2017 theme demo with raw shortcodes; 301 to /"
+    },
+    {
+      "type": "page",
+      "wpId": 2447,
+      "url": "https://lexpraxisng.com/practice-areas/",
+      "reason": "2016 page with raw shortcodes; 301 to /service/"
+    }
+  ],
+  "review": [
+    {
+      "type": "post",
+      "wpId": 13911,
+      "url": "https://lexpraxisng.com/how-to-amend-the-memorandum-and-articles-of-association/",
+      "reason": "Contains a WordPress shortcode that does not render outside WordPress"
+    },
+    {
+      "type": "post",
+      "wpId": 13611,
+      "url": "https://lexpraxisng.com/tax-obligations-for-foreign-investors-in-nigeria/",
+      "reason": "Contains a WordPress shortcode that does not render outside WordPress"
+    },
+    {
+      "type": "post",
+      "wpId": 12767,
+      "url": "https://lexpraxisng.com/what-to-do-when-your-intellectual-property-right-is-breached/",
+      "reason": "Contains a WordPress shortcode that does not render outside WordPress"
+    },
+    {
+      "type": "post",
+      "wpId": 10051,
+      "url": "https://lexpraxisng.com/how-to-launch-a-bureau-de-change-in-nigeria/",
+      "reason": "Contains a WordPress shortcode that does not render outside WordPress"
+    }
+  ],
+  "missingMedia": [
+    "/wp-content/uploads/2022/07/LEX-PRAXIS-E-FLYER-150x150.jpg",
+    "/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-JASON-D.-CRAIN-150x150.jpg",
+    "/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-LINDSEY-S.-MIGNANO-150x150.jpg"
+  ],
+  "finishedAt": "2026-10-28T12:31:22.540Z"
+}

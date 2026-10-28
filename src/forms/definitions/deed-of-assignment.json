@@ -1,0 +1,480 @@
+{
+  "id": "deed-of-assignment",
+  "title": "Deed of Assignment",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f85",
+          "type": "text",
+          "label": "Name",
+          "required": true,
+          "description": "User's full name",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f88",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f89",
+          "type": "tel",
+          "label": "Phone Number",
+          "required": true,
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Parties",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n18",
+          "text": "A. Assignor (person giving out property for sale)",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f19",
+          "type": "text",
+          "label": "i. Name (s) of Assignor",
+          "required": true,
+          "placeholder": "Enter the name of assignor"
+        },
+        {
+          "kind": "field",
+          "id": "f20",
+          "type": "text",
+          "label": "ii. Permanent address",
+          "required": true,
+          "placeholder": "Enter the permanent address of assignor"
+        },
+        {
+          "kind": "field",
+          "id": "f21",
+          "type": "text",
+          "label": "iii. Occupation",
+          "required": true,
+          "placeholder": "Enter the occupation of assignor"
+        },
+        {
+          "kind": "note",
+          "id": "n22",
+          "text": "B. Assignee (person who buys property)",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f23",
+          "type": "text",
+          "label": "i. Name of Assignee",
+          "required": true,
+          "placeholder": "Enter the name of assignee"
+        },
+        {
+          "kind": "field",
+          "id": "f24",
+          "type": "text",
+          "label": "ii. Permanent address",
+          "required": true,
+          "placeholder": "Enter the permanent address of assignee"
+        },
+        {
+          "kind": "field",
+          "id": "f25",
+          "type": "text",
+          "label": "iii. Occupation",
+          "required": true,
+          "placeholder": "Enter the occupation of assignee"
+        }
+      ]
+    },
+    {
+      "title": "Property",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f27",
+          "type": "text",
+          "label": "i. Name of property (if any)",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f28",
+          "type": "text",
+          "label": "ii. Address of property",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f30",
+          "type": "radio",
+          "label": "iii. Is the property registered with a certificate of occupancy?",
+          "required": false,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f31",
+          "type": "text",
+          "label": "iii (a). Please state the registration number.",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f33",
+          "type": "textarea",
+          "label": "If No, please state briefly how the property came to be that of the Assignor.",
+          "required": false,
+          "width": "full"
+        },
+        {
+          "kind": "field",
+          "id": "f34",
+          "type": "radio",
+          "label": "vi. Is the land/property surveyed?",
+          "required": false,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f35",
+          "type": "text",
+          "label": "vii. (a) If Yes, please state the survey number",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f36",
+          "type": "textarea",
+          "label": "viii. If No, please provide a brief description of the boundary neighbors",
+          "required": false,
+          "width": "full"
+        },
+        {
+          "kind": "field",
+          "id": "f38",
+          "type": "text",
+          "label": "a. On the right bounded by",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f39",
+          "type": "text",
+          "label": "b. On the left bounded by",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f40",
+          "type": "text",
+          "label": "c. At the front bounded by",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f41",
+          "type": "text",
+          "label": "d. At the back bounded by",
+          "required": false
+        }
+      ]
+    },
+    {
+      "title": "Consideration",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f43",
+          "type": "text",
+          "label": "How much is to be paid for the property?",
+          "required": false,
+          "placeholder": "How much is to be paid for the property"
+        }
+      ]
+    },
+    {
+      "title": "Covenants",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f46",
+          "type": "radio",
+          "label": "i. Are there any additional clauses the Assignor feels should be included as terms to the agreement?",
+          "required": false,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f47",
+          "type": "textarea",
+          "label": "If yes, please state them below",
+          "required": false,
+          "width": "full"
+        },
+        {
+          "kind": "field",
+          "id": "f49",
+          "type": "radio",
+          "label": "ii. Are there additional clauses the Assignee feels should be included as terms to the agreement?",
+          "required": false,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f50",
+          "type": "textarea",
+          "label": "If yes, please state them below",
+          "required": false,
+          "width": "full"
+        }
+      ]
+    },
+    {
+      "title": "Witnesses",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n53",
+          "text": "Please provide details of witnesses for both parties in the format below;",
+          "style": "paragraph"
+        },
+        {
+          "kind": "note",
+          "id": "n57",
+          "text": "Assignor;",
+          "style": "subheading"
+        },
+        {
+          "kind": "note",
+          "id": "n72",
+          "text": "Withness 1",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f61",
+          "type": "text",
+          "label": "Name:",
+          "required": true,
+          "placeholder": "Enter witness name"
+        },
+        {
+          "kind": "field",
+          "id": "f62",
+          "type": "text",
+          "label": "Address",
+          "required": true,
+          "placeholder": "Enter witness address"
+        },
+        {
+          "kind": "field",
+          "id": "f63",
+          "type": "text",
+          "label": "Occupation",
+          "required": true,
+          "placeholder": "Enter occupation"
+        },
+        {
+          "kind": "field",
+          "id": "f64",
+          "type": "file",
+          "label": "Upload Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n77",
+          "text": "Withness 2",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f73",
+          "type": "text",
+          "label": "Name:",
+          "required": true,
+          "placeholder": "Enter witness name"
+        },
+        {
+          "kind": "field",
+          "id": "f74",
+          "type": "text",
+          "label": "Address",
+          "required": true,
+          "placeholder": "Enter witness address"
+        },
+        {
+          "kind": "field",
+          "id": "f75",
+          "type": "text",
+          "label": "Occupation",
+          "required": true,
+          "placeholder": "Enter occupation"
+        },
+        {
+          "kind": "field",
+          "id": "f76",
+          "type": "file",
+          "label": "Upload Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n60",
+          "text": "Assignee",
+          "style": "subheading"
+        },
+        {
+          "kind": "note",
+          "id": "n66",
+          "text": "Withness 1",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f68",
+          "type": "text",
+          "label": "Name:",
+          "required": true,
+          "placeholder": "Enter witness name"
+        },
+        {
+          "kind": "field",
+          "id": "f69",
+          "type": "text",
+          "label": "Address",
+          "required": true,
+          "placeholder": "Enter witness address"
+        },
+        {
+          "kind": "field",
+          "id": "f70",
+          "type": "text",
+          "label": "Occupation",
+          "required": true,
+          "placeholder": "Enter occupation"
+        },
+        {
+          "kind": "field",
+          "id": "f71",
+          "type": "file",
+          "label": "Upload Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n67",
+          "text": "Withness 2",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f54",
+          "type": "text",
+          "label": "Name:",
+          "required": true,
+          "placeholder": "Enter witness name"
+        },
+        {
+          "kind": "field",
+          "id": "f55",
+          "type": "text",
+          "label": "Address",
+          "required": true,
+          "placeholder": "Enter witness address"
+        },
+        {
+          "kind": "field",
+          "id": "f56",
+          "type": "text",
+          "label": "Occupation",
+          "required": true,
+          "placeholder": "Enter occupation"
+        },
+        {
+          "kind": "field",
+          "id": "f59",
+          "type": "file",
+          "label": "Upload Signature",
+          "required": false,
+          "description": "Max. file size: 6 GB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "note",
+          "id": "n83",
+          "text": "Preview your submissions {all_fields}",
+          "style": "subheading"
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 13
+  }
+}

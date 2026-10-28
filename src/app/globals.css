@@ -32,6 +32,120 @@
   --radius-card: 0.875rem;
 }
 
+/* Article and rich-text typography (imported WordPress HTML and editor output). */
+@layer components {
+  .prose-lp {
+    color: var(--color-ink);
+    font-size: 1.075rem;
+    line-height: 1.8;
+    overflow-wrap: break-word;
+  }
+  .prose-lp > * + * {
+    margin-top: 1.25em;
+  }
+  .prose-lp h2 {
+    margin-top: 2.2em;
+    font-size: 1.85rem;
+    color: var(--color-navy-950);
+    scroll-margin-top: 7rem;
+  }
+  .prose-lp h3 {
+    margin-top: 1.8em;
+    font-size: 1.4rem;
+    color: var(--color-navy-950);
+    scroll-margin-top: 7rem;
+  }
+  .prose-lp h4,
+  .prose-lp h5,
+  .prose-lp h6 {
+    margin-top: 1.6em;
+    font-weight: 600;
+    color: var(--color-navy-900);
+  }
+  .prose-lp a {
+    color: var(--color-navy-700);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--color-gold-500) 70%, transparent);
+    text-underline-offset: 3px;
+  }
+  .prose-lp a:hover {
+    color: var(--color-gold-700);
+  }
+  .prose-lp ul,
+  .prose-lp ol {
+    padding-left: 1.4em;
+  }
+  .prose-lp ul {
+    list-style: disc;
+  }
+  .prose-lp ol {
+    list-style: decimal;
+  }
+  .prose-lp li + li {
+    margin-top: 0.45em;
+  }
+  .prose-lp li::marker {
+    color: var(--color-gold-600);
+  }
+  .prose-lp blockquote {
+    border-left: 3px solid var(--color-gold-500);
+    padding: 0.25em 0 0.25em 1.25em;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    color: var(--color-navy-900);
+  }
+  .prose-lp img,
+  .prose-lp video {
+    height: auto;
+    max-width: 100%;
+    border-radius: 0.75rem;
+  }
+  .prose-lp figure figcaption {
+    margin-top: 0.6em;
+    font-size: 0.875rem;
+    color: var(--color-ink-muted);
+  }
+  .prose-lp iframe {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: auto;
+    border-radius: 0.75rem;
+  }
+  .prose-lp table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+  .prose-lp th,
+  .prose-lp td {
+    border: 1px solid var(--color-line);
+    padding: 0.6em 0.8em;
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose-lp th {
+    background: var(--color-paper-warm);
+    font-weight: 600;
+  }
+  .prose-lp hr {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+    margin: 2.5em 0;
+  }
+  .prose-lp code {
+    border-radius: 0.3em;
+    background: var(--color-paper-warm);
+    padding: 0.1em 0.35em;
+    font-size: 0.9em;
+  }
+  .prose-lp strong {
+    font-weight: 600;
+    color: var(--color-navy-950);
+  }
+}
+
 @layer base {
   html {
     color: var(--color-ink);

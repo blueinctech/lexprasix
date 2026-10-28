@@ -1,0 +1,104 @@
+{
+  "id": "company-stamp",
+  "title": "Company Stamp",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f212",
+          "type": "text",
+          "label": "User Name",
+          "required": true,
+          "description": "Full name"
+        },
+        {
+          "kind": "field",
+          "id": "f216",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f217",
+          "type": "tel",
+          "label": "Phone Number",
+          "required": true,
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Section 1/1",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f199",
+          "type": "radio",
+          "label": "1. Please Pick one of the following",
+          "required": false,
+          "choices": [
+            "i. I have an existing entity.",
+            "ii. I am currently registering my entity with the Corporate Affairs Commission."
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f200",
+          "type": "text",
+          "label": "2. Name of entity.",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f201",
+          "type": "text",
+          "label": "3. Choice of Stamp.",
+          "required": false
+        },
+        {
+          "kind": "note",
+          "id": "n203",
+          "text": "Accompanying documents.",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f204",
+          "type": "text",
+          "label": "i. Registered company name (in full).",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f205",
+          "type": "tel",
+          "label": "ii. Company Registration number.",
+          "required": false
+        },
+        {
+          "kind": "note",
+          "id": "n207",
+          "text": "Preview Submissions {all_fields}",
+          "style": "subheading"
+        },
+        {
+          "kind": "note",
+          "id": "n208",
+          "text": "Preview your submissions {all_fields}",
+          "style": "subheading"
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 19
+  }
+}

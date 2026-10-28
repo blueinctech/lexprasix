@@ -1,0 +1,597 @@
+{
+  "id": "incorporated-trustee",
+  "title": "Incorporated Trustees",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "Organisation information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f7",
+          "type": "textarea",
+          "label": "1. What are the proposed names for the organization?",
+          "required": true,
+          "placeholder": "(The minimum requirement is 3 names)",
+          "width": "full"
+        },
+        {
+          "kind": "field",
+          "id": "f8",
+          "type": "textarea",
+          "label": "2. Briefly describe the aims and objectives of the organization?",
+          "required": true,
+          "placeholder": "(You are required to provide a minimum of one activity)",
+          "width": "full"
+        },
+        {
+          "kind": "field",
+          "id": "f10",
+          "type": "text",
+          "label": "3. Address of the organization",
+          "required": true,
+          "placeholder": "(Building number, City, State, Country, Local Government Area)"
+        }
+      ]
+    },
+    {
+      "title": "Trustee information",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n16",
+          "text": "FIRST TRUSTEE",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f17",
+          "type": "text",
+          "label": "First Name",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f19",
+          "type": "text",
+          "label": "Middle Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f20",
+          "type": "text",
+          "label": "Surname",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f22",
+          "type": "date",
+          "label": "D.O.B",
+          "required": true,
+          "placeholder": "mm/dd/yyyy"
+        },
+        {
+          "kind": "field",
+          "id": "f43",
+          "type": "text",
+          "label": "Nationality",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f24",
+          "type": "text",
+          "label": "Occupation",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f25",
+          "type": "text",
+          "label": "Gender",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f26",
+          "type": "text",
+          "label": "Residential address",
+          "required": true,
+          "placeholder": "(include Street Number and Name)"
+        },
+        {
+          "kind": "field",
+          "id": "f27",
+          "type": "text",
+          "label": "Country",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f28",
+          "type": "text",
+          "label": "State",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f29",
+          "type": "text",
+          "label": "City",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f30",
+          "type": "text",
+          "label": "LGA",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f32",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f33",
+          "type": "tel",
+          "label": "Phone",
+          "required": true,
+          "role": "phone"
+        },
+        {
+          "kind": "field",
+          "id": "f34",
+          "type": "text",
+          "label": "Means of Id and No.",
+          "required": true
+        },
+        {
+          "kind": "note",
+          "id": "n38",
+          "text": "SECOND TRUSTEE",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f39",
+          "type": "text",
+          "label": "First Name",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f40",
+          "type": "text",
+          "label": "Middle Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f41",
+          "type": "text",
+          "label": "Surname",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f42",
+          "type": "date",
+          "label": "D.O.B",
+          "required": true,
+          "placeholder": "mm/dd/yyyy"
+        },
+        {
+          "kind": "field",
+          "id": "f23",
+          "type": "text",
+          "label": "Nationality",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f44",
+          "type": "text",
+          "label": "Occupation",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f45",
+          "type": "text",
+          "label": "Gender",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f46",
+          "type": "text",
+          "label": "Residential address",
+          "required": true,
+          "placeholder": "(include Street Number and Name)"
+        },
+        {
+          "kind": "field",
+          "id": "f47",
+          "type": "text",
+          "label": "Country",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f48",
+          "type": "text",
+          "label": "State",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f49",
+          "type": "text",
+          "label": "City",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f50",
+          "type": "text",
+          "label": "LGA",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f51",
+          "type": "email",
+          "label": "Email",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f52",
+          "type": "tel",
+          "label": "Phone",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f53",
+          "type": "text",
+          "label": "Means of Id and No.",
+          "required": true
+        },
+        {
+          "kind": "note",
+          "id": "n54",
+          "text": "THIRD TRUSTEE",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f56",
+          "type": "text",
+          "label": "First Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f57",
+          "type": "text",
+          "label": "Middle Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f58",
+          "type": "text",
+          "label": "Surname",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f59",
+          "type": "date",
+          "label": "D.O.B",
+          "required": false,
+          "placeholder": "mm/dd/yyyy"
+        },
+        {
+          "kind": "field",
+          "id": "f61",
+          "type": "text",
+          "label": "Nationality",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f62",
+          "type": "text",
+          "label": "Occupation",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f63",
+          "type": "text",
+          "label": "Gender",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f64",
+          "type": "text",
+          "label": "Residential address",
+          "required": false,
+          "placeholder": "(include Street Number and Name)"
+        },
+        {
+          "kind": "field",
+          "id": "f65",
+          "type": "text",
+          "label": "Country",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f66",
+          "type": "text",
+          "label": "State",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f67",
+          "type": "text",
+          "label": "City",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f68",
+          "type": "text",
+          "label": "LGA",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f69",
+          "type": "email",
+          "label": "Email",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f70",
+          "type": "tel",
+          "label": "Phone",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f71",
+          "type": "text",
+          "label": "Means of Id and No.",
+          "required": false
+        },
+        {
+          "kind": "note",
+          "id": "n73",
+          "text": "FOURTH TRUSTEE",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f74",
+          "type": "text",
+          "label": "First Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f75",
+          "type": "text",
+          "label": "Middle Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f76",
+          "type": "text",
+          "label": "Surname",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f77",
+          "type": "date",
+          "label": "D.O.B",
+          "required": false,
+          "placeholder": "mm/dd/yyyy"
+        },
+        {
+          "kind": "field",
+          "id": "f78",
+          "type": "text",
+          "label": "Nationality",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f79",
+          "type": "text",
+          "label": "Occupation",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f80",
+          "type": "text",
+          "label": "Gender",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f81",
+          "type": "text",
+          "label": "Residential address",
+          "required": false,
+          "placeholder": "(include Street Number and Name)"
+        },
+        {
+          "kind": "field",
+          "id": "f82",
+          "type": "text",
+          "label": "Country",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f83",
+          "type": "text",
+          "label": "State",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f84",
+          "type": "text",
+          "label": "City",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f85",
+          "type": "text",
+          "label": "LGA",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f86",
+          "type": "email",
+          "label": "Email",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f87",
+          "type": "tel",
+          "label": "Phone",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f88",
+          "type": "text",
+          "label": "Means of Id and No.",
+          "required": false
+        },
+        {
+          "kind": "note",
+          "id": "n90",
+          "text": "EXECUTIVE POSITIONS",
+          "style": "subheading"
+        },
+        {
+          "kind": "note",
+          "id": "n91",
+          "text": "It is mandatory that the members of Board of Trustees must appoint at least a Chairman and a Secretary. Please provide the required information below.",
+          "style": "paragraph"
+        },
+        {
+          "kind": "field",
+          "id": "f92",
+          "type": "text",
+          "label": "Name of Chairman",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f94",
+          "type": "text",
+          "label": "Full Names of Secretary",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f93",
+          "type": "text",
+          "label": "How many years do you propose the members of the executive council retain these positions?",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f95",
+          "type": "text",
+          "label": "Is there any other additional information?",
+          "required": false
+        },
+        {
+          "kind": "note",
+          "id": "n96",
+          "text": "NOTE 1. Please submit with this form the accompanying documents to info@lexpraxisng.com or cynthia.tishion@gmail.com a. Scanned copy of Government issued ID cards of all trustees in PDF format (not exceeding 5MB). b. Soft copy of passport photographs of all trustees. c. E-signatures of all Trustees",
+          "style": "paragraph"
+        },
+        {
+          "kind": "field",
+          "id": "f99",
+          "type": "file",
+          "label": "Government Issued ID",
+          "required": false,
+          "description": "Max. file size: 5 MB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "field",
+          "id": "f100",
+          "type": "file",
+          "label": "Passport photograph",
+          "required": false,
+          "description": "Max. file size: 5 MB.",
+          "accept": [
+            ".pdf",
+            ".jpg",
+            ".jpeg",
+            ".png",
+            ".doc",
+            ".docx"
+          ],
+          "maxFiles": 1
+        },
+        {
+          "kind": "field",
+          "id": "f103",
+          "type": "text",
+          "label": "Signature",
+          "required": true
+        },
+        {
+          "kind": "note",
+          "id": "n97",
+          "text": "TERMS OF SERVICE. Thank you for patronizing us. Please ensure you read these terms before you submit this form. By submitting a completed copy of this form, it is implied that you have read, understood and agreed to our terms of service. Where you are uncertain as to any of the terms, please feel free to get clarification from any member of our team. You may send a mail to info@lexpraxis.ng or call +234 706 544 3425. 1. By filling this form, you have retained our firm to register your organization as incorporated trustees on your behalf. Where you do not understand what the term “incorporated trustee” stands for, please contact our team for clarification. 2. Our firm maintains a strict no refund policy on amount paid for our services. 3. We advise that this form be completed by you and not any of our team members as we will not be liable for any undesired outcome that may arise where you permit our team members to complete the form on your behalf. 4. Our service is performed strictly based on the information provided by you. We will therefore not be liable for any undesired outcome of our service that may occur based on the information provided by you. 5. The amount paid covers cost for one attempt at reservation of name and registration and does not cover additional incidents that may occur. 6. Where a name submitted for reservation is rejected by the relevant agency, and you have instructed us to reserve another name, such reservation and any other subsequent reservation will attract an additional amount of N5,500 (five thousand and five hundred naira only) per attempt.",
+          "style": "paragraph"
+        }
+      ],
+      "description": "(An organization is required to have a minimum of 2 and maximum of 15 Trustees)"
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 25
+  }
+}

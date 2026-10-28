@@ -1,0 +1,203 @@
+{
+  "id": "power-of-attorney",
+  "title": "Power of Attorney",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f86",
+          "type": "text",
+          "label": "Name",
+          "required": true,
+          "description": "User's full name",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f90",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f89",
+          "type": "tel",
+          "label": "Phone Number",
+          "required": true,
+          "description": "Please enter a number from 0 to 11.",
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Commencement",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f70",
+          "type": "date",
+          "label": "Please state the date of commencement of this agreement.",
+          "required": false,
+          "placeholder": "mm/dd/yyyy"
+        }
+      ]
+    },
+    {
+      "title": "Appointment",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n26",
+          "text": "DONOR",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f60",
+          "type": "text",
+          "label": "Full Name:",
+          "required": true,
+          "placeholder": "Enter the name of donor"
+        },
+        {
+          "kind": "field",
+          "id": "f61",
+          "type": "text",
+          "label": "Address:",
+          "required": true,
+          "placeholder": "Enter the address of donor"
+        },
+        {
+          "kind": "field",
+          "id": "f62",
+          "type": "text",
+          "label": "Occupation:",
+          "required": true,
+          "placeholder": "Enter the occupation of donor"
+        },
+        {
+          "kind": "note",
+          "id": "n59",
+          "text": "DONEE",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f63",
+          "type": "text",
+          "label": "Full Name:",
+          "required": true,
+          "placeholder": "Enter the name of donee"
+        },
+        {
+          "kind": "field",
+          "id": "f64",
+          "type": "text",
+          "label": "Address:",
+          "required": true,
+          "placeholder": "Enter the address of donee"
+        },
+        {
+          "kind": "field",
+          "id": "f65",
+          "type": "text",
+          "label": "Occupation:",
+          "required": true,
+          "placeholder": "Enter the occupation of donee"
+        }
+      ]
+    },
+    {
+      "title": "Delegated powers.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f66",
+          "type": "textarea",
+          "label": "Please list below the powers sought to be conferred on the donee.",
+          "required": false,
+          "width": "full"
+        }
+      ]
+    },
+    {
+      "title": "Irrevocability",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f67",
+          "type": "radio",
+          "label": "Do you wish to revoke this attorney in the future?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Execution and attestation",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n72",
+          "text": "WITNESS DETAILS",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f80",
+          "type": "text",
+          "label": "Name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f81",
+          "type": "text",
+          "label": "Occupation",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f82",
+          "type": "text",
+          "label": "Address",
+          "required": false
+        },
+        {
+          "kind": "note",
+          "id": "n69",
+          "text": "(NB; It is required that a Power of Attorney be attested to by a Judge, Magistrate or Notary Public. See S.150 Evidence Act)",
+          "style": "paragraph"
+        },
+        {
+          "kind": "field",
+          "id": "f75",
+          "type": "checkbox",
+          "label": "Yes I Understand.",
+          "required": true,
+          "choices": []
+        },
+        {
+          "kind": "note",
+          "id": "n84",
+          "text": "Please Preview Before Submission {all_fields}",
+          "style": "subheading"
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 3
+  }
+}

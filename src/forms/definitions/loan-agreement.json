@@ -1,0 +1,313 @@
+{
+  "id": "loan-agreement",
+  "title": "Loan Agreement",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f109",
+          "type": "text",
+          "label": "Name",
+          "required": false,
+          "description": "User's full name",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f112",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f111",
+          "type": "tel",
+          "label": "Phone Number",
+          "required": true,
+          "description": "Please enter a number from 0 to 11.",
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Parties lender",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f58",
+          "type": "radio",
+          "label": "i. Is the lender an:",
+          "required": true,
+          "choices": [
+            "Individual",
+            "Company"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f59",
+          "type": "text",
+          "label": "ii. Name of Lender",
+          "required": true,
+          "placeholder": "Enter name of Lender"
+        },
+        {
+          "kind": "field",
+          "id": "f60",
+          "type": "text",
+          "label": "iii. Address of Lender (Registered address if a registered company)",
+          "required": true,
+          "placeholder": "Enter address of Lender"
+        },
+        {
+          "kind": "field",
+          "id": "f61",
+          "type": "text",
+          "label": "iv. Occupation ( Nature of business if a company)",
+          "required": true,
+          "placeholder": "Enter Occupation of lender"
+        }
+      ]
+    },
+    {
+      "title": "Borrower",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f63",
+          "type": "radio",
+          "label": "i. Is the Borrower an:",
+          "required": true,
+          "choices": [
+            "Individual",
+            "Company"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f64",
+          "type": "text",
+          "label": "ii. Name of Borrower",
+          "required": true,
+          "placeholder": "Enter name of Borrower"
+        },
+        {
+          "kind": "field",
+          "id": "f65",
+          "type": "text",
+          "label": "iii. Address of Borrower (Registered address if a registered company)",
+          "required": true,
+          "placeholder": "Enter address of Borrower"
+        },
+        {
+          "kind": "field",
+          "id": "f66",
+          "type": "text",
+          "label": "iv. Occupation Borrower ( Nature of business if a company)",
+          "required": true,
+          "placeholder": "Enter Occupation of Borrower"
+        }
+      ]
+    },
+    {
+      "title": "Facility",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f68",
+          "type": "text",
+          "label": "Amount given as loan. (In words )",
+          "required": true,
+          "placeholder": "Amount in words"
+        },
+        {
+          "kind": "field",
+          "id": "f69",
+          "type": "tel",
+          "label": "Amount given as loan.( in figures)",
+          "required": true,
+          "placeholder": "Amount in figures"
+        }
+      ]
+    },
+    {
+      "title": "Purpose",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f74",
+          "type": "text",
+          "label": "The loan is for;",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f72",
+          "type": "radio",
+          "label": "The loan is for;",
+          "required": true,
+          "choices": [
+            "Personal use",
+            "Business finance"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f95",
+          "type": "text",
+          "label": "State the uses here",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Tenor/ duration",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f75",
+          "type": "text",
+          "label": "i. How long is the loan facility expected to last?",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f77",
+          "type": "radio",
+          "label": "ii. Is there provision for a roll over? (i.e extension of the duration of the agreement)",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f78",
+          "type": "text",
+          "label": "iii. how long?",
+          "required": false
+        }
+      ]
+    },
+    {
+      "title": "Security",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f80",
+          "type": "textarea",
+          "label": "Please state the collateral to be issued as security for the loan (if any).",
+          "required": false,
+          "width": "full"
+        }
+      ]
+    },
+    {
+      "title": "Covenants and conditions",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f82",
+          "type": "textarea",
+          "label": "Please state in detail, the conditions which the borrower must fulfill before, during and after the duration of this agreement.",
+          "required": true,
+          "width": "full"
+        }
+      ]
+    },
+    {
+      "title": "Pricing and interests",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f84",
+          "type": "radio",
+          "label": "Will the refund be paid with interest?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Default",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f86",
+          "type": "textarea",
+          "label": "Please list in detail, events under which the obligation of the lender to provide money under the agreement will be terminated automatically.",
+          "required": true,
+          "width": "full"
+        }
+      ]
+    },
+    {
+      "title": "Governing law",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f88",
+          "type": "text",
+          "label": "Please state the law which you prefer to govern the transaction",
+          "required": false
+        }
+      ]
+    },
+    {
+      "title": "Signatures, execution and witnesses",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f90",
+          "type": "text",
+          "label": "i. Please state the full name of person signing on behalf of the Lender",
+          "required": false,
+          "placeholder": "Full name"
+        },
+        {
+          "kind": "field",
+          "id": "f92",
+          "type": "text",
+          "label": "ii. Designation of the person signing on behalf of the lender",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f93",
+          "type": "text",
+          "label": "iii. State the full names of the person signing as borrower",
+          "required": false,
+          "placeholder": "Enter the full name of the borrower"
+        },
+        {
+          "kind": "field",
+          "id": "f94",
+          "type": "text",
+          "label": "iv. How many witnesses do you intend to provide for the borrower and the lender",
+          "required": false
+        },
+        {
+          "kind": "note",
+          "id": "n107",
+          "text": "Preview your submissions {all_fields}",
+          "style": "subheading"
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 6
+  }
+}

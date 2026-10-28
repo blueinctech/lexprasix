@@ -1,0 +1,143 @@
+{
+  "id": "hire-purchase-agreement",
+  "title": "Hire Purchase Agreement",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f31",
+          "type": "text",
+          "label": "Name",
+          "required": true,
+          "description": "User's Name",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f34",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f33",
+          "type": "tel",
+          "label": "Phone number",
+          "required": true,
+          "description": "Please enter a number from 0 to 11.",
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Section 1: parties",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f29",
+          "type": "text",
+          "label": "Untitled",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f22",
+          "type": "text",
+          "label": "i. Full names of person giving out property on hire.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f14",
+          "type": "radio",
+          "label": "ii. The party is;",
+          "required": true,
+          "choices": [
+            "An individual.",
+            "A company."
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f12",
+          "type": "text",
+          "label": "iii. Address of party.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f23",
+          "type": "text",
+          "label": "iv. Full names of Hirer",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f11",
+          "type": "radio",
+          "label": "v. The hirer is;",
+          "required": true,
+          "choices": [
+            "An individual.",
+            "A company."
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f15",
+          "type": "radio",
+          "label": "vi. Do you intend to include a guarantor in this agreement?",
+          "required": true,
+          "choices": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f24",
+          "type": "text",
+          "label": "vii. If yes, State the full names of the guarantor.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f17",
+          "type": "text",
+          "label": "viii. Address of the guarantor.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f19",
+          "type": "textarea",
+          "label": "i. State name and full description of property to be hired.",
+          "required": true,
+          "width": "full"
+        }
+      ]
+    },
+    {
+      "title": "Section 2: property to be hired",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n28",
+          "text": "Preview your submission {all_fields}",
+          "style": "subheading"
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 12
+  }
+}

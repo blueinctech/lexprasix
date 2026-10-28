@@ -1,0 +1,244 @@
+{
+  "id": "notice-of-rent-increase",
+  "title": "Notice of Rent Increase",
+  "kind": "document",
+  "steps": [
+    {
+      "title": "User information",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f68",
+          "type": "text",
+          "label": "Name",
+          "required": true,
+          "description": "Full name of user",
+          "role": "name"
+        },
+        {
+          "kind": "field",
+          "id": "f71",
+          "type": "email",
+          "label": "Email",
+          "required": true,
+          "description": "User's email",
+          "role": "email"
+        },
+        {
+          "kind": "field",
+          "id": "f70",
+          "type": "tel",
+          "label": "Phone Number",
+          "required": true,
+          "description": "Users Phone Number",
+          "role": "phone"
+        }
+      ]
+    },
+    {
+      "title": "Nature of agreement.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f30",
+          "type": "checkbox",
+          "label": "1. The tenancy is a.",
+          "required": true,
+          "choices": [
+            "Monthly tenancy",
+            "Yearly tenancy",
+            "Weekly tenancy",
+            "Other"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f32",
+          "type": "tel",
+          "label": "2. State the current rent amount.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f33",
+          "type": "tel",
+          "label": "3. Provide the new rent amount.",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f60",
+          "type": "text",
+          "label": "4. How is rent paid?",
+          "required": true,
+          "description": "For example: Annually, Monthly etc"
+        }
+      ]
+    },
+    {
+      "title": "Particulars of tenant",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f36",
+          "type": "text",
+          "label": "5. Name of tenant.",
+          "required": true
+        }
+      ]
+    },
+    {
+      "title": "Address of property on rent.",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f47",
+          "type": "text",
+          "label": "6. Property address",
+          "required": true,
+          "placeholder": "Enter property address here"
+        },
+        {
+          "kind": "field",
+          "id": "f48",
+          "type": "text",
+          "label": "Property name",
+          "required": false,
+          "placeholder": "Enter property name here"
+        },
+        {
+          "kind": "field",
+          "id": "f49",
+          "type": "select",
+          "label": "State",
+          "required": true,
+          "choices": [
+            "Abia",
+            "Adamawa",
+            "Akwa Ibom",
+            "Anambra",
+            "Bauchi",
+            "Bayelsa",
+            "Benue",
+            "Borno",
+            "Cross River",
+            "Delta",
+            "Ebonyi",
+            "Edo",
+            "Ekiti",
+            "Enugu",
+            "FCT - Abuja",
+            "Gombe",
+            "Imo",
+            "Jigawa",
+            "Kaduna",
+            "Kano",
+            "Katsina",
+            "Kebbi",
+            "Kogi",
+            "Kwara",
+            "Lagos",
+            "Nasarawa",
+            "Niger",
+            "Ogun",
+            "Ondo",
+            "Osun",
+            "Oyo",
+            "Plateau",
+            "Rivers",
+            "Sokoto",
+            "Taraba",
+            "Yobe",
+            "Zamfara"
+          ]
+        },
+        {
+          "kind": "field",
+          "id": "f51",
+          "type": "text",
+          "label": "Local govt",
+          "required": true,
+          "placeholder": "Enter local govt here"
+        }
+      ]
+    },
+    {
+      "title": "Particulars of landlord",
+      "items": [
+        {
+          "kind": "note",
+          "id": "n52",
+          "text": "7. Name of landlord",
+          "style": "subheading"
+        },
+        {
+          "kind": "field",
+          "id": "f44",
+          "type": "text",
+          "label": "First name",
+          "required": false
+        },
+        {
+          "kind": "field",
+          "id": "f46",
+          "type": "text",
+          "label": "Middle name",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f45",
+          "type": "text",
+          "label": "Last name",
+          "required": true
+        },
+        {
+          "kind": "field",
+          "id": "f41",
+          "type": "textarea",
+          "label": "8. Address of Landlord.",
+          "required": true,
+          "placeholder": "Enter address here",
+          "width": "full"
+        }
+      ]
+    },
+    {
+      "title": "Commencement",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f43",
+          "type": "textarea",
+          "label": "9. When will the rent increase take effect?",
+          "required": true,
+          "width": "full"
+        },
+        {
+          "kind": "note",
+          "id": "n59",
+          "text": "Preview your submissions {all_fields}",
+          "style": "subheading"
+        }
+      ]
+    },
+    {
+      "title": "Section break",
+      "items": [
+        {
+          "kind": "field",
+          "id": "f66",
+          "type": "text",
+          "label": "Untitled",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "submitLabel": "Submit request",
+  "successMessage": "Thank you. We have received your information and a member of our legal team will contact you within one business day to confirm the next steps and any fees.",
+  "legacy": {
+    "engine": "gravityforms",
+    "id": 5
+  }
+}
