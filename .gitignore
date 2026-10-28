@@ -51,3 +51,4 @@ next-env.d.ts
 /migration/logs/media-*.jsonl
 /test-results/
 /playwright-report/
+/migration/lighthouse/
