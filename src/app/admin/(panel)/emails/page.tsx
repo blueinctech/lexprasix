@@ -27,7 +27,7 @@ export default async function EmailsPage({ searchParams }: { searchParams: Promi
     db.select({ status: emailOutbox.status, n: count() }).from(emailOutbox).groupBy(emailOutbox.status),
   ]);
   const configured = emailProvider();
-  const provider = configured === "ses" ? `Amazon SES (${process.env.SES_REGION})` : configured === "resend" ? "Resend" : process.env.NODE_ENV === "production" ? "NOT CONFIGURED" : "development (written to .data/mail)";
+  const provider = configured === "ses" ? `Amazon SES (${process.env.SES_REGION || process.env.S3_REGION})` : configured === "resend" ? "Resend" : process.env.NODE_ENV === "production" ? "NOT CONFIGURED" : "development (written to .data/mail)";
 
   return (
     <>

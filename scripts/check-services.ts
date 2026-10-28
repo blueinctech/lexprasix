@@ -115,16 +115,21 @@ console.log("\nS3 storage");
 // ---------------------------------------------------------------- email
 console.log("\nAmazon SES");
 {
-  const missing = has("SES_REGION", "SES_ACCESS_KEY_ID", "SES_SECRET_ACCESS_KEY", "EMAIL_FROM");
+  // One AWS key can serve both S3 and SES: SES_* falls back to S3_*.
+  const sesKey = process.env.SES_ACCESS_KEY_ID || process.env.S3_ACCESS_KEY_ID;
+  const sesSecret = process.env.SES_SECRET_ACCESS_KEY || process.env.S3_SECRET_ACCESS_KEY;
+  const sesRegion = process.env.SES_REGION || process.env.S3_REGION;
+  const missing = [...(!sesKey ? ["S3_ACCESS_KEY_ID (or SES_ACCESS_KEY_ID)"] : []), ...(!sesSecret ? ["S3_SECRET_ACCESS_KEY (or SES_SECRET_ACCESS_KEY)"] : []), ...(!sesRegion ? ["S3_REGION (or SES_REGION)"] : []), ...has("EMAIL_FROM")];
   if (missing.length) {
     bad(`missing: ${missing.join(", ")}`);
     failures++;
   } else {
     const { SESv2Client, GetAccountCommand, GetEmailIdentityCommand, SendEmailCommand } = await import("@aws-sdk/client-sesv2");
-    const ses = new SESv2Client({ region: process.env.SES_REGION, credentials: { accessKeyId: process.env.SES_ACCESS_KEY_ID!, secretAccessKey: process.env.SES_SECRET_ACCESS_KEY! } });
+    console.log(`  • using the ${process.env.SES_ACCESS_KEY_ID ? "SES" : "S3"} access key`);
+    const ses = new SESv2Client({ region: sesRegion, credentials: { accessKeyId: sesKey!, secretAccessKey: sesSecret! } });
     try {
       const acct = await ses.send(new GetAccountCommand({}));
-      ok(`account reachable in ${process.env.SES_REGION}; sending ${acct.SendingEnabled ? "enabled" : "DISABLED"}`);
+      ok(`account reachable in ${sesRegion}; sending ${acct.SendingEnabled ? "enabled" : "DISABLED"}`);
       if (acct.ProductionAccessEnabled) ok(`production access (quota ${acct.SendQuota?.Max24HourSend}/day)`);
       else {
         bad("SES is in SANDBOX mode: it can only send to verified addresses. Request production access in the SES console before launch.");

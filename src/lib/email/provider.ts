@@ -29,9 +29,22 @@ export function emailFrom(): string {
   return process.env.EMAIL_FROM || "LexPraxis Solicitors <no-reply@lexpraxisng.com>";
 }
 
+/**
+ * SES settings. One AWS access key can serve both S3 and SES, so the SES_*
+ * values fall back to the S3_* ones when not set separately.
+ */
+export function sesSettings() {
+  const accessKeyId = process.env.SES_ACCESS_KEY_ID || process.env.S3_ACCESS_KEY_ID;
+  const secretAccessKey = process.env.SES_SECRET_ACCESS_KEY || process.env.S3_SECRET_ACCESS_KEY;
+  const region = process.env.SES_REGION || process.env.S3_REGION;
+  // S3 keys only imply SES if SES was asked for (SES_REGION set) or no other provider is configured.
+  const enabled = Boolean(accessKeyId && secretAccessKey && region && (process.env.SES_REGION || process.env.SES_ACCESS_KEY_ID || !process.env.RESEND_API_KEY));
+  return { enabled, accessKeyId: accessKeyId ?? "", secretAccessKey: secretAccessKey ?? "", region: region ?? "" };
+}
+
 /** Which transport is configured: Amazon SES, Resend, or none. */
 export function emailProvider(): "ses" | "resend" | null {
-  if (process.env.SES_REGION && process.env.SES_ACCESS_KEY_ID && process.env.SES_SECRET_ACCESS_KEY) return "ses";
+  if (sesSettings().enabled) return "ses";
   if (process.env.RESEND_API_KEY) return "resend";
   return null;
 }
@@ -68,10 +81,8 @@ export async function sendViaProvider(email: OutgoingEmail): Promise<SendResult>
 // Amazon SES. SES has no idempotency key; the outbox's conditional claim
 // (one row sent by one worker) is what prevents duplicates.
 async function sendViaSes(email: OutgoingEmail): Promise<SendResult> {
-  sesClient ??= new SESv2Client({
-    region: process.env.SES_REGION!,
-    credentials: { accessKeyId: process.env.SES_ACCESS_KEY_ID!, secretAccessKey: process.env.SES_SECRET_ACCESS_KEY! },
-  });
+  const cfg = sesSettings();
+  sesClient ??= new SESv2Client({ region: cfg.region, credentials: { accessKeyId: cfg.accessKeyId, secretAccessKey: cfg.secretAccessKey } });
   try {
     const res = await sesClient.send(
       new SendEmailCommand({
