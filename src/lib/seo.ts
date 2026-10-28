@@ -24,11 +24,15 @@ export function buildMetadata(opts: {
   publishedTime?: Date | null;
   modifiedTime?: Date | null;
   authors?: string[];
+  /** A full title that should not get the site suffix (e.g. Yoast author archives). */
+  absoluteTitle?: string;
   /** Paginated or filtered listing pages beyond the first. */
   noindex?: boolean;
 }): Metadata {
   const { settings, seo = {} } = opts;
-  const title = seo.title || `${opts.title}${settings.seo.titleSuffix}`;
+  // The suffix carries its own " - " separator; add the space if an editor saved it without one.
+  const suffix = settings.seo.titleSuffix && !/^\s/.test(settings.seo.titleSuffix) ? ` ${settings.seo.titleSuffix}` : settings.seo.titleSuffix;
+  const title = seo.title || (opts.absoluteTitle ?? `${opts.title}${suffix}`);
   const description = seo.description || opts.description || settings.seo.defaultDescription;
   const canonical = seo.canonical || absoluteUrl(opts.path);
   const image = opts.image?.url ?? (settings.seo.defaultOgImageUrl || undefined);
@@ -86,7 +90,7 @@ export function breadcrumbNode(path: string, crumbs: Crumb[]) {
   };
 }
 
-export function webPageNode(opts: { path: string; title: string; description?: string; type?: string; image?: ImageInfo | null; datePublished?: Date | null; dateModified?: Date | null; hasBreadcrumb?: boolean }) {
+export function webPageNode(opts: { path: string; title: string; description?: string; type?: string | string[]; image?: ImageInfo | null; datePublished?: Date | null; dateModified?: Date | null; hasBreadcrumb?: boolean }) {
   const url = absoluteUrl(opts.path);
   return {
     "@type": opts.type ?? "WebPage",

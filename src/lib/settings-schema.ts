@@ -48,7 +48,8 @@ export const settingsSchemas = {
   }),
   seo: z.object({
     homeTitle: z.string().trim().max(120),
-    titleSuffix: z.string().trim().max(60),
+    // Not trimmed: the leading " - " separator is part of the suffix.
+    titleSuffix: z.string().max(60),
     defaultDescription: z.string().trim().max(300),
     defaultOgImageUrl: z.string().trim().max(500).default(""),
   }),

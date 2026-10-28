@@ -110,7 +110,7 @@ export function ServiceCard({ service, index }: { service: { slug: string; title
         <span className="grid size-12 place-items-center rounded-xl bg-navy-50 text-navy-700 transition-colors group-hover:bg-navy-900 group-hover:text-gold-300">
           <Icon name={service.icon || "scale"} className="size-6" />
         </span>
-        {index !== undefined && <span className="font-display text-sm text-ink-muted/70">{String(index + 1).padStart(2, "0")}</span>}
+        {index !== undefined && <span className="font-display text-sm text-ink-muted">{String(index + 1).padStart(2, "0")}</span>}
       </div>
       <h3 className="mt-6 font-display text-[1.35rem] leading-snug text-navy-950">
         <Link href={`/service/${service.slug}/`} className="after:absolute after:inset-0">

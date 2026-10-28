@@ -42,7 +42,8 @@ export function parseStatus(
   opts: { canPublish: boolean; existing?: { status: ContentStatus; publishedAt: Date | null } },
 ): { ok: true; status: ContentStatus; publishedAt: Date | null } | { ok: false; error: string } {
   const requested = str(form.status) as ContentStatus;
-  const status: ContentStatus = ["draft", "scheduled", "published"].includes(requested) ? requested : "draft";
+  // A missing or unknown value keeps the current status; it never silently unpublishes.
+  const status: ContentStatus = ["draft", "scheduled", "published"].includes(requested) ? requested : (opts.existing?.status ?? "draft");
   const date = fromLagosInput(str(form.publishedAt));
   if (!opts.canPublish) {
     if (status !== "draft") return { ok: false, error: "Only editors can publish or schedule. Save as a draft and ask an editor to publish it." };

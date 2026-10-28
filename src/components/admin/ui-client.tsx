@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useActionState, useEffect, useId, useRef, type ReactNode } from "react";
+import { createContext, startTransition, useActionState, useContext, useEffect, useId, useRef, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import { Icon } from "@/components/ui/Icon";
 import { IDLE, type ActionState } from "@/lib/admin/types";
@@ -15,8 +15,12 @@ import { btn, cx, type ButtonVariant } from "./ui";
 
 export type FormAction = (prev: ActionState, formData: FormData) => Promise<ActionState>;
 
+/** Pending state of the enclosing ActionForm (which dispatches without a native form action). */
+const PendingContext = createContext(false);
+
 export function SubmitButton({ children, pendingLabel = "Saving…", variant = "primary", small, name, value, confirm }: { children: ReactNode; pendingLabel?: string; variant?: ButtonVariant; small?: boolean; name?: string; value?: string; confirm?: string }) {
-  const { pending } = useFormStatus();
+  const formPending = useFormStatus().pending;
+  const pending = useContext(PendingContext) || formPending;
   return (
     <button
       type="submit"
@@ -46,7 +50,7 @@ export function ActionMessage({ state }: { state: ActionState }) {
 
 /** A form bound to a Server Action, with its result shown above the fields. */
 export function ActionForm({ action, children, className, onSuccess, resetOnSuccess }: { action: FormAction; children: ReactNode; className?: string; onSuccess?: (s: ActionState) => void; resetOnSuccess?: boolean }) {
-  const [state, formAction] = useActionState(action, IDLE);
+  const [state, dispatch, isPending] = useActionState(action, IDLE);
   const ref = useRef<HTMLFormElement>(null);
   const last = useRef(state);
   useEffect(() => {
@@ -58,9 +62,24 @@ export function ActionForm({ action, children, className, onSuccess, resetOnSucc
     }
   }, [state, onSuccess, resetOnSuccess]);
   return (
-    <form ref={ref} action={formAction} className={cx("grid gap-5", className)}>
-      <ActionMessage state={state} />
-      <FieldErrorsContext errors={state.errors}>{children}</FieldErrorsContext>
+    // Submitted through onSubmit rather than <form action>: React resets a form
+    // after a successful action, which puts controlled fields (status selects,
+    // editors) out of sync with what is shown and can save the wrong value.
+    <form
+      ref={ref}
+      noValidate={false}
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (isPending) return;
+        const fd = new FormData(e.currentTarget, (e.nativeEvent as SubmitEvent).submitter);
+        startTransition(() => dispatch(fd));
+      }}
+      className={cx("grid gap-5", className)}
+    >
+      <PendingContext.Provider value={isPending}>
+        <ActionMessage state={state} />
+        <FieldErrorsContext errors={state.errors}>{children}</FieldErrorsContext>
+      </PendingContext.Provider>
     </form>
   );
 }

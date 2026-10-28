@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Archive, archiveMetadata, parsePage } from "@/components/content/Archive";
 import { listPosts } from "@/lib/content/queries";
 
+
 type Props = { params: Promise<{ n: string }> };
 
 export async function generateStaticParams() {

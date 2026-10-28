@@ -15,6 +15,8 @@ const CONCURRENCY = 6;
 
 const decode = (s) =>
   s
+    .replace(/&#x([0-9a-f]+);/gi, (_m, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_m, d) => String.fromCodePoint(Number(d)))
     .replace(/&#0?38;|&amp;/g, "&")
     .replace(/&#8217;|&#039;|&apos;/g, "'")
     .replace(/&#8211;/g, "–")

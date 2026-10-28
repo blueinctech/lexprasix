@@ -1,6 +1,7 @@
 import { Archive, archiveMetadata } from "@/components/content/Archive";
 import { archiveParams } from "@/lib/content/queries";
 
+
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {

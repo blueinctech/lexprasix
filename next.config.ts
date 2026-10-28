@@ -10,7 +10,7 @@ const CSP = [
   "style-src 'self' 'unsafe-inline' https://embed.tawk.to https://*.tawk.to https://fonts.googleapis.com https://cdn.trustindex.io",
   `img-src 'self' data: blob: https:`,
   "font-src 'self' data: https://*.tawk.to https://fonts.gstatic.com https://cdn.trustindex.io",
-  "connect-src 'self' https: wss://*.tawk.to",
+  `connect-src 'self' https: wss://*.tawk.to${process.env.NODE_ENV === "development" ? " ws: http://localhost:*" : ""}`,
   "frame-src https://calendly.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.google.com https://maps.google.com https://*.tawk.to https://td.doubleclick.net https://www.googletagmanager.com",
   "media-src 'self' https:",
   "object-src 'none'",

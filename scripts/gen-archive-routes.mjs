@@ -28,6 +28,7 @@ await w(
 import { Archive, archiveMetadata, parsePage } from "@/components/content/Archive";
 import { listPosts } from "@/lib/content/queries";
 
+
 type Props = { params: Promise<{ n: string }> };
 
 export async function generateStaticParams() {
@@ -55,6 +56,7 @@ for (const kind of ["category", "tag", "author"]) {
     `import { Archive, archiveMetadata } from "@/components/content/Archive";
 import { archiveParams } from "@/lib/content/queries";
 
+
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
@@ -75,6 +77,7 @@ export default async function ${Name}Archive({ params }: Props) {
     `import { notFound } from "next/navigation";
 import { Archive, archiveMetadata, parsePage } from "@/components/content/Archive";
 import { archiveParams } from "@/lib/content/queries";
+
 
 type Props = { params: Promise<{ slug: string; n: string }> };
 

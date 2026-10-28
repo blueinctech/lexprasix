@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { after } from "next/server";
-import { recordRedirectHit } from "@/lib/redirect-hits";
+import { notFound } from "next/navigation";
 import { DocumentView, PageView, PostView } from "@/components/content/views";
-import { getDocument, getPageByPath, getPost, getRedirect, getSettings, resolveRootSlug, rootSlugs } from "@/lib/content/queries";
+import { getDocument, getPageByPath, getPost, getSettings, resolveRootSlug, rootSlugs } from "@/lib/content/queries";
 import { buildMetadata } from "@/lib/seo";
 
 // Everything not matched by a more specific route. Root-level URLs are shared,
-// as on WordPress, by blog posts, legal-document pages and CMS pages. Any other
-// path is checked against the redirects managed in the admin, then 404s.
+// as on WordPress, by blog posts, legal-document pages and CMS pages. Anything
+// else is a 404 (redirects are applied earlier, in src/proxy.ts).
+
 
 type Props = { params: Promise<{ path: string[] }> };
 
@@ -49,12 +48,6 @@ export default async function CatchAllPage({ params }: Props) {
     if (kind === "document") return <DocumentView doc={(await getDocument(slug))!} />;
     if (kind === "page") return <PageView page={(await getPageByPath(slug))!} />;
   }
-  const path = `/${segments.map(decodeURIComponent).join("/")}/`.toLowerCase();
-  const target = await getRedirect(path);
-  if (target) {
-    after(() => recordRedirectHit(path));
-    if (target.statusCode === 302 || target.statusCode === 307) redirect(target.destination);
-    permanentRedirect(target.destination);
-  }
+  // Admin-managed redirects are handled in src/proxy.ts before this route runs.
   notFound();
 }

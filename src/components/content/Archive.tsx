@@ -47,7 +47,9 @@ export async function archiveMetadata(kind: ArchiveKind, slug: string | undefine
   const path = page > 1 ? `${info.base}page/${page}/` : info.base;
   // Yoast titles for archives were "{Name} Archives - Lexpraxis Solicitors".
   const title = kind === "blog" ? info.title : `${info.title.replace(/^#/, "")} Archives`;
-  return buildMetadata({ settings, path, title: page > 1 ? `${title} - Page ${page}` : title, description: info.summary, seo: page > 1 ? {} : info.seo });
+  // Yoast titled author archives "{Name}, Author at {Site}".
+  const absoluteTitle = kind === "author" ? `${info.title}, Author at ${settings.seo.titleSuffix.replace(/^\s*-\s*/, "")}${page > 1 ? ` - Page ${page}` : ""}` : undefined;
+  return buildMetadata({ settings, path, title: page > 1 ? `${title} - Page ${page}` : title, absoluteTitle, description: info.summary, seo: page > 1 ? {} : info.seo });
 }
 
 export async function Archive({ kind, slug, page }: { kind: ArchiveKind; slug?: string; page: number }) {
@@ -66,7 +68,7 @@ export async function Archive({ kind, slug, page }: { kind: ArchiveKind; slug?: 
     <>
       <JsonLd
         data={graph(
-          webPageNode({ path, title: info.title, description: info.summary, type: kind === "author" ? "ProfilePage" : "CollectionPage", hasBreadcrumb: true }),
+          webPageNode({ path, title: info.title, description: info.summary, type: kind === "author" ? "ProfilePage" : ["WebPage", "CollectionPage"], hasBreadcrumb: true }),
           breadcrumbNode(path, crumbs),
           websiteNode(settings),
           organizationNode(settings),

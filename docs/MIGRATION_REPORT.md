@@ -1,6 +1,6 @@
 # Migration report
 
-Generated 2026-10-28T12:55:21.720Z by `npm run migrate:report` from the WordPress export of 2026-10-28T11:32:21.342Z (https://lexpraxisng.com) and the current database.
+Generated 2026-10-28T14:03:28.082Z by `npm run migrate:report` from the WordPress export of 2026-10-28T11:32:21.342Z (https://lexpraxisng.com) and the current database.
 
 ## 1. Record counts
 
@@ -12,7 +12,7 @@ Generated 2026-10-28T12:55:21.720Z by `npm run migrate:report` from the WordPres
 | Tags | 123 | 87 | 36 empty tags skipped (already 404 on the live site) |
 | Authors | 7 | 6 | Only users with published posts become public authors |
 | Comments | 494 | 494 | Read-only archive; commenter emails not imported |
-| Media records | 844 | 844 | Files are copied to storage by the media migration step (see §4) |
+| Media records | 844 | 845 | Files are copied to storage by the media migration step (see §4) |
 | Testimonials | 5 (homepage) | 5 |  |
 | Legacy IDs (?p=) | — | 340 | Every WordPress post/page ID redirects |
 | Redirects | — | 4 | Plus pattern redirects in next.config.ts |
@@ -84,7 +84,7 @@ Generated 2026-10-28T12:55:21.720Z by `npm run migrate:report` from the WordPres
 
 ## 4. Media
 
-- Media library items: 844. Inline images checked in migrated content: 48 (1 hosted on third-party sites, left as-is).
+- Media library items: 845. Inline images checked in migrated content: 48 (1 hosted on third-party sites, left as-is).
 - Image references in content that are **not in the WordPress media library**: 15 (4 distinct files). Of these, 15 already return 404 on the live WordPress site, so nothing was lost in migration.
   - /doing-business-in-the-us-accessing-international-funding-oppurtunities-webinar-invitation/ → `/wp-content/uploads/2022/07/LEX-PRAXIS-E-FLYER-150x150.jpg` (live site: 404)
   - /doing-business-in-the-us-accessing-international-funding-oppurtunities-webinar-invitation/ → `/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-JASON-D.-CRAIN-150x150.jpg` (live site: 404)

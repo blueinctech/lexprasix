@@ -23,5 +23,5 @@ export function slugify(input: string): string {
 /** Root-level slugs the public site reserves for its own routes. */
 export const RESERVED_SLUGS = new Set([
   "admin", "api", "blog", "service", "category", "tag", "author", "feed", "media", "legal-forms", "corporate-filings",
-  "sitemap.xml", "robots.txt", "wp-admin", "wp-content", "wp-login.php", "_next",
+  "sitemap.xml", "robots.txt", "wp-admin", "wp-content", "wp-login.php", "_next", "page-not-found",
 ]);

@@ -15,7 +15,7 @@ export default async function ServicesIndex() {
   const crumbs = [{ name: "Home", path: "/" }, { name: page?.title ?? "Services", path: "/service/" }];
   return (
     <>
-      <JsonLd data={graph(webPageNode({ path: "/service/", title: page?.title ?? "Services", type: "CollectionPage", hasBreadcrumb: true }), breadcrumbNode("/service/", crumbs), websiteNode(settings), organizationNode(settings))} />
+      <JsonLd data={graph(webPageNode({ path: "/service/", title: page?.title ?? "Services", type: ["WebPage", "CollectionPage"], hasBreadcrumb: true }), breadcrumbNode("/service/", crumbs), websiteNode(settings), organizationNode(settings))} />
       <PageHeader crumbs={crumbs} eyebrow="What we do" title={page?.title ?? "Our Services"} summary={page?.summary} />
       <Container className="py-16 sm:py-24">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

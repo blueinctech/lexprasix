@@ -53,9 +53,12 @@ export async function Header() {
             >
               <DesktopNav items={items} />
             </Suspense>
-            <ButtonLink href={cta.headerHref} size="md" className="hidden sm:inline-flex">
-              {cta.headerLabel}
-            </ButtonLink>
+            {/* The wrapper carries the breakpoint; the button's own inline-flex would override "hidden". */}
+            <span className="hidden sm:block">
+              <ButtonLink href={cta.headerHref} size="md">
+                {cta.headerLabel}
+              </ButtonLink>
+            </span>
             <Suspense fallback={<span className="size-11 rounded-full border border-line lg:hidden" aria-hidden="true" />}>
               <MobileNav items={items} cta={{ label: cta.headerLabel, href: cta.headerHref }} phone={phone} />
             </Suspense>

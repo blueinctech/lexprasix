@@ -37,7 +37,7 @@ test("wrong password shows a generic error", async ({ page }) => {
   await page.getByLabel("Email").fill(accounts().editor.email);
   await page.getByLabel("Password").fill("definitely not the password");
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("alert")).toContainText("Incorrect email or password");
+  await expect(page.getByText("Incorrect email or password.")).toBeVisible();
 });
 
 test("administrator can sign in, see enquiries and sign out", async ({ page }) => {

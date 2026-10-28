@@ -24,7 +24,7 @@ export async function DocumentIndex({ path }: { path: "legal-forms" | "corporate
   const groups = path === "corporate-filings" ? GROUPS.filter((g) => g.key === "corporate-filings") : GROUPS;
   return (
     <>
-      <JsonLd data={graph(webPageNode({ path: `/${path}/`, title, type: "CollectionPage", description: page?.summary, hasBreadcrumb: true }), breadcrumbNode(`/${path}/`, crumbs), websiteNode(settings), organizationNode(settings))} />
+      <JsonLd data={graph(webPageNode({ path: `/${path}/`, title, type: ["WebPage", "CollectionPage"], description: page?.summary, hasBreadcrumb: true }), breadcrumbNode(`/${path}/`, crumbs), websiteNode(settings), organizationNode(settings))} />
       <PageHeader crumbs={crumbs} eyebrow="Start online" title={title} summary={page?.summary} />
       <Container className="grid gap-16 py-16 sm:py-20">
         {groups.map((g) => (

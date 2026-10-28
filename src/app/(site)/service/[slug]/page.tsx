@@ -4,6 +4,7 @@ import { ServiceView } from "@/components/content/views";
 import { getService, getSettings, listServices } from "@/lib/content/queries";
 import { buildMetadata } from "@/lib/seo";
 
+
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {

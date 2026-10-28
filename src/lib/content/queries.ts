@@ -366,15 +366,6 @@ export async function getImage(id: string | null): Promise<ImageInfo | null> {
   return (await imagesByIds([id])).get(id) ?? null;
 }
 
-/** Redirect configured in the admin for an exact path (normalised with trailing slash). */
-export async function getRedirect(path: string): Promise<{ destination: string; statusCode: number } | null> {
-  "use cache";
-  cacheTag(TAGS.redirects);
-  cacheLife("max");
-  const db = await getDb();
-  const [row] = await db.select({ destination: s.redirects.destination, statusCode: s.redirects.statusCode }).from(s.redirects).where(eq(s.redirects.source, path));
-  return row ?? null;
-}
 
 /** Build-time params for archive routes: every term/author with posts, and its page count. */
 export async function archiveParams(kind: "category" | "tag" | "author"): Promise<{ slug: string; pages: number }[]> {

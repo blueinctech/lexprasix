@@ -381,8 +381,8 @@ export async function PageView({ page }: { page: Page }) {
     <>
       <JsonLd
         data={graph(
-          webPageNode({ path, title: page.seo.title || page.title, description: page.seo.description || page.summary, image: page.featuredImage, hasBreadcrumb: !isHome }),
-          !isHome && breadcrumbNode(path, crumbs),
+          webPageNode({ path, title: page.seo.title || page.title, description: page.seo.description || page.summary, image: page.featuredImage, hasBreadcrumb: true }),
+          breadcrumbNode(path, isHome ? [{ name: "Home", path: "/" }] : crumbs),
           websiteNode(settings),
           organizationNode(settings),
           faqs.length ? faqNode(path, faqs) : null,

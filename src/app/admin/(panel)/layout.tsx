@@ -13,6 +13,9 @@ import { can, ROLE_LABELS, type Permission } from "@/lib/auth/permissions";
 // Signed-in admin chrome. requireUserPage() redirects to the sign-in page when
 // there's no valid session; each page and action checks its own permission.
 
+// Every admin page reads the session at request time; navigations may block.
+export const instant = false;
+
 const NAV: (NavItem & { permission: Permission })[] = [
   { href: "/admin/", label: "Dashboard", icon: "home", permission: "dashboard.view" },
   { href: "/admin/submissions/", label: "Enquiries", icon: "mail", permission: "submissions.view", group: "Clients" },
