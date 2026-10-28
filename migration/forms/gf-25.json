@@ -1,0 +1,520 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 25,
+  "title": "Incorporated Trustees",
+  "description": "",
+  "page": "/incorporated-trustee/",
+  "pageTitle": "Incorporated Trustees",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "12",
+      "type": "section",
+      "label": "ORGANISATION INFORMATION",
+      "required": false
+    },
+    {
+      "id": "7",
+      "type": "textarea",
+      "label": "1. What are the proposed names for the organization?",
+      "required": true,
+      "placeholder": "(The minimum requirement is 3 names)"
+    },
+    {
+      "id": "8",
+      "type": "textarea",
+      "label": "2. Briefly describe the aims and objectives of the organization?",
+      "required": true,
+      "placeholder": "(You are required to provide a minimum of one activity)"
+    },
+    {
+      "id": "10",
+      "type": "text",
+      "label": "3. Address of the organization",
+      "required": true,
+      "placeholder": "(Building number, City, State, Country, Local Government Area)"
+    },
+    {
+      "id": "11",
+      "type": "section",
+      "label": "TRUSTEE INFORMATION",
+      "required": false,
+      "description": "(An organization is required to have a minimum of 2 and maximum of 15 Trustees)"
+    },
+    {
+      "id": "16",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<p>FIRST TRUSTEE</p>"
+    },
+    {
+      "id": "17",
+      "type": "text",
+      "label": "First Name",
+      "required": true
+    },
+    {
+      "id": "19",
+      "type": "text",
+      "label": "Middle Name",
+      "required": false
+    },
+    {
+      "id": "20",
+      "type": "text",
+      "label": "Surname",
+      "required": true
+    },
+    {
+      "id": "22",
+      "type": "date",
+      "label": "D.O.B",
+      "required": true,
+      "placeholder": "mm/dd/yyyy"
+    },
+    {
+      "id": "43",
+      "type": "text",
+      "label": "Nationality",
+      "required": true
+    },
+    {
+      "id": "24",
+      "type": "text",
+      "label": "Occupation",
+      "required": true
+    },
+    {
+      "id": "25",
+      "type": "text",
+      "label": "Gender",
+      "required": false
+    },
+    {
+      "id": "26",
+      "type": "text",
+      "label": "Residential address",
+      "required": true,
+      "placeholder": "(include Street Number and Name)"
+    },
+    {
+      "id": "27",
+      "type": "text",
+      "label": "Country",
+      "required": true
+    },
+    {
+      "id": "28",
+      "type": "text",
+      "label": "State",
+      "required": true
+    },
+    {
+      "id": "29",
+      "type": "text",
+      "label": "City",
+      "required": true
+    },
+    {
+      "id": "30",
+      "type": "text",
+      "label": "LGA",
+      "required": true
+    },
+    {
+      "id": "32",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "33",
+      "type": "phone",
+      "label": "Phone",
+      "required": true
+    },
+    {
+      "id": "34",
+      "type": "text",
+      "label": "Means of Id and No.",
+      "required": true
+    },
+    {
+      "id": "38",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<p>SECOND TRUSTEE</p>"
+    },
+    {
+      "id": "39",
+      "type": "text",
+      "label": "First Name",
+      "required": true
+    },
+    {
+      "id": "40",
+      "type": "text",
+      "label": "Middle Name",
+      "required": false
+    },
+    {
+      "id": "41",
+      "type": "text",
+      "label": "Surname",
+      "required": true
+    },
+    {
+      "id": "42",
+      "type": "date",
+      "label": "D.O.B",
+      "required": true,
+      "placeholder": "mm/dd/yyyy"
+    },
+    {
+      "id": "23",
+      "type": "text",
+      "label": "Nationality",
+      "required": true
+    },
+    {
+      "id": "44",
+      "type": "text",
+      "label": "Occupation",
+      "required": true
+    },
+    {
+      "id": "45",
+      "type": "text",
+      "label": "Gender",
+      "required": false
+    },
+    {
+      "id": "46",
+      "type": "text",
+      "label": "Residential address",
+      "required": true,
+      "placeholder": "(include Street Number and Name)"
+    },
+    {
+      "id": "47",
+      "type": "text",
+      "label": "Country",
+      "required": true
+    },
+    {
+      "id": "48",
+      "type": "text",
+      "label": "State",
+      "required": true
+    },
+    {
+      "id": "49",
+      "type": "text",
+      "label": "City",
+      "required": true
+    },
+    {
+      "id": "50",
+      "type": "text",
+      "label": "LGA",
+      "required": true
+    },
+    {
+      "id": "51",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "52",
+      "type": "phone",
+      "label": "Phone",
+      "required": true
+    },
+    {
+      "id": "53",
+      "type": "text",
+      "label": "Means of Id and No.",
+      "required": true
+    },
+    {
+      "id": "54",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<p>THIRD TRUSTEE</p>"
+    },
+    {
+      "id": "56",
+      "type": "text",
+      "label": "First Name",
+      "required": false
+    },
+    {
+      "id": "57",
+      "type": "text",
+      "label": "Middle Name",
+      "required": false
+    },
+    {
+      "id": "58",
+      "type": "text",
+      "label": "Surname",
+      "required": false
+    },
+    {
+      "id": "59",
+      "type": "date",
+      "label": "D.O.B",
+      "required": false,
+      "placeholder": "mm/dd/yyyy"
+    },
+    {
+      "id": "61",
+      "type": "text",
+      "label": "Nationality",
+      "required": false
+    },
+    {
+      "id": "62",
+      "type": "text",
+      "label": "Occupation",
+      "required": false
+    },
+    {
+      "id": "63",
+      "type": "text",
+      "label": "Gender",
+      "required": false
+    },
+    {
+      "id": "64",
+      "type": "text",
+      "label": "Residential address",
+      "required": false,
+      "placeholder": "(include Street Number and Name)"
+    },
+    {
+      "id": "65",
+      "type": "text",
+      "label": "Country",
+      "required": false
+    },
+    {
+      "id": "66",
+      "type": "text",
+      "label": "State",
+      "required": false
+    },
+    {
+      "id": "67",
+      "type": "text",
+      "label": "City",
+      "required": false
+    },
+    {
+      "id": "68",
+      "type": "text",
+      "label": "LGA",
+      "required": false
+    },
+    {
+      "id": "69",
+      "type": "email",
+      "label": "Email",
+      "required": false
+    },
+    {
+      "id": "70",
+      "type": "phone",
+      "label": "Phone",
+      "required": false
+    },
+    {
+      "id": "71",
+      "type": "text",
+      "label": "Means of Id and No.",
+      "required": false
+    },
+    {
+      "id": "73",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<p>FOURTH TRUSTEE</p>"
+    },
+    {
+      "id": "74",
+      "type": "text",
+      "label": "First Name",
+      "required": false
+    },
+    {
+      "id": "75",
+      "type": "text",
+      "label": "Middle Name",
+      "required": false
+    },
+    {
+      "id": "76",
+      "type": "text",
+      "label": "Surname",
+      "required": false
+    },
+    {
+      "id": "77",
+      "type": "date",
+      "label": "D.O.B",
+      "required": false,
+      "placeholder": "mm/dd/yyyy"
+    },
+    {
+      "id": "78",
+      "type": "text",
+      "label": "Nationality",
+      "required": false
+    },
+    {
+      "id": "79",
+      "type": "text",
+      "label": "Occupation",
+      "required": false
+    },
+    {
+      "id": "80",
+      "type": "text",
+      "label": "Gender",
+      "required": false
+    },
+    {
+      "id": "81",
+      "type": "text",
+      "label": "Residential address",
+      "required": false,
+      "placeholder": "(include Street Number and Name)"
+    },
+    {
+      "id": "82",
+      "type": "text",
+      "label": "Country",
+      "required": false
+    },
+    {
+      "id": "83",
+      "type": "text",
+      "label": "State",
+      "required": false
+    },
+    {
+      "id": "84",
+      "type": "text",
+      "label": "City",
+      "required": false
+    },
+    {
+      "id": "85",
+      "type": "text",
+      "label": "LGA",
+      "required": false
+    },
+    {
+      "id": "86",
+      "type": "email",
+      "label": "Email",
+      "required": false
+    },
+    {
+      "id": "87",
+      "type": "phone",
+      "label": "Phone",
+      "required": false
+    },
+    {
+      "id": "88",
+      "type": "text",
+      "label": "Means of Id and No.",
+      "required": false
+    },
+    {
+      "id": "90",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<p>EXECUTIVE POSITIONS</p>"
+    },
+    {
+      "id": "91",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span>It is mandatory that the members of Board of Trustees must appoint at least a Chairman and a Secretary. \n Please provide the required information below.</span>"
+    },
+    {
+      "id": "92",
+      "type": "text",
+      "label": "Name of Chairman",
+      "required": true
+    },
+    {
+      "id": "94",
+      "type": "text",
+      "label": "Full Names of Secretary",
+      "required": true
+    },
+    {
+      "id": "93",
+      "type": "text",
+      "label": "How many years do you propose the members of the executive council retain these positions?",
+      "required": false
+    },
+    {
+      "id": "95",
+      "type": "text",
+      "label": "Is there any other additional information?",
+      "required": false
+    },
+    {
+      "id": "96",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span style=\"color:#ff3232; font-size: 20px; font-weight: 500\">NOTE</span>\n<p>1. Please submit with this form the accompanying documents to info@lexpraxisng.com or \n cynthia.tishion@gmail.com\na. Scanned copy of Government issued ID cards of all trustees in PDF format (not exceeding 5MB). \nb. Soft copy of passport photographs of all trustees.\nc. E-signatures of all Trustees</p>"
+    },
+    {
+      "id": "99",
+      "type": "fileupload",
+      "label": "Government Issued ID",
+      "required": false,
+      "description": "Max. file size: 5 MB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 5 MB."
+    },
+    {
+      "id": "100",
+      "type": "fileupload",
+      "label": "Passport photograph",
+      "required": false,
+      "description": "Max. file size: 5 MB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 5 MB."
+    },
+    {
+      "id": "103",
+      "type": "text",
+      "label": "Signature",
+      "required": true
+    },
+    {
+      "id": "97",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<b>TERMS OF SERVICE.</b>\nThank you for patronizing us. Please ensure you read these terms before you submit this form. By submitting a completed copy of this form, it is implied that you have read, understood and agreed to our terms of service. \nWhere you are uncertain as to any of the terms, please feel free to get clarification from any member of our team. \nYou may send a mail to info@lexpraxis.ng or call +234 706 544 3425. \n1. By filling this form, you have retained our firm to register your organization as incorporated trustees on your behalf. Where you do not understand what the term “incorporated trustee” stands for, please contact our team for clarification.\n2. Our firm maintains a strict no refund policy on amount paid for our services.\n3. We advise that this form be completed by you and not any of our team members as we will not be liable for any undesired outcome that may arise where you permit our team members to complete the form on your behalf.\n4. Our service is performed strictly based on the information provided by you. We will therefore not be liable for any undesired outcome of our service that may occur based on the information provided by you.\n5. The amount paid covers cost for one attempt at reservation of name and registration and does not cover additional incidents that may occur.\n\n6. Where a name submitted for reservation is rejected by the relevant agency, and you have instructed us to reserve another name, such reservation and any other subsequent reservation will attract an additional amount of N5,500 (five thousand and five hundred naira only) per attempt."
+    }
+  ]
+}

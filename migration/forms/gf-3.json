@@ -1,0 +1,195 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 3,
+  "title": "Power of Attorney",
+  "description": "",
+  "page": "/power-of-attorney/",
+  "pageTitle": "Power of Attorney",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "85",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "86",
+      "type": "text",
+      "label": "Name",
+      "required": true,
+      "description": "User's full name"
+    },
+    {
+      "id": "90",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "89",
+      "type": "number",
+      "label": "Phone Number",
+      "required": true,
+      "description": "Please enter a number from 0 to 11."
+    },
+    {
+      "id": "8",
+      "type": "section",
+      "label": "Section 1/5 : COMMENCEMENT",
+      "required": false
+    },
+    {
+      "id": "70",
+      "type": "date",
+      "label": "Please state the date of commencement of this agreement.",
+      "required": false,
+      "placeholder": "mm/dd/yyyy"
+    },
+    {
+      "id": "58",
+      "type": "section",
+      "label": "Section 2/5 : APPOINTMENT",
+      "required": false
+    },
+    {
+      "id": "26",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\"><b>DONOR</b></span>"
+    },
+    {
+      "id": "60",
+      "type": "text",
+      "label": "Full Name:",
+      "required": true,
+      "placeholder": "Enter the name of donor"
+    },
+    {
+      "id": "61",
+      "type": "text",
+      "label": "Address:",
+      "required": true,
+      "placeholder": "Enter the address of donor"
+    },
+    {
+      "id": "62",
+      "type": "text",
+      "label": "Occupation:",
+      "required": true,
+      "placeholder": "Enter the occupation of donor"
+    },
+    {
+      "id": "59",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\"><b>DONEE</b></span>"
+    },
+    {
+      "id": "63",
+      "type": "text",
+      "label": "Full Name:",
+      "required": true,
+      "placeholder": "Enter the name of donee"
+    },
+    {
+      "id": "64",
+      "type": "text",
+      "label": "Address:",
+      "required": true,
+      "placeholder": "Enter the address of donee"
+    },
+    {
+      "id": "65",
+      "type": "text",
+      "label": "Occupation:",
+      "required": true,
+      "placeholder": "Enter the occupation of donee"
+    },
+    {
+      "id": "7",
+      "type": "section",
+      "label": "Section 3/5 : DELEGATED POWERS.",
+      "required": false
+    },
+    {
+      "id": "66",
+      "type": "textarea",
+      "label": "Please list below the powers sought to be conferred on the donee.",
+      "required": false
+    },
+    {
+      "id": "11",
+      "type": "section",
+      "label": "Section 4/5 : IRREVOCABILITY",
+      "required": false
+    },
+    {
+      "id": "67",
+      "type": "radio",
+      "label": "Do you wish to revoke this attorney in the future?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "73",
+      "type": "section",
+      "label": "Section 5/5 : EXECUTION AND ATTESTATION",
+      "required": false
+    },
+    {
+      "id": "72",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<hr>\n<h5 style=\"text-align: center;\">WITNESS DETAILS</h5>"
+    },
+    {
+      "id": "80",
+      "type": "text",
+      "label": "Name",
+      "required": false
+    },
+    {
+      "id": "81",
+      "type": "text",
+      "label": "Occupation",
+      "required": false
+    },
+    {
+      "id": "82",
+      "type": "text",
+      "label": "Address",
+      "required": false
+    },
+    {
+      "id": "69",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\"><h6 style=\"text-align: center;\">(NB; It is required that a Power of Attorney be attested to by a Judge, Magistrate or Notary Public. See S.150 Evidence Act)</h6></span>"
+    },
+    {
+      "id": "75",
+      "type": "checkbox",
+      "label": "Yes I Understand.",
+      "required": true,
+      "choices": [
+        "*"
+      ]
+    },
+    {
+      "id": "84",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3><center>Please Preview Before Submission</center></h3>\n<br>\n\n{all_fields}"
+    }
+  ]
+}

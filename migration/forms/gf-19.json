@@ -1,0 +1,104 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 19,
+  "title": "Company Stamp",
+  "description": "",
+  "page": "/company-stamp/",
+  "pageTitle": "Company Stamp",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "211",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "212",
+      "type": "text",
+      "label": "User Name",
+      "required": true,
+      "description": "Full name"
+    },
+    {
+      "id": "216",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "217",
+      "type": "phone",
+      "label": "Phone Number",
+      "required": true
+    },
+    {
+      "id": "197",
+      "type": "section",
+      "label": "Section 1/1",
+      "required": false
+    },
+    {
+      "id": "199",
+      "type": "radio",
+      "label": "1. Please Pick one of the following",
+      "required": false,
+      "choices": [
+        "i. I have an existing entity.",
+        "ii. I am currently registering my entity with the Corporate Affairs Commission."
+      ]
+    },
+    {
+      "id": "200",
+      "type": "text",
+      "label": "2. Name of entity.",
+      "required": false
+    },
+    {
+      "id": "201",
+      "type": "text",
+      "label": "3. Choice of Stamp.",
+      "required": false
+    },
+    {
+      "id": "203",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\"><b>Accompanying documents.</b></span>"
+    },
+    {
+      "id": "204",
+      "type": "text",
+      "label": "i. Registered company name (in full).",
+      "required": false
+    },
+    {
+      "id": "205",
+      "type": "phone",
+      "label": "ii. Company Registration number.",
+      "required": false
+    },
+    {
+      "id": "207",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "Preview Submissions\n\n{all_fields}"
+    },
+    {
+      "id": "208",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<H3>Preview your submissions</H3>\n<br>\n{all_fields}"
+    },
+    {
+      "id": "210",
+      "type": "section",
+      "label": "Section Break",
+      "required": false
+    }
+  ]
+}

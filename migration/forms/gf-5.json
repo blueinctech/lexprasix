@@ -1,0 +1,255 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 5,
+  "title": "Notice of Rent Increase",
+  "description": "",
+  "page": "/notice-of-rent-increase/",
+  "pageTitle": "Notice of Rent Increase",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "65",
+      "type": "section",
+      "label": "USER INFORMATION",
+      "required": false
+    },
+    {
+      "id": "68",
+      "type": "text",
+      "label": "Name",
+      "required": true,
+      "description": "Full name of user"
+    },
+    {
+      "id": "71",
+      "type": "email",
+      "label": "Email",
+      "required": true,
+      "description": "User's email"
+    },
+    {
+      "id": "70",
+      "type": "number",
+      "label": "Phone Number",
+      "required": true,
+      "description": "Users Phone Number"
+    },
+    {
+      "id": "53",
+      "type": "section",
+      "label": "Section 1/5: Nature of Agreement.",
+      "required": false
+    },
+    {
+      "id": "30",
+      "type": "checkbox",
+      "label": "1. The tenancy is a.",
+      "required": true,
+      "choices": [
+        "Monthly tenancy",
+        "Yearly tenancy",
+        "Weekly tenancy",
+        "Other"
+      ]
+    },
+    {
+      "id": "32",
+      "type": "number",
+      "label": "2. State the current rent amount.",
+      "required": true
+    },
+    {
+      "id": "33",
+      "type": "number",
+      "label": "3. Provide the new rent amount.",
+      "required": true
+    },
+    {
+      "id": "60",
+      "type": "text",
+      "label": "4. How is rent paid?",
+      "required": true,
+      "description": "For example: Annually, Monthly etc"
+    },
+    {
+      "id": "35",
+      "type": "section",
+      "label": "Section 2/5: Particulars of Tenant",
+      "required": false
+    },
+    {
+      "id": "36",
+      "type": "name",
+      "label": "5. Name of tenant.",
+      "required": true,
+      "inputs": [
+        "First",
+        "Middle",
+        "Last"
+      ]
+    },
+    {
+      "id": "37",
+      "type": "section",
+      "label": "Section 3/5: Address of property on rent.",
+      "required": false
+    },
+    {
+      "id": "47",
+      "type": "text",
+      "label": "6. Property address",
+      "required": true,
+      "placeholder": "Enter property address here"
+    },
+    {
+      "id": "48",
+      "type": "text",
+      "label": "Property name",
+      "required": false,
+      "placeholder": "Enter property name here"
+    },
+    {
+      "id": "49",
+      "type": "select",
+      "label": "State",
+      "required": true,
+      "choices": [
+        "Abia",
+        "Adamawa",
+        "Akwa Ibom",
+        "Anambra",
+        "Bauchi",
+        "Bayelsa",
+        "Benue",
+        "Borno",
+        "Cross River",
+        "Delta",
+        "Ebonyi",
+        "Edo",
+        "Ekiti",
+        "Enugu",
+        "FCT - Abuja",
+        "Gombe",
+        "Imo",
+        "Jigawa",
+        "Kaduna",
+        "Kano",
+        "Katsina",
+        "Kebbi",
+        "Kogi",
+        "Kwara",
+        "Lagos",
+        "Nasarawa",
+        "Niger",
+        "Ogun",
+        "Ondo",
+        "Osun",
+        "Oyo",
+        "Plateau",
+        "Rivers",
+        "Sokoto",
+        "Taraba",
+        "Yobe",
+        "Zamfara"
+      ]
+    },
+    {
+      "id": "51",
+      "type": "text",
+      "label": "Local govt",
+      "required": true,
+      "placeholder": "Enter local govt here"
+    },
+    {
+      "id": "39",
+      "type": "section",
+      "label": "Section 4/5: Particulars of Landlord",
+      "required": false
+    },
+    {
+      "id": "52",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\"><b>7. Name of landlord</b></span>"
+    },
+    {
+      "id": "44",
+      "type": "text",
+      "label": "First name",
+      "required": false
+    },
+    {
+      "id": "46",
+      "type": "text",
+      "label": "Middle name",
+      "required": true
+    },
+    {
+      "id": "45",
+      "type": "text",
+      "label": "Last name",
+      "required": true
+    },
+    {
+      "id": "41",
+      "type": "address",
+      "label": "8. Address of Landlord.",
+      "required": true,
+      "inputs": [
+        "Street Address"
+      ],
+      "placeholder": "Enter address here"
+    },
+    {
+      "id": "42",
+      "type": "section",
+      "label": "Section 5/5: Commencement",
+      "required": false
+    },
+    {
+      "id": "43",
+      "type": "textarea",
+      "label": "9. When will the rent increase take effect?",
+      "required": true
+    },
+    {
+      "id": "59",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3><center>Preview your submissions</center></h3>\n<br>\n{all_fields}"
+    },
+    {
+      "id": "61",
+      "type": "section",
+      "label": "Section Break",
+      "required": false
+    },
+    {
+      "id": "62",
+      "type": "section",
+      "label": "Section Break",
+      "required": false
+    },
+    {
+      "id": "63",
+      "type": "section",
+      "label": "Section Break",
+      "required": false
+    },
+    {
+      "id": "64",
+      "type": "section",
+      "label": "Section Break",
+      "required": false
+    },
+    {
+      "id": "66",
+      "type": "text",
+      "label": "Untitled",
+      "required": false
+    }
+  ]
+}

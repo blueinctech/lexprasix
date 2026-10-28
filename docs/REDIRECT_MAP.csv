@@ -1,0 +1,25 @@
+old_url,new_url,status,reason,verified
+https://lexpraxisng.com/home-full-width/,https://lexpraxisng.com/,301,2017 theme demo page with raw shortcodes,no
+https://lexpraxisng.com/practice-areas/,https://lexpraxisng.com/service/,301,2016 page with raw shortcodes; services replace practice areas,no
+https://lexpraxisng.com/?ensaf_header=header-1,https://lexpraxisng.com/,301,Theme header template exposed in sitemap,no
+https://lexpraxisng.com/?ensaf_header=header-2,https://lexpraxisng.com/,301,Theme header template exposed in sitemap,no
+https://lexpraxisng.com/?ensaf_header=header-3,https://lexpraxisng.com/,301,Theme header template exposed in sitemap,no
+https://lexpraxisng.com/?ensaf_footerbuild=footer-1,https://lexpraxisng.com/,301,Theme footer template exposed in sitemap,no
+https://lexpraxisng.com/?ensaf_footerbuild=global-footer,https://lexpraxisng.com/,301,Theme footer template exposed in sitemap,no
+https://lexpraxisng.com/author/blueinchost/,https://lexpraxisng.com/blog/,301,Admin account with no posts,no
+https://lexpraxisng.com/YYYY/MM/DD/ (pattern),https://lexpraxisng.com/blog/,301,Date archives are thin and not in the sitemap,no
+https://lexpraxisng.com/?p={id} (pattern),permalink of WordPress ID,301,Legacy short links; mapping table built from the export,no
+https://lexpraxisng.com/?page_id={id} (pattern),permalink of WordPress ID,301,Legacy short links,no
+https://lexpraxisng.com/sitemap_index.xml,https://lexpraxisng.com/sitemap.xml,301,Yoast sitemap index,no
+https://lexpraxisng.com/{type}-sitemap.xml (pattern),https://lexpraxisng.com/sitemap.xml,301,Yoast sub-sitemaps,no
+https://lexpraxisng.com/wp-sitemap.xml,https://lexpraxisng.com/sitemap.xml,301,Core WP sitemap,no
+https://lexpraxisng.com/category/{slug}/feed/ (pattern),https://lexpraxisng.com/feed/,301,Per-category RSS,no
+https://lexpraxisng.com/wp-admin/ (pattern),https://lexpraxisng.com/admin/login/,302,Staff bookmarks,no
+https://lexpraxisng.com/wp-login.php,https://lexpraxisng.com/admin/login/,302,Staff bookmarks,no
+https://lexpraxisng.com/wp-content/uploads/{path} (pattern),{MEDIA_BASE_URL}/{path},301,Media moved to object storage with identical paths,no
+https://lexpraxisng.com/{UPPERCASE PATH} (pattern),lowercase equivalent,301,Normalise duplicate URLs,no
+https://lexpraxisng.com/cart/,TBD (shop decision),301,WooCommerce,no
+https://lexpraxisng.com/checkout/,TBD (shop decision),301,WooCommerce,no
+https://lexpraxisng.com/my-account-2/,TBD (shop decision),301,WooCommerce,no
+https://lexpraxisng.com/product-category/books/,TBD (shop decision),301,WooCommerce archive,no
+https://lexpraxisng.com/product-tag/essential-tax-guide/,TBD (shop decision),301,WooCommerce archive,no

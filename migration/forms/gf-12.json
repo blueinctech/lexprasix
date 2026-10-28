@@ -1,0 +1,144 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 12,
+  "title": "Hire Purchase Agreement",
+  "description": "",
+  "page": "/hire-purchase-agreement/",
+  "pageTitle": "Hire Purchase Agreement",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "30",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "31",
+      "type": "text",
+      "label": "Name",
+      "required": true,
+      "description": "User's Name"
+    },
+    {
+      "id": "34",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "33",
+      "type": "number",
+      "label": "Phone number",
+      "required": true,
+      "description": "Please enter a number from 0 to 11."
+    },
+    {
+      "id": "8",
+      "type": "section",
+      "label": "Section 1: Parties",
+      "required": false
+    },
+    {
+      "id": "29",
+      "type": "text",
+      "label": "Untitled",
+      "required": false
+    },
+    {
+      "id": "22",
+      "type": "name",
+      "label": "i. Full names of person giving out property on hire.",
+      "required": true,
+      "inputs": [
+        "First",
+        "Middle",
+        "Surname"
+      ]
+    },
+    {
+      "id": "14",
+      "type": "radio",
+      "label": "ii. The party is;",
+      "required": true,
+      "choices": [
+        "An individual.",
+        "A company."
+      ]
+    },
+    {
+      "id": "12",
+      "type": "text",
+      "label": "iii. Address of party.",
+      "required": true
+    },
+    {
+      "id": "23",
+      "type": "name",
+      "label": "iv. Full names of Hirer",
+      "required": true,
+      "inputs": [
+        "First",
+        "Middle",
+        "Surname"
+      ]
+    },
+    {
+      "id": "11",
+      "type": "radio",
+      "label": "v. The hirer is;",
+      "required": true,
+      "choices": [
+        "An individual.",
+        "A company."
+      ]
+    },
+    {
+      "id": "15",
+      "type": "radio",
+      "label": "vi. Do you intend to include a guarantor in this agreement?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "24",
+      "type": "name",
+      "label": "vii. If yes, State the full names of the guarantor.",
+      "required": true,
+      "inputs": [
+        "First",
+        "Middle",
+        "Surname"
+      ]
+    },
+    {
+      "id": "17",
+      "type": "text",
+      "label": "viii. Address of the guarantor.",
+      "required": true
+    },
+    {
+      "id": "19",
+      "type": "textarea",
+      "label": "i. State name and full description of property to be hired.",
+      "required": true
+    },
+    {
+      "id": "7",
+      "type": "section",
+      "label": "Section 2: Property to be hired",
+      "required": false
+    },
+    {
+      "id": "28",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3>Preview your submission</h3>\n<br>\n\n{all_fields}"
+    }
+  ]
+}

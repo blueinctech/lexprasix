@@ -1,0 +1,291 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 6,
+  "title": "Loan Agreement",
+  "description": "",
+  "page": "/loan-agreement/",
+  "pageTitle": "Loan Agreement",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "108",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "109",
+      "type": "text",
+      "label": "Name",
+      "required": false,
+      "description": "User's full name"
+    },
+    {
+      "id": "112",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "111",
+      "type": "number",
+      "label": "Phone Number",
+      "required": true,
+      "description": "Please enter a number from 0 to 11."
+    },
+    {
+      "id": "8",
+      "type": "section",
+      "label": "Section 1/11: PARTIES LENDER",
+      "required": false
+    },
+    {
+      "id": "58",
+      "type": "radio",
+      "label": "i. Is the lender an:",
+      "required": true,
+      "choices": [
+        "Individual",
+        "Company"
+      ]
+    },
+    {
+      "id": "59",
+      "type": "text",
+      "label": "ii. Name of Lender",
+      "required": true,
+      "placeholder": "Enter name of Lender"
+    },
+    {
+      "id": "60",
+      "type": "text",
+      "label": "iii. Address of Lender (Registered address if a registered company)",
+      "required": true,
+      "placeholder": "Enter address of Lender"
+    },
+    {
+      "id": "61",
+      "type": "text",
+      "label": "iv. Occupation ( Nature of business if a company)",
+      "required": true,
+      "placeholder": "Enter Occupation of lender"
+    },
+    {
+      "id": "62",
+      "type": "section",
+      "label": "Section 2/11: BORROWER",
+      "required": false
+    },
+    {
+      "id": "63",
+      "type": "radio",
+      "label": "i. Is the Borrower an:",
+      "required": true,
+      "choices": [
+        "Individual",
+        "Company"
+      ]
+    },
+    {
+      "id": "64",
+      "type": "text",
+      "label": "ii. Name of Borrower",
+      "required": true,
+      "placeholder": "Enter name of Borrower"
+    },
+    {
+      "id": "65",
+      "type": "text",
+      "label": "iii. Address of Borrower (Registered address if a registered company)",
+      "required": true,
+      "placeholder": "Enter address of Borrower"
+    },
+    {
+      "id": "66",
+      "type": "text",
+      "label": "iv. Occupation Borrower ( Nature of business if a company)",
+      "required": true,
+      "placeholder": "Enter Occupation of Borrower"
+    },
+    {
+      "id": "67",
+      "type": "section",
+      "label": "Section 3/11: FACILITY",
+      "required": false
+    },
+    {
+      "id": "68",
+      "type": "text",
+      "label": "Amount given as loan. (In words )",
+      "required": true,
+      "placeholder": "Amount in words"
+    },
+    {
+      "id": "69",
+      "type": "number",
+      "label": "Amount given as loan.( in figures)",
+      "required": true,
+      "placeholder": "Amount in figures"
+    },
+    {
+      "id": "70",
+      "type": "section",
+      "label": "Section 4/11: PURPOSE",
+      "required": false
+    },
+    {
+      "id": "74",
+      "type": "text",
+      "label": "The loan is for;",
+      "required": true
+    },
+    {
+      "id": "72",
+      "type": "radio",
+      "label": "The loan is for;",
+      "required": true,
+      "choices": [
+        "Personal use",
+        "Business finance"
+      ]
+    },
+    {
+      "id": "95",
+      "type": "text",
+      "label": "State the uses here",
+      "required": true
+    },
+    {
+      "id": "73",
+      "type": "section",
+      "label": "Section 5/11: TENOR/ DURATION",
+      "required": false
+    },
+    {
+      "id": "75",
+      "type": "text",
+      "label": "i. How long is the loan facility expected to last?",
+      "required": true
+    },
+    {
+      "id": "77",
+      "type": "radio",
+      "label": "ii. Is there provision for a roll over? (i.e extension of the duration of the agreement)",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "78",
+      "type": "text",
+      "label": "iii. how long?",
+      "required": false
+    },
+    {
+      "id": "79",
+      "type": "section",
+      "label": "Section 6/11: SECURITY",
+      "required": false
+    },
+    {
+      "id": "80",
+      "type": "textarea",
+      "label": "Please state the collateral to be issued as security for the loan (if any).",
+      "required": false
+    },
+    {
+      "id": "81",
+      "type": "section",
+      "label": "Section 7/11: COVENANTS AND CONDITIONS",
+      "required": false
+    },
+    {
+      "id": "82",
+      "type": "textarea",
+      "label": "Please state in detail, the conditions which the borrower must fulfill before, during and after the duration of this agreement.",
+      "required": true
+    },
+    {
+      "id": "83",
+      "type": "section",
+      "label": "Section 8/11: PRICING AND INTERESTS",
+      "required": false
+    },
+    {
+      "id": "84",
+      "type": "radio",
+      "label": "Will the refund be paid with interest?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "85",
+      "type": "section",
+      "label": "Section 9/11: DEFAULT",
+      "required": false
+    },
+    {
+      "id": "86",
+      "type": "textarea",
+      "label": "Please list in detail, events under which the obligation of the lender to provide money under the agreement will be terminated automatically.",
+      "required": true
+    },
+    {
+      "id": "87",
+      "type": "section",
+      "label": "Section 10/11: GOVERNING LAW",
+      "required": false
+    },
+    {
+      "id": "88",
+      "type": "text",
+      "label": "Please state the law which you prefer to govern the transaction",
+      "required": false
+    },
+    {
+      "id": "89",
+      "type": "section",
+      "label": "Section 11/11: SIGNATURES, EXECUTION AND WITNESSES",
+      "required": false
+    },
+    {
+      "id": "90",
+      "type": "text",
+      "label": "i. Please state the full name of person signing on behalf of the Lender",
+      "required": false,
+      "placeholder": "Full name"
+    },
+    {
+      "id": "92",
+      "type": "text",
+      "label": "ii. Designation of the person signing on behalf of the lender",
+      "required": false
+    },
+    {
+      "id": "93",
+      "type": "text",
+      "label": "iii. State the full names of the person signing as borrower",
+      "required": false,
+      "placeholder": "Enter the full name of the borrower"
+    },
+    {
+      "id": "94",
+      "type": "text",
+      "label": "iv. How many witnesses do you intend to provide for the borrower and the lender",
+      "required": false
+    },
+    {
+      "id": "107",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3><center>Preview your submissions</center></h3>\n<br>\n{all_fields}"
+    }
+  ]
+}

@@ -1,0 +1,422 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 13,
+  "title": "Deed of Assignment",
+  "description": "",
+  "page": "/deed-of-assignment/",
+  "pageTitle": "Deed of Assignment",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "84",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "85",
+      "type": "text",
+      "label": "Name",
+      "required": true,
+      "description": "User's full name"
+    },
+    {
+      "id": "88",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "89",
+      "type": "phone",
+      "label": "Phone Number",
+      "required": true
+    },
+    {
+      "id": "17",
+      "type": "section",
+      "label": "Section 1/5 : PARTIES",
+      "required": false
+    },
+    {
+      "id": "18",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">A.\tAssignor (person giving out property for sale)</span>"
+    },
+    {
+      "id": "19",
+      "type": "text",
+      "label": "i. Name (s) of Assignor",
+      "required": true,
+      "placeholder": "Enter the name of assignor"
+    },
+    {
+      "id": "20",
+      "type": "text",
+      "label": "ii. Permanent address",
+      "required": true,
+      "placeholder": "Enter the permanent address of assignor"
+    },
+    {
+      "id": "21",
+      "type": "text",
+      "label": "iii. Occupation",
+      "required": true,
+      "placeholder": "Enter the occupation of assignor"
+    },
+    {
+      "id": "22",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">B.\t  Assignee (person who buys property)</span>"
+    },
+    {
+      "id": "23",
+      "type": "text",
+      "label": "i. Name of Assignee",
+      "required": true,
+      "placeholder": "Enter the name of assignee"
+    },
+    {
+      "id": "24",
+      "type": "text",
+      "label": "ii. Permanent address",
+      "required": true,
+      "placeholder": "Enter the permanent address of assignee"
+    },
+    {
+      "id": "25",
+      "type": "text",
+      "label": "iii. Occupation",
+      "required": true,
+      "placeholder": "Enter the occupation of assignee"
+    },
+    {
+      "id": "44",
+      "type": "section",
+      "label": "Section 2/5 : PROPERTY",
+      "required": false
+    },
+    {
+      "id": "27",
+      "type": "text",
+      "label": "i. Name of property (if any)",
+      "required": false
+    },
+    {
+      "id": "28",
+      "type": "text",
+      "label": "ii. Address of property",
+      "required": false
+    },
+    {
+      "id": "30",
+      "type": "radio",
+      "label": "iii. Is the property registered with a certificate of occupancy?",
+      "required": false,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "31",
+      "type": "text",
+      "label": "iii (a). Please state the registration number.",
+      "required": false
+    },
+    {
+      "id": "33",
+      "type": "textarea",
+      "label": "If No, please state briefly how the property came to be that of the Assignor.",
+      "required": false
+    },
+    {
+      "id": "34",
+      "type": "radio",
+      "label": "vi. Is the land/property surveyed?",
+      "required": false,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "35",
+      "type": "text",
+      "label": "vii. (a) If Yes, please state the survey number",
+      "required": false
+    },
+    {
+      "id": "36",
+      "type": "textarea",
+      "label": "viii. If No, please provide a brief description of the boundary neighbors",
+      "required": false
+    },
+    {
+      "id": "38",
+      "type": "text",
+      "label": "a. On the right bounded by",
+      "required": false
+    },
+    {
+      "id": "39",
+      "type": "text",
+      "label": "b. On the left bounded by",
+      "required": false
+    },
+    {
+      "id": "40",
+      "type": "text",
+      "label": "c. At the front bounded by",
+      "required": false
+    },
+    {
+      "id": "41",
+      "type": "text",
+      "label": "d. At the back bounded by",
+      "required": false
+    },
+    {
+      "id": "42",
+      "type": "section",
+      "label": "Section 3/5 : CONSIDERATION",
+      "required": false
+    },
+    {
+      "id": "43",
+      "type": "text",
+      "label": "How much is to be paid for the property?",
+      "required": false,
+      "placeholder": "How much is to be paid for the property"
+    },
+    {
+      "id": "45",
+      "type": "section",
+      "label": "Section 4/5 : COVENANTS",
+      "required": false
+    },
+    {
+      "id": "46",
+      "type": "radio",
+      "label": "i. Are there any additional clauses the Assignor feels should be included as terms to the agreement?",
+      "required": false,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "47",
+      "type": "textarea",
+      "label": "If yes, please state them below",
+      "required": false
+    },
+    {
+      "id": "49",
+      "type": "radio",
+      "label": "ii. Are there additional clauses the Assignee feels should be included as terms to the agreement?",
+      "required": false,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "50",
+      "type": "textarea",
+      "label": "If yes, please state them below",
+      "required": false
+    },
+    {
+      "id": "51",
+      "type": "section",
+      "label": "Section 5/5: WITNESSES",
+      "required": false
+    },
+    {
+      "id": "53",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Please provide details of witnesses for both parties in the format below;</span>"
+    },
+    {
+      "id": "57",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Assignor;</span>"
+    },
+    {
+      "id": "72",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Withness 1</span>"
+    },
+    {
+      "id": "61",
+      "type": "text",
+      "label": "Name:",
+      "required": true,
+      "placeholder": "Enter witness name"
+    },
+    {
+      "id": "62",
+      "type": "text",
+      "label": "Address",
+      "required": true,
+      "placeholder": "Enter witness address"
+    },
+    {
+      "id": "63",
+      "type": "text",
+      "label": "Occupation",
+      "required": true,
+      "placeholder": "Enter occupation"
+    },
+    {
+      "id": "64",
+      "type": "fileupload",
+      "label": "Upload Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "77",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Withness 2</span>"
+    },
+    {
+      "id": "73",
+      "type": "text",
+      "label": "Name:",
+      "required": true,
+      "placeholder": "Enter witness name"
+    },
+    {
+      "id": "74",
+      "type": "text",
+      "label": "Address",
+      "required": true,
+      "placeholder": "Enter witness address"
+    },
+    {
+      "id": "75",
+      "type": "text",
+      "label": "Occupation",
+      "required": true,
+      "placeholder": "Enter occupation"
+    },
+    {
+      "id": "76",
+      "type": "fileupload",
+      "label": "Upload Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "60",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Assignee</span>"
+    },
+    {
+      "id": "66",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Withness 1</span>"
+    },
+    {
+      "id": "68",
+      "type": "text",
+      "label": "Name:",
+      "required": true,
+      "placeholder": "Enter witness name"
+    },
+    {
+      "id": "69",
+      "type": "text",
+      "label": "Address",
+      "required": true,
+      "placeholder": "Enter witness address"
+    },
+    {
+      "id": "70",
+      "type": "text",
+      "label": "Occupation",
+      "required": true,
+      "placeholder": "Enter occupation"
+    },
+    {
+      "id": "71",
+      "type": "fileupload",
+      "label": "Upload Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "67",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Withness 2</span>"
+    },
+    {
+      "id": "54",
+      "type": "text",
+      "label": "Name:",
+      "required": true,
+      "placeholder": "Enter witness name"
+    },
+    {
+      "id": "55",
+      "type": "text",
+      "label": "Address",
+      "required": true,
+      "placeholder": "Enter witness address"
+    },
+    {
+      "id": "56",
+      "type": "text",
+      "label": "Occupation",
+      "required": true,
+      "placeholder": "Enter occupation"
+    },
+    {
+      "id": "59",
+      "type": "fileupload",
+      "label": "Upload Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "83",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3>Preview your submissions</h3>\n<br>\n{all_fields}"
+    }
+  ]
+}

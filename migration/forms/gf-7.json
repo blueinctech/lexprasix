@@ -1,0 +1,91 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 7,
+  "title": "Company Seal",
+  "description": "",
+  "page": "/company-seal/",
+  "pageTitle": "Company Seal",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "31",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "32",
+      "type": "text",
+      "label": "User Name",
+      "required": true
+    },
+    {
+      "id": "38",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "36",
+      "type": "phone",
+      "label": "Phone",
+      "required": true
+    },
+    {
+      "id": "11",
+      "type": "section",
+      "label": "A. Company Information",
+      "required": false
+    },
+    {
+      "id": "23",
+      "type": "radio",
+      "label": "1. Please choose one of the following;",
+      "required": false,
+      "choices": [
+        "i. I have an existing company.",
+        "ii. I’m currently incorporating my company with the Corporate Affairs Commission."
+      ]
+    },
+    {
+      "id": "22",
+      "type": "text",
+      "label": "2. What is the name of your company?",
+      "required": true
+    },
+    {
+      "id": "26",
+      "type": "section",
+      "label": "B. Accompanying documents.",
+      "required": false
+    },
+    {
+      "id": "24",
+      "type": "text",
+      "label": "3. Registered company name (in full)",
+      "required": false
+    },
+    {
+      "id": "25",
+      "type": "text",
+      "label": "4. Company registration number.",
+      "required": true,
+      "description": "*Accompanying documents.",
+      "placeholder": "Enter your company registration number, RC or BN"
+    },
+    {
+      "id": "30",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3><center>Preview your submissions</center></h3>\n<br>\n{all_fields}"
+    },
+    {
+      "id": "37",
+      "type": "email",
+      "label": "Email",
+      "required": false
+    }
+  ]
+}

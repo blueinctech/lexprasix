@@ -1,0 +1,413 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 17,
+  "title": "Lease Agreement",
+  "description": "",
+  "page": "/lease-agreement/",
+  "pageTitle": "Lease Agreement",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "95",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "96",
+      "type": "text",
+      "label": "Name",
+      "required": true,
+      "description": "User's full name"
+    },
+    {
+      "id": "100",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "99",
+      "type": "number",
+      "label": "Phone Number",
+      "required": true,
+      "description": "Please enter a number from 0 to 11."
+    },
+    {
+      "id": "25",
+      "type": "section",
+      "label": "Section 1 : PARTIES",
+      "required": false
+    },
+    {
+      "id": "26",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">LESSOR (person giving out property as lease)</span>"
+    },
+    {
+      "id": "31",
+      "type": "text",
+      "label": "Name",
+      "required": true
+    },
+    {
+      "id": "28",
+      "type": "text",
+      "label": "Occupation",
+      "required": true
+    },
+    {
+      "id": "29",
+      "type": "text",
+      "label": "Address",
+      "required": true
+    },
+    {
+      "id": "30",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">LESSEE( person to whom the property is given out)</span>"
+    },
+    {
+      "id": "27",
+      "type": "text",
+      "label": "Name",
+      "required": true
+    },
+    {
+      "id": "32",
+      "type": "text",
+      "label": "Occupation",
+      "required": true
+    },
+    {
+      "id": "33",
+      "type": "text",
+      "label": "Address",
+      "required": true
+    },
+    {
+      "id": "35",
+      "type": "section",
+      "label": "Section 2 : COMMENCEMENT",
+      "required": false
+    },
+    {
+      "id": "37",
+      "type": "date",
+      "label": "Please state the date of commencing this agreement.",
+      "required": true,
+      "placeholder": "dd/mm/yyyy"
+    },
+    {
+      "id": "38",
+      "type": "section",
+      "label": "Section 3 : DESCRIPTION OF PROPERTY",
+      "required": false
+    },
+    {
+      "id": "39",
+      "type": "text",
+      "label": "a. Name of the property (If any).",
+      "required": true
+    },
+    {
+      "id": "40",
+      "type": "textarea",
+      "label": "b. Detailed description of demised property.",
+      "required": true
+    },
+    {
+      "id": "41",
+      "type": "select",
+      "label": "c. Is it part or all of the property leased.",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "42",
+      "type": "section",
+      "label": "Section 4 : PURPOSE OF LEASE.",
+      "required": false
+    },
+    {
+      "id": "43",
+      "type": "text",
+      "label": "Please state the purpose of the leased property. (eg for residential purposes)",
+      "required": true
+    },
+    {
+      "id": "46",
+      "type": "section",
+      "label": "Section 5 : DURATION.",
+      "required": false
+    },
+    {
+      "id": "45",
+      "type": "text",
+      "label": "How long is the lease supposed to last?",
+      "required": true,
+      "description": "NB: (A lease ought to operate for not less than 3 (three) years)."
+    },
+    {
+      "id": "47",
+      "type": "section",
+      "label": "Section 6 : RENT.",
+      "required": false
+    },
+    {
+      "id": "49",
+      "type": "text",
+      "label": "a. Please state the amount to be paid as rent.",
+      "required": true
+    },
+    {
+      "id": "51",
+      "type": "select",
+      "label": "b. Is the amount to be paid in advance or arrears?",
+      "required": true,
+      "choices": [
+        "Please Select",
+        "Advance",
+        "Arrears"
+      ]
+    },
+    {
+      "id": "52",
+      "type": "section",
+      "label": "Section 7 : INSURANCE",
+      "required": false,
+      "description": "If any"
+    },
+    {
+      "id": "53",
+      "type": "text",
+      "label": "a. Who is responsible for insuring the property?",
+      "required": false
+    },
+    {
+      "id": "55",
+      "type": "select",
+      "label": "b. Are there any duties or liabilities to be considered in respect of the insurance policy?",
+      "required": false,
+      "choices": [
+        "Please Select",
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "56",
+      "type": "section",
+      "label": "Section 8 : RENT REVIEW",
+      "required": false,
+      "description": "Optional"
+    },
+    {
+      "id": "57",
+      "type": "text",
+      "label": "Do you intend to increase or decrease rent in the future?",
+      "required": false
+    },
+    {
+      "id": "58",
+      "type": "section",
+      "label": "Section 9 : RENEWAL OF LEASE",
+      "required": false,
+      "description": "Optional"
+    },
+    {
+      "id": "59",
+      "type": "radio",
+      "label": "a. Is there an option for lessee to renew lease?",
+      "required": false,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "60",
+      "type": "text",
+      "label": "b. How many days, months or weeks will the lessee provide a notice to renew lease?",
+      "required": false
+    },
+    {
+      "id": "61",
+      "type": "section",
+      "label": "Section 10 : WITNESS",
+      "required": false
+    },
+    {
+      "id": "62",
+      "type": "radio",
+      "label": "How many witnesses do you intend to attest the lease?",
+      "required": true,
+      "choices": [
+        "1",
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "63",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Please provide the details of the witnesses in the format below</span>"
+    },
+    {
+      "id": "73",
+      "type": "text",
+      "label": "Name",
+      "required": false
+    },
+    {
+      "id": "74",
+      "type": "text",
+      "label": "Occupation",
+      "required": false
+    },
+    {
+      "id": "75",
+      "type": "text",
+      "label": "Address",
+      "required": false
+    },
+    {
+      "id": "76",
+      "type": "fileupload",
+      "label": "Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "89",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Second witness</span>"
+    },
+    {
+      "id": "77",
+      "type": "text",
+      "label": "Name",
+      "required": false
+    },
+    {
+      "id": "78",
+      "type": "text",
+      "label": "Occupation",
+      "required": false
+    },
+    {
+      "id": "79",
+      "type": "text",
+      "label": "Address",
+      "required": false
+    },
+    {
+      "id": "80",
+      "type": "fileupload",
+      "label": "Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "91",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Second witness</span>"
+    },
+    {
+      "id": "81",
+      "type": "text",
+      "label": "Name",
+      "required": false
+    },
+    {
+      "id": "82",
+      "type": "text",
+      "label": "Occupation",
+      "required": false
+    },
+    {
+      "id": "83",
+      "type": "text",
+      "label": "Address",
+      "required": false
+    },
+    {
+      "id": "84",
+      "type": "fileupload",
+      "label": "Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "92",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<span class=\"hml\">Third witness</span>"
+    },
+    {
+      "id": "85",
+      "type": "text",
+      "label": "Name",
+      "required": false
+    },
+    {
+      "id": "86",
+      "type": "text",
+      "label": "Occupation",
+      "required": false
+    },
+    {
+      "id": "87",
+      "type": "text",
+      "label": "Address",
+      "required": false
+    },
+    {
+      "id": "88",
+      "type": "fileupload",
+      "label": "Signature",
+      "required": false,
+      "description": "Max. file size: 6 GB.",
+      "accept": "",
+      "multiple": false,
+      "rules": "Max. file size: 6 GB."
+    },
+    {
+      "id": "94",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3><center>Please Preview Before Submission</center></h3>\n\n{all_fields}"
+    },
+    {
+      "id": "97",
+      "type": "text",
+      "label": "Untitled",
+      "required": false
+    }
+  ]
+}

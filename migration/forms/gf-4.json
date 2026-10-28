@@ -1,0 +1,243 @@
+{
+  "engine": "gravityforms",
+  "wpFormId": 4,
+  "title": "Partnership Agreement",
+  "description": "",
+  "page": "/partnership-agreement/",
+  "pageTitle": "Partnership Agreement",
+  "multiPage": true,
+  "submitLabel": "Previous",
+  "fields": [
+    {
+      "id": "66",
+      "type": "section",
+      "label": "QUESTIONNAIRE FORM FOR PARTNERSHIP AGREEMENT.",
+      "required": false
+    },
+    {
+      "id": "94",
+      "type": "section",
+      "label": "User Information",
+      "required": false
+    },
+    {
+      "id": "95",
+      "type": "text",
+      "label": "Name",
+      "required": true,
+      "description": "User's Full Name"
+    },
+    {
+      "id": "98",
+      "type": "email",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "id": "97",
+      "type": "number",
+      "label": "Phone Number",
+      "required": true,
+      "description": "Please enter a number from 0 to 11."
+    },
+    {
+      "id": "87",
+      "type": "name",
+      "label": "1. State your full names",
+      "required": false,
+      "inputs": [
+        "First",
+        "Middle",
+        "Surname"
+      ]
+    },
+    {
+      "id": "59",
+      "type": "text",
+      "label": "2. State your address (Permanent address is preferable).",
+      "required": true
+    },
+    {
+      "id": "61",
+      "type": "text",
+      "label": "3. What is the name of your proposed partner(s)?",
+      "required": true,
+      "placeholder": "(Full names please)."
+    },
+    {
+      "id": "60",
+      "type": "text",
+      "label": "4. State the permanent address of your proposed partner.",
+      "required": true
+    },
+    {
+      "id": "63",
+      "type": "text",
+      "label": "5. What is the name of the business?",
+      "required": true
+    },
+    {
+      "id": "68",
+      "type": "text",
+      "label": "6. What is the address of the business?",
+      "required": true
+    },
+    {
+      "id": "67",
+      "type": "textarea",
+      "label": "7. Describe briefly the nature of the business.",
+      "required": true
+    },
+    {
+      "id": "70",
+      "type": "radio",
+      "label": "8. Is the business registered at the Corporate Affairs Commission?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "71",
+      "type": "text",
+      "label": "If not, by what means is it registered?.",
+      "required": false
+    },
+    {
+      "id": "72",
+      "type": "text",
+      "label": "9. Do you have a limited time frame for the Partnership to last?",
+      "required": true
+    },
+    {
+      "id": "73",
+      "type": "text",
+      "label": "10. How much or what percentage do you intend to contribute to the capital of the business?",
+      "required": true,
+      "placeholder": "(state in words and figures)."
+    },
+    {
+      "id": "74",
+      "type": "text",
+      "label": "11. How much or what percentage of the capital is your partner willing to contribute to the business capital?",
+      "required": true,
+      "placeholder": "(state in words and figures)"
+    },
+    {
+      "id": "75",
+      "type": "text",
+      "label": "12. How much or what percentage of the net income of the business are you willing to have?",
+      "required": true
+    },
+    {
+      "id": "76",
+      "type": "text",
+      "label": "13. How much or what percentage of the net income of the business is your proposed partner entitled to?",
+      "required": true
+    },
+    {
+      "id": "77",
+      "type": "text",
+      "label": "14. What percentage or amount of net loss and liability is your proposed partner entitled to?",
+      "required": true
+    },
+    {
+      "id": "78",
+      "type": "text",
+      "label": "15. What duration would you prefer to be your accounting year?",
+      "required": true,
+      "placeholder": "(ie one calendar year or six months)"
+    },
+    {
+      "id": "79",
+      "type": "radio",
+      "label": "16. Do you have an existing partnership account?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "80",
+      "type": "text",
+      "label": "17. What is the name of the bank in charge of the partnership account?",
+      "required": true
+    },
+    {
+      "id": "81",
+      "type": "text",
+      "label": "18. What is the signature mandate for accessing funds from the Partnership account?",
+      "required": true
+    },
+    {
+      "id": "82",
+      "type": "text",
+      "label": "19. Will your proposed partner be equally involved in the daily running and decision making of the business?",
+      "required": true
+    },
+    {
+      "id": "83",
+      "type": "radio",
+      "label": "20. Do you intend to include subsequent partners into the business in the future?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "84",
+      "type": "text",
+      "label": "21. Who decides who will include a subsequent partner in the future?",
+      "required": true
+    },
+    {
+      "id": "85",
+      "type": "radio",
+      "label": "22. Do you have any preference as to how you wish to resolve a dispute with your proposed partner should any arise?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "92",
+      "type": "text",
+      "label": "If any please state below",
+      "required": false
+    },
+    {
+      "id": "86",
+      "type": "radio",
+      "label": "23. Do you have any additional information?",
+      "required": true,
+      "choices": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "88",
+      "type": "text",
+      "label": "If any please state below",
+      "required": true,
+      "placeholder": "Enter the information you wish to provide here."
+    },
+    {
+      "id": "91",
+      "type": "html",
+      "label": "",
+      "required": false,
+      "html": "<h3>Preview your submission</h3>\n<br>\n\n{all_fields}"
+    },
+    {
+      "id": "93",
+      "type": "section",
+      "label": "Section Break",
+      "required": false
+    }
+  ]
+}

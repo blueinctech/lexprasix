@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/*
+ * LexPraxis design tokens. Brand colours come from the existing site
+ * (navy #20336D, gold #AE844E) with a deeper ink and warm paper neutrals.
+ * Gold on white fails contrast for body text, so text-on-light uses gold-700.
+ */
+@theme {
+  --color-navy-950: #0b1630;
+  --color-navy-900: #112347;
+  --color-navy-800: #182c5c;
+  --color-navy-700: #20336d;
+  --color-navy-600: #2f4687;
+  --color-navy-100: #e6eaf4;
+  --color-navy-50: #f3f5fa;
+
+  --color-gold-700: #7f5d31;
+  --color-gold-600: #96703f;
+  --color-gold-500: #ae844e;
+  --color-gold-300: #d6bb91;
+  --color-gold-100: #f4ebdd;
+
+  --color-ink: #141a26;
+  --color-ink-muted: #4a5366;
+  --color-line: #e3e0d8;
+  --color-paper: #fbfaf7;
+  --color-paper-warm: #f5f1e9;
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 0.875rem;
+}
+
+@layer base {
+  html {
+    color: var(--color-ink);
+    background: var(--color-paper);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
