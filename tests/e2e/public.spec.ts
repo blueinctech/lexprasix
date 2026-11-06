@@ -102,7 +102,7 @@ test("contact form submits and confirms with a reference", async ({ page }) => {
   await page.getByLabel("Email address").first().fill("e2e.client@example.com");
   await page.getByLabel("Phone number").fill("+234 803 000 0000");
   await page.getByLabel("Your message").fill("Automated end-to-end test. Please ignore.");
-  await page.getByRole("button", { name: "Send message" }).click();
+  await page.getByRole("button", { name: "Send Now" }).click();
   await expect(page.getByRole("status")).toContainText("Request received");
   await expect(page.getByRole("status")).toContainText(/LP-[A-Z0-9]{6}/);
 });

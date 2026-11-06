@@ -13,6 +13,7 @@ import * as s from "../src/db/schema";
 import type { AnyBlock } from "../src/lib/blocks";
 import { DEFAULT_SETTINGS } from "../src/lib/settings-schema";
 import { plainText, readingMinutes, sanitizeRichHtml } from "../src/lib/sanitize";
+import { liveMenus, livePageBlocks, SERVICE_ICON_SRC, TESTIMONIAL_PHOTO } from "./live-design";
 
 config({ path: process.env.ENV_FILE || ".env.local", quiet: true });
 config({ quiet: true });
@@ -251,21 +252,6 @@ const SERVICE_SHORT: Record<string, string> = {
   "formation-of-non-profit-organizations-charities": "Non-Profits & Charities",
   "data-protection-officer-dpo-services-in-nigeria": "Data Protection Officer (DPO)",
 };
-const SERVICE_ICON: Record<string, string> = {
-  "legal-service-subscription": "subscription",
-  "company-formation-and-restructuring": "building",
-  "access-to-foreign-markets": "globe",
-  "tax-registration-filing-and-compliance": "receipt",
-  "intellectual-property-registration": "badge",
-  "obtaining-business-licenses-and-permits": "license",
-  "contract-review-drafting-and-negotiation": "contract",
-  "vc-and-equity-funding-advisory": "growth",
-  "investor-due-diligence": "search",
-  "formation-of-non-profit-organizations-charities": "hands",
-  "real-estate-transactions": "home",
-  "data-protection-and-compliance": "shield",
-  "data-protection-officer-dpo-services-in-nigeria": "user-shield",
-};
 
 /** Content of an Elementor service page up to the repeated "All Services" sidebar. */
 function serviceBody(html: string): string {
@@ -298,7 +284,7 @@ const serviceRows = servicePages.map((p) => {
     shortTitle: SERVICE_SHORT[slug] ?? title,
     summary,
     body,
-    icon: SERVICE_ICON[slug] ?? "",
+    icon: SERVICE_ICON_SRC[slug] ?? "",
     ctaLabel: "Book a free consultation",
     ctaHref: "/book-appointment/",
     sortOrder: SERVICE_ORDER.indexOf(slug) + 1 || 99,
@@ -370,7 +356,7 @@ const TESTIMONIALS = [
 ];
 const existingTestimonials = await db.select({ name: s.testimonials.name }).from(s.testimonials);
 const haveT = new Set(existingTestimonials.map((t) => t.name));
-const newT = TESTIMONIALS.filter((t) => !haveT.has(t.name)).map((t) => ({ ...t, role: "Client", source: "website", sortOrder: TESTIMONIALS.indexOf(t) + 1, status: "published" as const }));
+const newT = TESTIMONIALS.filter((t) => !haveT.has(t.name)).map((t) => ({ ...t, photoSrc: TESTIMONIAL_PHOTO[t.name] ?? "", role: "Client", source: "website", sortOrder: TESTIMONIALS.indexOf(t) + 1, status: "published" as const }));
 if (newT.length) await db.insert(s.testimonials).values(newT);
 report.imported.testimonials = TESTIMONIALS.length;
 
@@ -386,80 +372,19 @@ function seoOf(id: number) {
   return p ? yoastSeo(p) : {};
 }
 
+const LIVE_BLOCKS = livePageBlocks(bid);
+
 const PAGES: { wpId: number; path: string; title: string; template: string; summary?: string; blocks: AnyBlock[] }[] = [
+  { wpId: 42, path: "", title: "LexPraxis Solicitors", template: "home", blocks: LIVE_BLOCKS[42] },
   {
-    wpId: 42,
-    path: "",
-    title: "LexPraxis Solicitors",
-    template: "home",
-    blocks: [
-      {
-        id: bid(), type: "hero", eyebrow: "Business law firm in Nigeria",
-        heading: "Start, protect and grow your business with lawyers who understand it.",
-        text: "We help local and foreign entrepreneurs and corporate organisations set up correctly in Nigeria, stay legally protected and compliant, and expand into new markets.",
-        primary: { label: "Book a free consultation", href: "/book-appointment/" },
-        secondary: { label: "Explore our services", href: "/service/" },
-        imageId: null,
-        points: ["Initial corporate setup", "Legal protection & compliance", "Access to foreign markets"],
-      },
-      // Figures from the live homepage, hidden until the firm confirms them (see docs/WEBSITE_AUDIT.md §6).
-      { id: bid(), type: "stats", verified: false, items: [ { value: "250+", label: "Businesses" }, { value: "10+", label: "Countries" }, { value: "180+", label: "Happy clients" }, { value: "20+", label: "Partners" } ] },
-      { id: bid(), type: "services", eyebrow: "What we do", heading: "Legal solutions for corporate success", text: "From incorporation to investor due diligence, we cover the legal work a growing business needs.", limit: 0 },
-      {
-        id: bid(), type: "steps", eyebrow: "How we work", heading: "Get started in three steps",
-        items: [
-          { title: "Book a discovery call", text: "Book a free discovery call to find out what you qualify for." },
-          { title: "Get recommendations", text: "We recommend how we can help, based on your needs." },
-          { title: "Achieve results", text: "We get to work on your matter and see it through to a satisfactory result." },
-        ],
-      },
-      {
-        id: bid(), type: "features", eyebrow: "Why LexPraxis", heading: "Legal-proof your business",
-        text: "Running a business without an experienced legal team is like building a house without a solid foundation. When problems or opportunities arrive, the cost can be fines, reputational damage, disrupted operations or lost licences.",
-        items: [
-          { title: "Focus on what you love", text: "We handle the legal side so you can spend your time on the business itself." },
-          { title: "Expand beyond borders", text: "Company formation and licensing in Nigeria, the US, the UK and Ghana." },
-          { title: "Continuous legal support", text: "A legal service subscription gives you priority access to consultations, contract reviews and compliance guidance." },
-          { title: "Offices in three cities", text: "Lagos, Abuja and Calabar, with clients served remotely across Nigeria and abroad." },
-        ],
-      },
-      { id: bid(), type: "documents", eyebrow: "Legal documents online", heading: "Start a filing or agreement online", text: "Answer a guided questionnaire and our lawyers take it from there.", group: "all" },
-      { id: bid(), type: "reviews", heading: "What our clients say", text: "" },
-      { id: bid(), type: "latestPosts", eyebrow: "Insights", heading: "From our blog", count: 3 },
-      { id: bid(), type: "cta", heading: "Book a free discovery call", text: "Tell us about your business. We'll explain your options and the next step.", primary: { label: "Book a call", href: "/book-appointment/" }, secondary: { label: "Contact us", href: "/contact-us/" } },
-    ],
-  },
-  {
-    wpId: 51,
-    path: "about-us",
-    title: "About Us",
-    template: "default",
+    wpId: 51, path: "about-us", title: "About Us", template: "default",
     summary: "LexPraxis is a business law firm in Nigeria for entrepreneurs and corporate organisations looking to start, grow and expand their businesses with legal protection.",
-    blocks: [
-      {
-        id: bid(), type: "richText", heading: "Expert legal solutions for businesses",
-        html: "<p>We help local and foreign entrepreneurs and businesses who are looking to start, grow or expand their businesses with:</p><ul><li><strong>Initial corporate setup</strong> – we help businesses across all sectors start on the right footing in Nigeria.</li><li><strong>Legal protection and compliance</strong> – beyond starting up, we make sure your business is legally protected in its dealings with investors, customers, regulators and partners.</li><li><strong>Access to foreign markets</strong> – we help businesses meet the legal requirements for entering the international markets where we operate.</li></ul>",
-      },
-      {
-        id: bid(), type: "features", eyebrow: "So that you can", heading: "What we make possible",
-        text: "",
-        items: [
-          { title: "Save time", text: "Focus on what you love in your business." },
-          { title: "Expand with confidence", text: "Grow your business beyond borders." },
-          { title: "Build with fulfilment", text: "Build the business of your dreams on a solid legal foundation." },
-        ],
-      },
-      { id: bid(), type: "reviews", heading: "What our clients say", text: "" },
-      { id: bid(), type: "cta", heading: "Let's talk about your business", text: "Book a free discovery call with our team.", primary: { label: "Book a call", href: "/book-appointment/" }, secondary: { label: "Our services", href: "/service/" } },
-    ],
+    blocks: LIVE_BLOCKS[51],
   },
   {
     wpId: 50, path: "contact-us", title: "Contact", template: "contact",
     summary: "Speak to a business lawyer at LexPraxis Solicitors. Offices in Lagos, Abuja and Calabar.",
-    blocks: [
-      { id: bid(), type: "contactForm", heading: "Send us a message", text: "Tell us briefly what you need. We usually reply within one business day." },
-      { id: bid(), type: "offices", heading: "Our offices", showMap: true },
-    ],
+    blocks: LIVE_BLOCKS[50],
   },
   {
     wpId: 9077, path: "book-appointment", title: "Book Appointment", template: "booking",
@@ -480,8 +405,8 @@ const PAGES: { wpId: number; path: string; title: string; template: string; summ
   },
   // Index routes: their title, intro and SEO are editable here; the listing is generated.
   { wpId: 3987, path: "blog", title: "Blog", template: "index", summary: "Practical guides on Nigerian business law, company registration, tax, intellectual property and compliance.", blocks: [] },
-  { wpId: 53, path: "service", title: "Our Services", template: "index", summary: "Legal services for entrepreneurs, startups and corporate organisations in Nigeria and abroad.", blocks: [] },
-  { wpId: 9083, path: "legal-forms", title: "Legal Documents", template: "index", summary: "Start a corporate filing or request a legal agreement online. Each questionnaire goes straight to our legal team.", blocks: [] },
+  { wpId: 53, path: "service", title: "Service", template: "index", summary: "Legal services for entrepreneurs, startups and corporate organisations in Nigeria and abroad.", blocks: LIVE_BLOCKS[53] },
+  { wpId: 9083, path: "legal-forms", title: "Legal Forms", template: "index", summary: "Start a corporate filing or request a legal agreement online. Each questionnaire goes straight to our legal team.", blocks: [] },
   { wpId: 9079, path: "corporate-filings", title: "Corporate Filings", template: "index", summary: "Company, business name, trademark, copyright and tax filings handled by our lawyers.", blocks: [] },
 ];
 report.source.pages = wpPages.length;
@@ -536,55 +461,7 @@ await db.insert(s.redirects).values(REDIRECTS).onConflictDoNothing();
 
 // ---------------------------------------------------------------- menus (from the live header/footer)
 
-const docMenu = (group: string) =>
-  docRows
-    .filter((d) => d.group === group)
-    .sort((a, b) => a.sortOrder - b.sortOrder)
-    .map((d) => ({ id: `doc-${d.slug}`, label: d.title, href: `/${d.slug}/` }));
-const svcMenu = serviceRows.sort((a, b) => a.sortOrder - b.sortOrder).map((r) => ({ id: `svc-${r.slug}`, label: r.shortTitle, href: `/service/${r.slug}/` }));
-const MENUS: { key: string; label: string; items: s.MenuItem[] }[] = [
-  {
-    key: "header",
-    label: "Header",
-    items: [
-      { id: "services", label: "Services", href: "/service/", children: svcMenu },
-      {
-        id: "documents",
-        label: "Legal Documents",
-        href: "/legal-forms/",
-        children: [
-          { id: "corporate", label: "Corporate filings", href: "/corporate-filings/", children: docMenu("corporate-filings") },
-          { id: "agreements", label: "Agreements", href: "/legal-forms/", children: docMenu("agreements") },
-        ],
-      },
-      { id: "about", label: "About", href: "/about-us/" },
-      { id: "blog", label: "Blog", href: "/blog/" },
-      { id: "contact", label: "Contact", href: "/contact-us/" },
-    ],
-  },
-  { key: "footer-services", label: "Footer: services", items: svcMenu.slice(0, 7) },
-  {
-    key: "footer-company",
-    label: "Footer: firm",
-    items: [
-      { id: "f-about", label: "About us", href: "/about-us/" },
-      { id: "f-services", label: "All services", href: "/service/" },
-      { id: "f-docs", label: "Legal documents", href: "/legal-forms/" },
-      { id: "f-blog", label: "Blog", href: "/blog/" },
-      { id: "f-reviews", label: "Reviews", href: "/review/" },
-      { id: "f-book", label: "Book appointment", href: "/book-appointment/" },
-      { id: "f-contact", label: "Contact", href: "/contact-us/" },
-    ],
-  },
-  {
-    key: "footer-legal",
-    label: "Footer: legal",
-    items: [
-      { id: "l-privacy", label: "Privacy policy", href: "/privacy-policy/" },
-      { id: "l-terms", label: "Terms and conditions", href: "/terms-and-condition/" },
-    ],
-  },
-];
+const MENUS = liveMenus(serviceRows, docRows);
 // Menus are editable: only create them if missing.
 await db.insert(s.menus).values(MENUS).onConflictDoNothing();
 

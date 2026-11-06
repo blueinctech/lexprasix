@@ -402,6 +402,9 @@ export const testimonials = pgTable(
     /** e.g. "Founder, Flourish Her Africa". */
     role: text("role").notNull().default(""),
     quote: text("quote").notNull(),
+    /** Client photo: a media path ("/wp-content/uploads/…" or "/theme/…"); empty shows an initial. */
+    photoSrc: text("photo_src").notNull().default(""),
+    rating: integer("rating").notNull().default(5),
     /** Where it was given: "website", "google", ... */
     source: text("source").notNull().default("website"),
     sourceUrl: text("source_url").notNull().default(""),

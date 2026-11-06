@@ -41,12 +41,12 @@ export function DesktopNav({ items }: { items: MenuItem[] }) {
   };
 
   return (
-    <div ref={ref} className="hidden items-center gap-1 lg:flex">
+    <div ref={ref} className="hidden items-center gap-1 xl:flex">
       {items.map((item) => {
         const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
         if (!item.children?.length) {
           return (
-            <Link key={item.id} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={`rounded-full px-3.5 py-2 text-[0.94rem] transition-colors hover:text-gold-700 ${active ? "text-navy-950 font-medium" : "text-ink/80"}`}>
+            <Link key={item.id} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={`px-3 py-2 text-base font-semibold transition-colors hover:text-gold-500 ${active ? "text-gold-500" : "text-navy-700"}`}>
               {item.label}
             </Link>
           );
@@ -60,7 +60,7 @@ export function DesktopNav({ items }: { items: MenuItem[] }) {
               aria-expanded={isOpen}
               aria-controls={`menu-${item.id}`}
               onClick={() => setOpen(isOpen ? null : item.id)}
-              className={`flex items-center gap-1 rounded-full px-3.5 py-2 text-[0.94rem] transition-colors hover:text-gold-700 ${active || isOpen ? "text-navy-950 font-medium" : "text-ink/80"}`}
+              className={`flex items-center gap-1 px-3 py-2 text-base font-semibold transition-colors hover:text-gold-500 ${active || isOpen ? "text-gold-500" : "text-navy-700"}`}
             >
               {item.label}
               <Icon name="chevron-down" className={`size-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
@@ -70,7 +70,7 @@ export function DesktopNav({ items }: { items: MenuItem[] }) {
               hidden={!isOpen}
               className={`absolute top-full z-40 pt-3 ${mega ? "left-1/2 -translate-x-1/2" : "left-0"}`}
             >
-              <div className={`rounded-2xl border border-line bg-white p-6 shadow-[0_24px_60px_-20px_rgba(11,22,48,.25)] ${mega ? "w-[min(52rem,90vw)]" : "w-[34rem]"}`}>
+              <div className={`rounded-b-xl border-t-2 border-gold-500 bg-white p-6 shadow-[0_18px_40px_-12px_rgba(8,33,78,.25)] ${mega ? "w-[min(52rem,90vw)]" : "w-[34rem]"}`}>
                 {mega ? (
                   <div className="grid grid-cols-2 gap-8">
                     {item.children.map((group) => (
@@ -136,7 +136,7 @@ export function MobileNav({ items, cta, phone }: { items: MenuItem[]; cta: { lab
   }, [open]);
 
   return (
-    <div className="lg:hidden">
+    <div className="xl:hidden">
       <button type="button" onClick={() => setOpen(true)} aria-expanded={open} aria-controls={panelId} className="grid size-11 place-items-center rounded-full border border-line text-navy-900">
         <Icon name="menu" className="size-5" label="Open menu" />
       </button>

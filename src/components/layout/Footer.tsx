@@ -1,105 +1,125 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cacheLife, cacheTag } from "next/cache";
 import { getMenu, getSettings, TAGS } from "@/lib/content/queries";
 import { Icon } from "@/components/ui/Icon";
-import { Logo } from "@/components/ui/Logo";
-import { Container } from "@/components/ui/primitives";
 import { NewsletterForm } from "@/components/forms/NewsletterForm";
 
-const SOCIAL_LABEL: Record<string, string> = { instagram: "Instagram", linkedin: "LinkedIn", youtube: "YouTube", facebook: "Facebook", x: "X" };
+// Matches the WordPress (Ensaf) footer: a navy footer
+// with page and service links, the logo with the firm's motto and social
+// buttons, and the office / phone / email column.
+
+const SOCIAL_ORDER = ["facebook", "instagram", "linkedin", "youtube", "x"] as const;
+const SOCIAL_LABEL: Record<string, string> = { facebook: "Facebook", instagram: "Instagram", linkedin: "LinkedIn", youtube: "YouTube", x: "X" };
+
+/** "Sign Up To Get Latest Update" band; on the live site it sits above the footer on the homepage only. */
+export function NewsletterBand() {
+  return (
+    <section aria-labelledby="newsletter-title" className="grid grid-cols-1 lg:grid-cols-[49%_51%]">
+      <div className="bg-navy-900 px-4 py-14 sm:px-6 lg:py-[5.5rem] lg:pl-[3.75rem]">
+        <p className="font-display text-lg font-semibold text-white">Newsletter</p>
+        <h2 id="newsletter-title" className="mt-2 text-3xl font-semibold text-white sm:text-[2.75rem]">
+          Sign Up To Get Latest Update
+        </h2>
+      </div>
+      <div className="flex min-w-0 items-center bg-[#e4e4e4] px-4 py-10 sm:px-6 lg:px-11">
+        <NewsletterForm variant="band" />
+      </div>
+    </section>
+  );
+}
 
 export async function Footer() {
   "use cache";
   cacheTag(TAGS.settings, TAGS.menus);
   cacheLife("days");
-  const [settings, services, company, legal] = await Promise.all([getSettings(), getMenu("footer-services"), getMenu("footer-company"), getMenu("footer-legal")]);
+  const [settings, services, pages, legal] = await Promise.all([getSettings(), getMenu("footer-services"), getMenu("footer-company"), getMenu("footer-legal")]);
   const { site } = settings;
   const year = new Date().getFullYear();
+  const pageLinks = [...pages, ...legal.filter((l) => !pages.some((p) => p.href === l.href))];
   return (
-    <footer className="relative overflow-hidden bg-navy-950 text-white/75">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-500/50 to-transparent" aria-hidden="true" />
-      <Container className="grid gap-12 py-16 lg:grid-cols-12 lg:py-20">
-        <div className="lg:col-span-4">
-          <Logo inverted />
-          {site.footerNote && <p className="mt-6 max-w-sm font-display text-xl leading-snug text-white/90">“{site.footerNote}”</p>}
-          <div className="mt-8">
-            <p className="text-sm font-medium text-white">Legal updates in your inbox</p>
-            <p className="mt-1 text-sm text-white/60">Occasional guides on Nigerian business law. Unsubscribe anytime.</p>
-            <NewsletterForm />
+    <footer>
+      <div className="bg-navy-950 text-footer-text">
+        <div className="mx-auto grid max-w-[82.5rem] gap-12 px-4 py-14 sm:px-6 md:grid-cols-2 xl:grid-cols-[13rem_26rem_1fr_17rem] xl:gap-0 xl:px-0">
+          <div className="xl:pr-8 xl:pl-5">
+            <h2 className="font-display text-2xl font-medium text-gold-400">Pages</h2>
+            <ul className="mt-6 space-y-4">
+              {pageLinks.map((l) => (
+                <li key={l.id}>
+                  <Link href={l.href} className="hover:text-gold-400">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
-        </div>
-        <FooterColumn title="Services" items={services} className="lg:col-span-3" />
-        <FooterColumn title="The firm" items={company} className="lg:col-span-2" />
-        <div className="lg:col-span-3">
-          <h2 className="text-xs font-semibold tracking-[0.2em] text-gold-300 uppercase">Offices</h2>
-          <ul className="mt-5 space-y-4 text-sm">
-            {site.offices.map((o) => (
-              <li key={o.city}>
-                <p className="font-medium text-white">{o.city}</p>
-                <p className="text-white/65">{o.address}</p>
-              </li>
-            ))}
-          </ul>
-          <ul className="mt-6 space-y-2 text-sm">
-            {site.phones.map((p) => (
-              <li key={p}>
-                <a href={`tel:${p.replace(/\s+/g, "")}`} className="inline-flex items-center gap-2 hover:text-white">
-                  <Icon name="phone" className="size-4 text-gold-300" /> {p}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a href={`mailto:${site.email}`} className="inline-flex items-center gap-2 hover:text-white">
-                <Icon name="mail" className="size-4 text-gold-300" /> {site.email}
-              </a>
-            </li>
-          </ul>
-        </div>
-      </Container>
-      <div className="border-t border-white/10">
-        <Container className="flex flex-col gap-4 py-6 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} {site.legalName || site.name}. All rights reserved.
-          </p>
-          <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            {legal.map((l) => (
-              <li key={l.id}>
-                <Link href={l.href} className="hover:text-white">
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <ul className="flex items-center gap-2">
-            {Object.entries(site.social)
-              .filter(([, url]) => url)
-              .map(([key, url]) => (
-                <li key={key}>
-                  <a href={url} target="_blank" rel="noopener noreferrer" className="grid size-9 place-items-center rounded-full border border-white/15 text-white/70 hover:border-gold-300 hover:text-white">
-                    <Icon name={key} className="size-4" label={`${site.name} on ${SOCIAL_LABEL[key] ?? key}`} />
+          <div className="xl:border-l xl:border-white/15 xl:pr-8">
+            <h2 className="font-display text-2xl font-medium text-gold-400">Our Services</h2>
+            <ul className="mt-6 space-y-4">
+              {services.map((l) => (
+                <li key={l.id}>
+                  <Link href={l.href} className="hover:text-gold-400">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex flex-col items-center justify-between gap-10 text-center xl:border-l xl:border-white/15 xl:px-6 xl:pt-12">
+            <Image src="/theme/roundlogo.png" alt={site.name} width={160} height={169} className="h-auto w-36" />
+            {site.footerNote && <p className="font-quote text-2xl leading-[1.75] text-footer-text">“{site.footerNote}”</p>}
+            <ul className="flex items-center gap-3">
+              {SOCIAL_ORDER.filter((k) => site.social[k]).map((k) => (
+                <li key={k}>
+                  <a href={site.social[k]} target="_blank" rel="noopener noreferrer" className="grid size-10 place-items-center rounded-full bg-gold-400 text-white transition-colors hover:bg-white hover:text-navy-950">
+                    <Icon name={k} className="size-4" label={`${site.name} on ${SOCIAL_LABEL[k]}`} />
                   </a>
                 </li>
               ))}
+            </ul>
+          </div>
+          <ul className="space-y-5 xl:border-l xl:border-white/15 xl:pl-0">
+            {site.offices.map((o) => (
+              <FooterContact key={o.city} icon="map-pin" title={`Location (${o.city})`}>
+                {o.address}
+              </FooterContact>
+            ))}
+            {site.phones.length > 0 && (
+              <FooterContact icon="phone" title="Phone">
+                {site.phones.map((p) => (
+                  <a key={p} href={`tel:${p.replace(/\s+/g, "")}`} className="block hover:text-gold-400">
+                    {p}
+                  </a>
+                ))}
+              </FooterContact>
+            )}
+            <FooterContact icon="mail" title="Email">
+              <a href={`mailto:${site.email}`} className="hover:text-gold-400">
+                {site.email}
+              </a>
+            </FooterContact>
           </ul>
-        </Container>
+        </div>
+        <div className="border-t border-white/20">
+          <p className="py-7 text-center text-white">
+            Copyright © {year} <span className="text-gold-400">{site.name.replace(/\s+/g, " ")}</span>. All Rights Reserved.
+          </p>
+        </div>
       </div>
     </footer>
   );
 }
 
-function FooterColumn({ title, items, className }: { title: string; items: { id: string; label: string; href: string }[]; className?: string }) {
+function FooterContact({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
   return (
-    <div className={className}>
-      <h2 className="text-xs font-semibold tracking-[0.2em] text-gold-300 uppercase">{title}</h2>
-      <ul className="mt-5 space-y-2.5 text-sm">
-        {items.map((i) => (
-          <li key={i.id}>
-            <Link href={i.href} className="hover:text-white">
-              {i.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <li className="flex gap-4">
+      <span className="grid size-14 shrink-0 place-items-center rounded-full bg-white/5 text-gold-400">
+        <Icon name={icon} className="size-5" />
+      </span>
+      <div className="text-[#d9d9d9]">
+        <p className="font-display text-[1.375rem] font-medium text-gold-400">{title}</p>
+        <div className="mt-1">{children}</div>
+      </div>
+    </li>
   );
 }

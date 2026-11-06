@@ -33,7 +33,7 @@ const nextConfig: NextConfig = {
       // Old host, used only until media is migrated to the bucket.
       new URL("https://lexpraxisng.com/wp-content/uploads/**"),
     ],
-    localPatterns: [{ pathname: "/media/**" }, { pathname: "/brand/**" }],
+    localPatterns: [{ pathname: "/media/**" }, { pathname: "/brand/**" }, { pathname: "/theme/**" }],
   },
   experimental: {
     // Uploads go straight to storage; actions carry form answers and long article HTML.

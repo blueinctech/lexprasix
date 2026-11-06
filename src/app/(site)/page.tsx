@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageView } from "@/components/content/views";
+import { NewsletterBand } from "@/components/layout/Footer";
 import { getPageByPath, getSettings } from "@/lib/content/queries";
 import { buildMetadata } from "@/lib/seo";
 
@@ -12,5 +13,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const page = await getPageByPath("");
   if (!page) notFound();
-  return <PageView page={page} />;
+  return (
+    <>
+      <PageView page={page} />
+      <NewsletterBand />
+    </>
+  );
 }

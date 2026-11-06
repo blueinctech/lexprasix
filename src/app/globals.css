@@ -6,38 +6,47 @@
  * Gold on white fails contrast for body text, so text-on-light uses gold-700.
  */
 @theme {
-  --color-navy-950: #0b1630;
-  --color-navy-900: #112347;
+  /* Colours of the WordPress (Ensaf) theme the site is matched to. */
+  --color-navy-950: #08214e; /* footer */
+  --color-navy-900: #13254b; /* newsletter band */
   --color-navy-800: #182c5c;
-  --color-navy-700: #20336d;
-  --color-navy-600: #2f4687;
+  --color-navy-700: #20336d; /* primary navy: top bar, nav, icons */
+  --color-navy-600: #2d5280; /* hero heading */
   --color-navy-100: #e6eaf4;
   --color-navy-50: #f3f5fa;
 
-  --color-gold-700: #7f5d31;
-  --color-gold-600: #96703f;
-  --color-gold-500: #ae844e;
+  /* gold-500 is the live gold (#ae844e) darkened just enough for WCAG AA text
+     contrast on white and the light greys; gold-400 is the exact live gold,
+     used on the dark navy footer where it already passes (and decoration). */
+  --color-gold-700: #6e5331;
+  --color-gold-600: #7d5f38;
+  --color-gold-500: #88673d; /* buttons, sub-titles, accents on light backgrounds */
+  --color-gold-400: #ae844e; /* live gold: on dark navy, decorative lines */
   --color-gold-300: #d6bb91;
   --color-gold-100: #f4ebdd;
 
-  --color-ink: #141a26;
-  --color-ink-muted: #4a5366;
-  --color-line: #e3e0d8;
-  --color-paper: #fbfaf7;
-  --color-paper-warm: #f5f1e9;
+  --color-heading: #230000; /* section headings */
+  --color-ink: #333333; /* body text */
+  --color-ink-muted: #555555;
+  --color-line: #e3e3e3;
+  --color-paper: #ffffff;
+  --color-paper-warm: #f5f5f5; /* light grey sections */
+  --color-band: #efefef; /* page title bands, hero */
+  --color-footer-text: #99a4a3;
 
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--font-lora), ui-serif, Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-quote: var(--font-kotta), Georgia, serif;
 
-  --radius-card: 0.875rem;
+  --radius-card: 1rem;
 }
 
 /* Article and rich-text typography (imported WordPress HTML and editor output). */
 @layer components {
   .prose-lp {
     color: var(--color-ink);
-    font-size: 1.075rem;
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 1.75;
     overflow-wrap: break-word;
   }
   .prose-lp > * + * {
@@ -149,22 +158,23 @@
 @layer base {
   html {
     color: var(--color-ink);
-    background: var(--color-paper);
+    background: #ffffff;
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
   }
   body {
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
-    line-height: 1.65;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--color-ink);
   }
   h1,
   h2,
   h3 {
     font-family: var(--font-display);
     font-weight: 500;
-    letter-spacing: -0.015em;
-    line-height: 1.15;
+    line-height: 1.18;
+    color: var(--color-heading);
     text-wrap: balance;
   }
   :focus-visible {
@@ -180,5 +190,11 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+}
+
+@keyframes lp-marquee {
+  to {
+    transform: translateX(calc(-50% - 2rem));
   }
 }

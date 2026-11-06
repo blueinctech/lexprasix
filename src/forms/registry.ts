@@ -30,7 +30,7 @@ const contact: FormDefinition = {
   id: "contact",
   title: "Contact",
   kind: "contact",
-  submitLabel: "Send message",
+  submitLabel: "Send Now",
   successMessage: "Thank you for getting in touch. A member of our team will reply within one business day.",
   legacy: { engine: "contact-form-7", id: 930 },
   steps: [

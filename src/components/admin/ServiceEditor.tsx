@@ -32,7 +32,13 @@ export type ServiceEditorData = {
   seo: SeoFields;
 };
 
-const ICONS = ["subscription", "building", "globe", "receipt", "badge", "license", "contract", "growth", "search", "hands", "home", "shield", "user-shield", "scale", "file-text"];
+// Theme icons (public/theme) used on the live site, then simple line icons.
+const ICONS = [
+  "/theme/legal.png", "/theme/balance.png", "/theme/roundlogo.png", "/theme/taxes.png", "/theme/registration.png", "/theme/driver-license.png",
+  "/theme/contract-negotiation.png", "/theme/advisor.png", "/theme/process-3-icon-2.svg", "/theme/charity.png", "/theme/agreement.png",
+  "/theme/data-security.png", "/theme/personal-data.png",
+  "subscription", "building", "globe", "receipt", "badge", "license", "contract", "growth", "search", "hands", "home", "shield", "user-shield", "scale", "file-text",
+];
 
 export function ServiceEditor({ service, otherServices, documents, sidebarExtra }: { service: ServiceEditorData; otherServices: { id: string; title: string }[]; documents: { id: string; title: string }[]; sidebarExtra?: ReactNode }) {
   return (
@@ -82,7 +88,12 @@ export function ServiceEditor({ service, otherServices, documents, sidebarExtra 
                     {ICONS.map((icon) => (
                       <label key={icon} className="grid cursor-pointer place-items-center rounded-lg border border-slate-200 p-2 has-checked:border-navy-700 has-checked:bg-navy-50" title={icon}>
                         <input type="radio" name="icon" value={icon} defaultChecked={service.icon === icon} className="sr-only" />
-                        <Icon name={icon} className="size-5 text-navy-700" label={icon} />
+                        {icon.startsWith("/") ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={icon} alt={icon.split("/").pop()} className="size-6 object-contain" />
+                        ) : (
+                          <Icon name={icon} className="size-5 text-navy-700" label={icon} />
+                        )}
                       </label>
                     ))}
                   </div>

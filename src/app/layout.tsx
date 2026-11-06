@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Inter, Kotta_One, Lora } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", axes: ["opsz"] });
+// Same typefaces as the WordPress theme: Lora headings, Inter text, Kotta One for the footer quote.
+const lora = Lora({ subsets: ["latin"], variable: "--font-lora", display: "swap", weight: ["400", "500", "600", "700"] });
+const kotta = Kotta_One({ subsets: ["latin"], variable: "--font-kotta", display: "swap", weight: "400" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lexpraxisng.com";
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-NG" className={`${fraunces.variable} ${inter.variable}`}>
+    <html lang="en-NG" className={`${lora.variable} ${inter.variable} ${kotta.variable}`}>
       <body>{children}</body>
     </html>
   );

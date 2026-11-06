@@ -22,7 +22,7 @@ declare global {
 }
 
 const inputCls =
-  "w-full rounded-xl border border-line bg-white px-4 py-3 text-[0.97rem] text-ink shadow-[0_1px_0_rgba(20,26,38,.03)] transition-colors placeholder:text-ink-muted/60 hover:border-navy-900/30 focus:border-navy-700 focus:outline-none focus:ring-4 focus:ring-navy-700/10 aria-[invalid=true]:border-red-600 aria-[invalid=true]:ring-red-600/10";
+  "w-full rounded-[1.875rem] border border-[#e0e0e0] bg-white px-7 py-[1.05rem] text-base text-ink transition-colors placeholder:text-ink-muted/70 hover:border-navy-700/40 focus:border-gold-500 focus:outline-none focus:ring-4 focus:ring-gold-500/15 aria-[invalid=true]:border-red-600 aria-[invalid=true]:ring-red-600/10";
 
 const noopSubscribe = () => () => {};
 
@@ -227,16 +227,16 @@ export function FormRenderer({ def, compact = false }: { def: FormDefinition; co
         </div>
       )}
       {total > 1 && (
-        <div className="mb-8">
-          <div className="flex items-baseline justify-between gap-4 text-sm">
-            <p className="font-medium text-navy-950">
-              Step {step + 1} of {total}: {current.title}
-            </p>
-            <p className="text-ink-muted">{Math.round(((step + 1) / total) * 100)}%</p>
+        <div className="mb-10">
+          <p className="font-display text-2xl text-[#5e7593]">
+            Step {step + 1} of {total}
+            <span className="sr-only">: {current.title}</span>
+          </p>
+          <div className="relative mt-4 h-9 overflow-hidden rounded-full bg-[#d5d5de]" aria-hidden="true">
+            <div className="h-full rounded-full bg-gold-500 transition-[width] duration-500" style={{ width: `${(step / total) * 100}%` }} />
+            <span className="absolute inset-y-0 left-3 flex items-center text-xs text-ink">{Math.round((step / total) * 100)}%</span>
           </div>
-          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-navy-900/10" aria-hidden="true">
-            <div className="h-full rounded-full bg-gold-500 transition-[width] duration-500" style={{ width: `${((step + 1) / total) * 100}%` }} />
-          </div>
+          <h3 className="mt-12 border-b border-gold-500 pb-1 text-[1.75rem] leading-[1.3] text-[#8b6f2e]">{current.title}</h3>
         </div>
       )}
 
@@ -292,7 +292,7 @@ export function FormRenderer({ def, compact = false }: { def: FormDefinition; co
               <Icon name="arrow-left" className="size-4" /> Back
             </button>
           )}
-          <button type="submit" disabled={pending} className={buttonClass("primary")}>
+          <button type="submit" disabled={pending} className={buttonClass("navy")}>
             {pending ? "Sending…" : isLast ? def.submitLabel : "Continue"}
             {!pending && <Icon name="arrow-right" className="size-4" />}
           </button>
@@ -309,7 +309,7 @@ export function FormRenderer({ def, compact = false }: { def: FormDefinition; co
 
 function Note({ note }: { note: NoteDef }) {
   return note.style === "subheading" ? (
-    <p className="mt-2 border-b border-line pb-2 text-xs font-semibold tracking-[0.16em] text-gold-700 uppercase sm:col-span-2">{note.text}</p>
+    <p className="mt-2 font-semibold text-heading sm:col-span-2">{note.text}</p>
   ) : (
     <p className="text-sm leading-relaxed text-ink-muted sm:col-span-2">{note.text}</p>
   );
@@ -343,7 +343,7 @@ function Field({
   const label = (
     <>
       {field.label}
-      {field.required ? <span className="text-gold-700"> *</span> : <span className="font-normal text-ink-muted"> (optional)</span>}
+      {field.required ? <span className="text-red-600"> *</span> : <span className="font-normal text-ink-muted"> (optional)</span>}
     </>
   );
 
@@ -365,7 +365,7 @@ function Field({
   if (field.type === "radio" || field.type === "checkbox") {
     return (
       <fieldset className={span} aria-describedby={describedBy}>
-        <legend className="mb-2 text-[0.95rem] font-medium text-ink">{label}</legend>
+        <legend className="mb-3 font-semibold text-heading">{label}</legend>
         <div className="grid gap-2 sm:grid-cols-2">
           {field.choices?.map((c, i) => {
             const checked = field.type === "radio" ? str === c : arr.includes(c);
@@ -452,7 +452,7 @@ function Field({
   const autoComplete = field.role === "name" ? "name" : field.role === "email" ? "email" : field.role === "phone" ? "tel" : undefined;
   return (
     <div className={span}>
-      <label htmlFor={id} className="mb-2 block text-[0.95rem] font-medium text-ink">
+      <label htmlFor={id} className="mb-3 block font-semibold text-heading">
         {label}
       </label>
       {field.type === "textarea" ? (

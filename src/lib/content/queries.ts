@@ -155,6 +155,7 @@ export type PostCard = {
   image: ImageInfo | null;
   author: { name: string; slug: string } | null;
   category: { name: string; slug: string } | null;
+  commentCount: number;
 };
 
 type ListFilter = { category?: string; tag?: string; author?: string; q?: string };
@@ -163,7 +164,7 @@ async function cardsFor(rows: { id: string; slug: string; title: string; excerpt
   if (!rows.length) return [];
   const db = await getDb();
   const ids = rows.map((r) => r.id);
-  const [images, authorRows, catRows] = await Promise.all([
+  const [images, authorRows, catRows, commentRows] = await Promise.all([
     imagesByIds(rows.map((r) => r.featuredImageId)),
     db.select({ id: s.authors.id, name: s.authors.name, slug: s.authors.slug }).from(s.authors).where(inArray(s.authors.id, rows.map((r) => r.authorId).filter((x): x is string => Boolean(x)).concat(["00000000-0000-0000-0000-000000000000"]))),
     db
@@ -171,6 +172,7 @@ async function cardsFor(rows: { id: string; slug: string; title: string; excerpt
       .from(s.postCategories)
       .innerJoin(s.categories, eq(s.categories.id, s.postCategories.categoryId))
       .where(and(inArray(s.postCategories.postId, ids), ne(s.categories.slug, "blog"), ne(s.categories.slug, "uncategorized"))),
+    db.select({ postId: s.comments.postId, n: count() }).from(s.comments).where(and(inArray(s.comments.postId, ids), eq(s.comments.status, "approved"))).groupBy(s.comments.postId),
   ]);
   const authorMap = new Map(authorRows.map((a) => [a.id, { name: a.name, slug: a.slug }]));
   const catMap = new Map<string, { name: string; slug: string }>();
@@ -184,6 +186,7 @@ async function cardsFor(rows: { id: string; slug: string; title: string; excerpt
     image: images.get(r.featuredImageId ?? "") ?? null,
     author: r.authorId ? (authorMap.get(r.authorId) ?? null) : null,
     category: catMap.get(r.id) ?? null,
+    commentCount: commentRows.find((c) => c.postId === r.id)?.n ?? 0,
   }));
 }
 
@@ -229,6 +232,33 @@ export async function latestPosts(n: number): Promise<PostCard[]> {
     .orderBy(desc(s.posts.publishedAt))
     .limit(n);
   return cardsFor(rows);
+}
+
+/** Blog sidebar widgets, as on the WordPress theme: recent posts, recent comments and categories. */
+export async function blogSidebar() {
+  "use cache";
+  cacheTag(TAGS.posts, TAGS.taxonomies);
+  cacheLife("max");
+  const db = await getDb();
+  const [recentPosts, recentComments, categories] = await Promise.all([
+    db.select({ slug: s.posts.slug, title: s.posts.title }).from(s.posts).where(published(s.posts)).orderBy(desc(s.posts.publishedAt)).limit(5),
+    db
+      .select({ id: s.comments.id, authorName: s.comments.authorName, postSlug: s.posts.slug, postTitle: s.posts.title })
+      .from(s.comments)
+      .innerJoin(s.posts, eq(s.posts.id, s.comments.postId))
+      .where(and(eq(s.comments.status, "approved"), published(s.posts)))
+      .orderBy(desc(s.comments.createdAt))
+      .limit(5),
+    db
+      .select({ slug: s.categories.slug, name: s.categories.name, n: count() })
+      .from(s.categories)
+      .innerJoin(s.postCategories, eq(s.postCategories.categoryId, s.categories.id))
+      .innerJoin(s.posts, eq(s.posts.id, s.postCategories.postId))
+      .where(and(published(s.posts), ne(s.categories.slug, "uncategorized")))
+      .groupBy(s.categories.slug, s.categories.name)
+      .orderBy(asc(s.categories.name)),
+  ]);
+  return { recentPosts, recentComments, categories };
 }
 
 export async function getPost(slug: string) {
@@ -306,7 +336,7 @@ export async function listTestimonials() {
   cacheLife("max");
   const db = await getDb();
   return db
-    .select({ id: s.testimonials.id, name: s.testimonials.name, role: s.testimonials.role, quote: s.testimonials.quote, source: s.testimonials.source, sourceUrl: s.testimonials.sourceUrl })
+    .select({ id: s.testimonials.id, name: s.testimonials.name, role: s.testimonials.role, quote: s.testimonials.quote, source: s.testimonials.source, sourceUrl: s.testimonials.sourceUrl, photoSrc: s.testimonials.photoSrc, rating: s.testimonials.rating })
     .from(s.testimonials)
     .where(eq(s.testimonials.status, "published"))
     .orderBy(asc(s.testimonials.sortOrder));

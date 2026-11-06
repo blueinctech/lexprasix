@@ -68,15 +68,15 @@ export const DEFAULT_SETTINGS: Settings = {
     whatsapp: "+2349160546551",
     offices: [
       { city: "Lagos", address: "23 Water Corporation Drive, Victoria Island, Lagos", phone: "", mapQuery: "" },
-      { city: "Abuja", address: "22 Kumasi Crescent, Wuse 2, Abuja", phone: "", mapQuery: "" },
       { city: "Calabar", address: "66 Ndidem Usang Iso Road, Calabar", phone: "", mapQuery: "" },
+      { city: "Abuja", address: "22 Kumasi Crescent, Wuse 2, Abuja", phone: "", mapQuery: "" },
     ],
     hours: "",
     social: {
       instagram: "https://www.instagram.com/lex_praxis_businesslawyers/",
       linkedin: "https://www.linkedin.com/company/lex-praxis-business-lawyers/",
       youtube: "https://www.youtube.com/@lex-praxis",
-      facebook: "",
+      facebook: "https://web.facebook.com/people/Lex-Praxis-Business-Lawyers/100063969975647/",
       x: "",
     },
     footerNote: "We handle the legal aspects of your business while you focus on what you love.",

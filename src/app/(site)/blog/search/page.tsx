@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { SearchBox } from "@/components/content/Archive";
-import { PageHeader, PostGrid } from "@/components/content/common";
+import { BlogListCard, BlogSidebar } from "@/components/content/blog";
+import { PageHeader } from "@/components/content/common";
 import { Container } from "@/components/ui/primitives";
 import { listPosts } from "@/lib/content/queries";
 
@@ -12,14 +12,14 @@ type Props = { searchParams: Promise<{ q?: string }> };
 
 async function Results({ searchParams }: Props) {
   const q = ((await searchParams).q ?? "").trim().slice(0, 100);
-  if (!q) return <p className="text-ink-muted">Type a few words to search the blog.</p>;
+  if (!q) return <p className="text-ink">Type a few words in the search box to search the blog.</p>;
   const { items, total } = await listPosts(1, { q });
   return (
     <>
-      <p className="mb-10 text-ink-muted">
+      <p className="text-ink">
         {total} result{total === 1 ? "" : "s"} for “{q}”{total > items.length ? ` (showing the ${items.length} most recent)` : ""}
       </p>
-      {items.length ? <PostGrid posts={items} /> : <p className="text-ink-muted">No articles matched. Try different words or browse the blog.</p>}
+      {items.length ? items.map((p, i) => <BlogListCard key={p.slug} post={p} priority={i === 0} />) : <p className="text-ink">No articles matched. Try different words or browse the blog.</p>}
     </>
   );
 }
@@ -27,13 +27,14 @@ async function Results({ searchParams }: Props) {
 export default function SearchPage(props: Props) {
   return (
     <>
-      <PageHeader crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: "Search", path: "/blog/search/" }]} title="Search articles">
-        <SearchBox />
-      </PageHeader>
-      <Container className="py-16">
-        <Suspense fallback={<p className="text-ink-muted">Searching…</p>}>
-          <Results {...props} />
-        </Suspense>
+      <PageHeader crumbs={[{ name: "Home", path: "/" }, { name: "Blog", path: "/blog/" }, { name: "Search", path: "/blog/search/" }]} title="Search Articles" />
+      <Container className="grid gap-10 py-20 lg:grid-cols-[1fr_26.75rem] lg:py-[7.5rem]">
+        <div className="min-w-0 space-y-10">
+          <Suspense fallback={<p className="text-ink">Searching…</p>}>
+            <Results {...props} />
+          </Suspense>
+        </div>
+        <BlogSidebar />
       </Container>
     </>
   );

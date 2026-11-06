@@ -28,7 +28,9 @@
     "prod:migrate:content": "node scripts/with-env.mjs .env.prod.local tsx scripts/import-content.ts",
     "prod:migrate:media": "node scripts/with-env.mjs .env.prod.local tsx --conditions=react-server scripts/migrate-media.ts",
     "prod:migrate:report": "node scripts/with-env.mjs .env.prod.local tsx scripts/migration-report.ts",
-    "prod:admin:create": "node scripts/with-env.mjs .env.prod.local tsx scripts/create-admin.ts"
+    "prod:admin:create": "node scripts/with-env.mjs .env.prod.local tsx scripts/create-admin.ts",
+    "design:apply": "tsx scripts/apply-live-design.ts",
+    "prod:design:apply": "node scripts/with-env.mjs .env.prod.local tsx scripts/apply-live-design.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1158.0",

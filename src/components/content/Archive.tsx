@@ -5,7 +5,8 @@ import { getAuthor, getPageByPath, getSettings, getTerm, listPosts } from "@/lib
 import { breadcrumbNode, buildMetadata, graph, organizationNode, webPageNode, websiteNode, type Crumb } from "@/lib/seo";
 import { Icon } from "@/components/ui/Icon";
 import { Container } from "@/components/ui/primitives";
-import { JsonLd, PageHeader, Pagination, PostGrid } from "./common";
+import { BlogListCard, BlogSidebar } from "./blog";
+import { JsonLd, PageHeader, Pagination } from "./common";
 
 // Blog index and category / tag / author archives, paginated at /…/page/N/ as on WordPress.
 
@@ -74,15 +75,16 @@ export async function Archive({ kind, slug, page }: { kind: ArchiveKind; slug?: 
           organizationNode(settings),
         )}
       />
-      <PageHeader crumbs={crumbs} eyebrow={info.eyebrow} title={page > 1 ? `${info.title} — page ${page}` : info.title} summary={page > 1 ? undefined : info.summary}>
-        {kind === "blog" && <SearchBox />}
-        <p className="mt-6 text-sm text-ink-muted">
-          {result.total} article{result.total === 1 ? "" : "s"}
-        </p>
-      </PageHeader>
-      <Container className="py-16 sm:py-20">
-        <PostGrid posts={result.items} />
-        <Pagination page={page} pages={result.pages} base={info.base} />
+      {/* The theme titles the blog index "Latest News"; the breadcrumb keeps the page name. */}
+      <PageHeader crumbs={crumbs} title={kind === "blog" ? (page > 1 ? `Latest News — page ${page}` : "Latest News") : page > 1 ? `${info.title} — page ${page}` : info.title} />
+      <Container className="grid gap-10 py-20 lg:grid-cols-[1fr_26.75rem] lg:py-[7.5rem]">
+        <div className="min-w-0 space-y-10">
+          {result.items.map((p, i) => (
+            <BlogListCard key={p.slug} post={p} priority={i === 0} />
+          ))}
+          <Pagination page={page} pages={result.pages} base={info.base} />
+        </div>
+        <BlogSidebar />
       </Container>
     </>
   );

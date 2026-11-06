@@ -8,7 +8,8 @@ const CONSENT = "I agree to receive occasional emails from LexPraxis Solicitors 
 
 // Footer newsletter sign-up. Replaces the old theme form, which had no action
 // and silently discarded every address. Sign-ups are stored for export.
-export function NewsletterForm() {
+export function NewsletterForm({ variant = "dark" }: { variant?: "dark" | "band" }) {
+  const band = variant === "band";
   const id = useId();
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -25,7 +26,7 @@ export function NewsletterForm() {
 
   return (
     <form
-      className="mt-4"
+      className={band ? "w-full" : "mt-4"}
       noValidate
       onSubmit={(e) => {
         e.preventDefault();
@@ -40,12 +41,12 @@ export function NewsletterForm() {
       }}
     >
       {message?.ok ? (
-        <p role="status" className="flex items-center gap-2 text-sm text-gold-300">
+        <p role="status" className={`flex items-center gap-2 ${band ? "text-base text-navy-700" : "text-sm text-gold-300"}`}>
           <Icon name="check" className="size-4" /> {message.text}
         </p>
       ) : (
         <>
-          <div className="flex gap-2">
+          <div className={band ? "flex h-14 items-center rounded-full border border-white/70 bg-[#e4e4e4] p-0.5" : "flex gap-2"}>
             <label htmlFor={`${id}-email`} className="sr-only">
               Email address
             </label>
@@ -56,20 +57,21 @@ export function NewsletterForm() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@company.com"
-              className="h-11 min-w-0 flex-1 rounded-full border border-white/15 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-gold-300 focus:outline-none"
+              placeholder={band ? "Enter your Email" : "you@company.com"}
+              className={band ? "h-full min-w-0 flex-1 rounded-full bg-transparent px-5 text-sm text-heading placeholder:text-ink-muted focus:outline-none" : "h-11 min-w-0 flex-1 rounded-full border border-white/15 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-gold-300 focus:outline-none"}
             />
-            <button type="submit" disabled={pending} className="h-11 shrink-0 rounded-full bg-gold-500 px-5 text-sm font-medium text-navy-950 hover:bg-gold-300 disabled:opacity-60">
+            <button type="submit" disabled={pending} className={band ? "inline-flex h-full shrink-0 items-center gap-2 rounded-full bg-gold-500 px-6 text-sm sm:px-10 font-semibold text-white hover:bg-navy-700 disabled:opacity-60" : "h-11 shrink-0 rounded-full bg-gold-400 px-5 text-sm font-medium text-navy-950 hover:bg-gold-300 disabled:opacity-60"}>
               {pending ? "…" : "Subscribe"}
+              {band && !pending && <Icon name="arrow-right" className="size-4" />}
             </button>
           </div>
           <input className="absolute -left-[9999px]" tabIndex={-1} aria-hidden="true" autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
-          <label className="mt-3 flex items-start gap-2 text-xs text-white/60">
+          <label className={`mt-3 flex items-start gap-2 text-xs ${band ? "text-ink-muted" : "text-white/60"}`}>
             <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5 accent-gold-500" />
             {CONSENT}
           </label>
           {message && (
-            <p role="alert" className="mt-2 text-xs text-red-300">
+            <p role="alert" className={`mt-2 text-xs ${band ? "text-red-700" : "text-red-300"}`}>
               {message.text}
             </p>
           )}
