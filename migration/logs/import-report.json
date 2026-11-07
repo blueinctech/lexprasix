@@ -1,28 +1,28 @@
 {
-  "startedAt": "2026-10-28T12:54:49.215Z",
+  "startedAt": "2026-11-06T21:04:20.809Z",
   "source": {
-    "media": 844,
+    "media": 846,
     "authors": 7,
     "categories": 25,
     "tags": 123,
-    "posts": 286,
+    "posts": 288,
     "comments": 494,
     "services": 13,
     "documents": 23,
     "pages": 54
   },
   "imported": {
-    "media": 844,
+    "media": 846,
     "authors": 6,
     "categories": 18,
     "tags": 87,
-    "posts": 286,
+    "posts": 288,
     "comments": 494,
     "services": 13,
     "documents": 23,
     "testimonials": 5,
     "pages": 12,
-    "legacyIds": 340
+    "legacyIds": 342
   },
   "skipped": [
     {
@@ -357,5 +357,5 @@
     "/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-JASON-D.-CRAIN-150x150.jpg",
     "/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-LINDSEY-S.-MIGNANO-150x150.jpg"
   ],
-  "finishedAt": "2026-10-28T12:54:52.730Z"
+  "finishedAt": "2026-11-06T21:08:54.764Z"
 }

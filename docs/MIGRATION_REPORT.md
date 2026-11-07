@@ -1,20 +1,20 @@
 # Migration report
 
-Generated 2026-10-28T14:03:28.082Z by `npm run migrate:report` from the WordPress export of 2026-10-28T11:32:21.342Z (https://lexpraxisng.com) and the current database.
+Generated 2026-11-06T21:22:30.014Z by `npm run migrate:report` from the WordPress export of 2026-11-06T20:44:23.954Z (https://lexpraxisng.com) and the current database.
 
 ## 1. Record counts
 
 | Type | WordPress | New site | Notes |
 |---|---|---|---|
-| Posts | 286 | 286 | All migrated |
+| Posts | 288 | 288 | All migrated |
 | Pages (all) | 54 | 12 pages + 13 services + 23 legal documents | 6 intentionally not migrated (see §2) |
 | Categories | 25 | 18 | 7 empty categories skipped (already unlisted on the live site) |
 | Tags | 123 | 87 | 36 empty tags skipped (already 404 on the live site) |
 | Authors | 7 | 6 | Only users with published posts become public authors |
 | Comments | 494 | 494 | Read-only archive; commenter emails not imported |
-| Media records | 844 | 845 | Files are copied to storage by the media migration step (see §4) |
+| Media records | 846 | 846 | Files are copied to storage by the media migration step (see §4) |
 | Testimonials | 5 (homepage) | 5 |  |
-| Legacy IDs (?p=) | — | 340 | Every WordPress post/page ID redirects |
+| Legacy IDs (?p=) | — | 342 | Every WordPress post/page ID redirects |
 | Redirects | — | 4 | Plus pattern redirects in next.config.ts |
 | Menus / settings | — | 4 / 4 | Rebuilt from the live header/footer; confirm against WP menus (needs admin) |
 
@@ -84,7 +84,7 @@ Generated 2026-10-28T14:03:28.082Z by `npm run migrate:report` from the WordPres
 
 ## 4. Media
 
-- Media library items: 845. Inline images checked in migrated content: 48 (1 hosted on third-party sites, left as-is).
+- Media library items: 846. Inline images checked in migrated content: 48 (1 hosted on third-party sites, left as-is).
 - Image references in content that are **not in the WordPress media library**: 15 (4 distinct files). Of these, 15 already return 404 on the live WordPress site, so nothing was lost in migration.
   - /doing-business-in-the-us-accessing-international-funding-oppurtunities-webinar-invitation/ → `/wp-content/uploads/2022/07/LEX-PRAXIS-E-FLYER-150x150.jpg` (live site: 404)
   - /doing-business-in-the-us-accessing-international-funding-oppurtunities-webinar-invitation/ → `/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-JASON-D.-CRAIN-150x150.jpg` (live site: 404)
@@ -98,7 +98,7 @@ Generated 2026-10-28T14:03:28.082Z by `npm run migrate:report` from the WordPres
 
 ## 5. Internal links in migrated content
 
-Checked 223 internal links across 311 posts, services and pages. Broken: **6**.
+Checked 225 internal links across 313 posts, services and pages. Broken: **6**.
 
 | Page | Link | Problem |
 |---|---|---|

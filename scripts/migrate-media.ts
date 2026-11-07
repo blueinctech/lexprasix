@@ -40,7 +40,8 @@ const stats = { copied: 0, skipped: 0, failed: 0, missing: 0, bytes: 0 };
 async function fetchWithRetry(url: string, tries = 4): Promise<Response> {
   for (let i = 1; ; i++) {
     try {
-      const res = await fetch(url, { headers: { "User-Agent": "LexPraxisMigration/1.0 (+media copy)" } });
+      // Time out stalled downloads so a dropped connection is retried instead of hanging.
+      const res = await fetch(url, { headers: { "User-Agent": "LexPraxisMigration/1.0 (+media copy)" }, signal: AbortSignal.timeout(60_000) });
       if (res.status === 404 || res.ok) return res;
       throw new Error(`HTTP ${res.status}`);
     } catch (err) {
