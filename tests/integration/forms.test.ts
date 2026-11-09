@@ -30,6 +30,8 @@ const submit = (values: Record<string, unknown>, extra: Partial<SubmitPayload> =
 
 describe("public form submission", () => {
   it("stores a valid enquiry and sends staff + client emails through the outbox", async () => {
+    // Client confirmations are capped per recipient per day; start from a clean slate.
+    await db.delete(s.rateLimits);
     const res = await submit(valid);
     expect(res.status).toBe("success");
     if (res.status !== "success") return;

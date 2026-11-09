@@ -19,7 +19,7 @@ export default async function EditPost({ params, searchParams }: { params: Promi
   if (!post) notFound();
   const editAny = can(user.role, "posts.edit_any");
   // Authors may only open their own articles.
-  if (!editAny && post.authorId !== user.authorId) redirect("/admin/posts/?denied=1");
+  if (!editAny && (!user.authorId || post.authorId !== user.authorId)) redirect("/admin/posts/?denied=1");
   const locked = !editAny && post.status !== "draft";
   return (
     <>

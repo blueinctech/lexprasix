@@ -35,11 +35,11 @@ export async function POST(request: NextRequest) {
       if (!row) return NextResponse.json({ ok: false, error: "File not found." }, { status: 404 });
       if (MEDIA_TYPES[extOf(row.key)]?.mime !== type.mime) return NextResponse.json({ ok: false, error: `The replacement must be the same type (${extOf(row.key)}).` }, { status: 400 });
       const uploadKey = `staging/${randomUUID()}/${safeMediaFilename(filename)}`;
-      return NextResponse.json({ ok: true, key: row.key, uploadKey, contentType: type.mime, ...(await createMediaUploadTarget(uploadKey, type.mime)) });
+      return NextResponse.json({ ok: true, key: row.key, uploadKey, contentType: type.mime, ...(await createMediaUploadTarget(uploadKey, type.mime, size)) });
     }
 
     const key = await uniqueMediaKey(filename);
-    return NextResponse.json({ ok: true, key, uploadKey: key, contentType: type.mime, ...(await createMediaUploadTarget(key, type.mime)) });
+    return NextResponse.json({ ok: true, key, uploadKey: key, contentType: type.mime, ...(await createMediaUploadTarget(key, type.mime, size)) });
   } catch (err) {
     if (err instanceof AuthError) return NextResponse.json({ ok: false, error: err.message }, { status: err.code === "unauthenticated" ? 401 : 403 });
     if (err instanceof ConfigurationError) return NextResponse.json({ ok: false, error: err.message }, { status: 503 });

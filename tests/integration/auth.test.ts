@@ -42,12 +42,29 @@ describe("staff sign-in", () => {
     expect(await login(u.email, "wrong password!!")).toEqual(await login(`nobody-${randomUUID()}@example.com`, "wrong password!!"));
   });
 
-  it("locks the account after 5 failed attempts, even for the right password", async () => {
+  it("a locked account refuses even the right password, without revealing the lock", async () => {
     const u = await makeUser(PW);
-    for (let i = 0; i < 5; i++) await login(u.email, "wrong password!!");
+    const wrong = await login(u.email, "wrong password!!");
+    await db.update(s.users).set({ lockedUntil: new Date(Date.now() + 60_000) }).where(eq(s.users.id, u.id));
     const res = await login(u.email, PW);
     expect(res.ok).toBe(false);
-    if (!res.ok) expect(res.error).toMatch(/locked/i);
+    if (!res.ok && !wrong.ok) expect(res.error).toBe(wrong.error);
+  });
+
+  it("locks after repeated wrong passwords", async () => {
+    const u = await makeUser(PW);
+    for (let i = 0; i < auth.MAX_FAILED_LOGINS; i++) await login(u.email, "wrong password!!");
+    const [row] = await db.select({ lockedUntil: s.users.lockedUntil }).from(s.users).where(eq(s.users.id, u.id));
+    expect(row.lockedUntil && row.lockedUntil.getTime() > Date.now()).toBe(true);
+  });
+
+  it("a reset link issued before deactivation can't set a password", async () => {
+    const u = await makeUser(PW);
+    const token = await tokens.issueToken(u.id, "reset", null);
+    await db.update(s.users).set({ isActive: false }).where(eq(s.users.id, u.id));
+    expect((await auth.redeemToken({ purpose: "reset", token, password: "a brand new long sentence", ctx: ctx() })).ok).toBe(false);
+    const [row] = await db.select({ hash: s.users.passwordHash }).from(s.users).where(eq(s.users.id, u.id));
+    expect(row.hash).toBe(u.passwordHash);
   });
 
   it("does not sign in deactivated users", async () => {

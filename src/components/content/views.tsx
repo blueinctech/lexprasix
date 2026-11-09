@@ -44,7 +44,7 @@ type Page = NonNullable<Awaited<ReturnType<typeof getPageByPath>>>;
 export async function PostView({ post }: { post: Post }) {
   const settings = await getSettings();
   const path = `/${post.slug}/`;
-  const { html } = addHeadingIds(post.html);
+  const { html } = addHeadingIds(sanitizeRichHtml(post.html));
   const crumbs = [
     { name: "Home", path: "/" },
     { name: "Blog", path: "/blog/" },
@@ -205,7 +205,7 @@ function Comment({ c }: { c: Post["comments"][number] }) {
       </p>
       <div
         className="prose-lp mt-3"
-        dangerouslySetInnerHTML={{ __html: c.html }}
+        dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(c.html) }}
       />
     </article>
   );

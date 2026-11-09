@@ -9,13 +9,18 @@ import { logger } from "./logger";
  * passed in should already be pseudonymous (hashed IP / hashed email).
  */
 export const RATE_LIMITS = {
+  // Per email from one IP, so someone else can't block a known staff email; plus a higher cap across all IPs.
   loginByEmail: { limit: 10, windowSeconds: 15 * 60 },
+  loginByEmailAll: { limit: 60, windowSeconds: 15 * 60 },
   loginByIp: { limit: 30, windowSeconds: 15 * 60 },
   passwordResetByEmail: { limit: 3, windowSeconds: 60 * 60 },
+  passwordResetByEmailAll: { limit: 10, windowSeconds: 60 * 60 },
   passwordResetByIp: { limit: 10, windowSeconds: 60 * 60 },
   tokenRedeemByIp: { limit: 20, windowSeconds: 15 * 60 },
   formSubmitByIp: { limit: 8, windowSeconds: 10 * 60 },
   formUploadByIp: { limit: 40, windowSeconds: 60 * 60 },
+  clientEmailByRecipient: { limit: 3, windowSeconds: 24 * 60 * 60 },
+  clientEmailAll: { limit: 100, windowSeconds: 60 * 60 },
 } as const satisfies Record<string, { limit: number; windowSeconds: number }>;
 
 export type RateLimitPolicy = keyof typeof RATE_LIMITS;

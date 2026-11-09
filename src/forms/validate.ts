@@ -7,7 +7,8 @@ import { fieldsOf, type FieldDef, type FormDefinition } from "./types";
 export type FormValues = Record<string, string | string[]>;
 export type FieldErrors = Record<string, string>;
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+// Plain addresses only: no quotes, angle brackets, commas or "?" that could smuggle extra recipients.
+const EMAIL = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/;
 const PHONE = /^[+()\-\s\d]{7,20}$/;
 const MAX_TEXT = 500;
 const MAX_TEXTAREA = 8000;

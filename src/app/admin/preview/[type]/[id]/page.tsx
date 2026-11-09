@@ -31,7 +31,7 @@ export default async function PreviewPage({ params }: Props) {
     const user = await requireUserPage("posts.edit_own");
     const [row] = await db.select().from(posts).where(eq(posts.id, id));
     if (!row) notFound();
-    if (!can(user.role, "posts.edit_any") && row.authorId !== user.authorId) redirect("/admin/posts/?denied=1");
+    if (!can(user.role, "posts.edit_any") && (!user.authorId || row.authorId !== user.authorId)) redirect("/admin/posts/?denied=1");
     const [author] = row.authorId ? await db.select().from(authors).where(eq(authors.id, row.authorId)) : [];
     const [cats, tgs, cms, featuredImage, ogImage, photo] = await Promise.all([
       db.select({ name: categories.name, slug: categories.slug }).from(postCategories).innerJoin(categories, eq(categories.id, postCategories.categoryId)).where(eq(postCategories.postId, id)),

@@ -7,6 +7,7 @@ import { submissionFiles, submissions } from "@/db/schema";
 import { appUrl, staffRecipients, uploadMaxBytes } from "@/lib/env";
 import { enqueueEmails, processOutbox, type QueuedEmail } from "@/lib/email/outbox";
 import { logger } from "@/lib/security/logger";
+import { hmac } from "@/lib/security/crypto";
 import { rateLimit } from "@/lib/security/rate-limit";
 import type { RequestContext } from "@/lib/security/request";
 import { createUploadTarget, objectInfo, readHead } from "@/lib/storage";
@@ -94,7 +95,7 @@ export async function signUpload(input: { formId: string; fieldId: string; filen
   const key = `forms/${def.id}/${now.getUTCFullYear()}/${String(now.getUTCMonth() + 1).padStart(2, "0")}/${id}/${safeFilename(input.filename)}`;
   const db = await getDb();
   await db.insert(submissionFiles).values({ id, fieldId: field.id, key, filename: input.filename.slice(0, 200), mimeType: MIME[ext], size: input.size });
-  const target = await createUploadTarget(key, MIME[ext]);
+  const target = await createUploadTarget(key, MIME[ext], input.size);
   return { ok: true as const, uploadId: id, ...target };
 }
 
@@ -202,25 +203,33 @@ export async function submitForm(payload: SubmitPayload, ctx: RequestContext): P
         const rows = fieldsOf(def)
           .map((f) => ({ label: f.label, value: displayValue(f, values[f.id], fileNames) }))
           .filter((r) => r.value);
+        // The confirmation goes to an address the visitor typed, so cap it per recipient and overall
+        // (stops the form being used to send mail to strangers), and only greet by a plain name.
+        const sendClient =
+          !!contact.email &&
+          (await rateLimit("clientEmailByRecipient", hmac("rl-recipient", contact.email.toLowerCase()).slice(0, 32))).success &&
+          (await rateLimit("clientEmailAll", "all")).success;
+        const plainName = /^[\p{L}\p{M} .'’-]{1,80}$/u.test(contact.name ?? "") ? contact.name : "";
+        const subjectName = (contact.name || contact.email || reference).replace(/[\u0000-\u001f\u007f]+/g, " ").slice(0, 120);
         const emails: QueuedEmail[] = [
           {
             idempotencyKey: `submission:${row.id}:staff`,
             template: "submission.staff",
             to: staffRecipients(),
             replyTo: contact.email || null,
-            subject: `New ${def.title} request — ${contact.name || contact.email || reference} (${reference})`,
+            subject: `New ${def.title} request — ${subjectName} (${reference})`,
             payload: { formTitle: def.title, reference, rows, files: [...fileNames.values()], adminUrl: `${appUrl()}/admin/submissions/${row.id}/` },
             submissionId: row.id,
           },
         ];
-        if (contact.email) {
+        if (sendClient && contact.email) {
           emails.push({
             idempotencyKey: `submission:${row.id}:client`,
             template: "submission.client",
             to: [contact.email],
             replyTo: process.env.EMAIL_REPLY_TO || "info@lexpraxisng.com",
             subject: `We received your ${def.title} request (${reference})`,
-            payload: { name: contact.name, formTitle: def.title, reference, nextSteps: def.successMessage },
+            payload: { name: plainName, formTitle: def.title, reference, nextSteps: def.successMessage },
             submissionId: row.id,
           });
         }

@@ -1,10 +1,10 @@
 "use server";
 
-import { and, count, eq, ne } from "drizzle-orm";
+import { and, count, eq, isNull, ne } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getDb } from "@/db";
-import { authors, posts, userRole, users } from "@/db/schema";
+import { authTokens, authors, posts, userRole, users } from "@/db/schema";
 import { adminAction, invalid } from "@/lib/admin/action";
 import { refreshPublic, slugify } from "@/lib/admin/content";
 import { fail, ok, type ActionState } from "@/lib/admin/types";
@@ -83,7 +83,11 @@ export async function setUserActive(_prev: ActionState, fd: FormData): Promise<A
       if (target.role === "administrator" && (await otherActiveAdmins(id)) === 0) return fail("This is the only active administrator.");
     }
     await db.update(users).set({ isActive: active, ...(active ? { failedLoginAttempts: 0, lockedUntil: null } : {}) }).where(eq(users.id, id));
-    if (!active) await revokeAllSessions(id);
+    if (!active) {
+      await revokeAllSessions(id);
+      // Outstanding invite/reset links stop working too.
+      await db.update(authTokens).set({ consumedAt: new Date() }).where(and(eq(authTokens.userId, id), isNull(authTokens.consumedAt)));
+    }
     await audit({ userId: me.id, action: active ? "user.reactivate" : "user.deactivate", entityType: "user", entityId: id });
     return ok(active ? "Account reactivated." : "Account deactivated and signed out everywhere.");
   });

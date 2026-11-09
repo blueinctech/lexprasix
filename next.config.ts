@@ -63,9 +63,9 @@ const nextConfig: NextConfig = {
       { source: "/:type([a-z_]+)-sitemap:n(\\d*).xml", destination: "/sitemap.xml", permanent: true },
       { source: "/wp-sitemap.xml", destination: "/sitemap.xml", permanent: true },
       // Feeds.
-      { source: "/:kind(category|tag|author)/:slug/feed", destination: "/feed/", permanent: true },
+      { source: "/:kind(category|tag|author)/:slug([a-z0-9-]+)/feed", destination: "/feed/", permanent: true },
       { source: "/comments/feed", destination: "/feed/", permanent: true },
-      { source: "/:slug/feed", destination: "/:slug/", permanent: true },
+      { source: "/:slug([a-z0-9-]+)/feed", destination: "/:slug/", permanent: true },
       // Staff bookmarks.
       { source: "/wp-admin/:path*", destination: "/admin/login/", permanent: false },
       { source: "/wp-login.php", destination: "/admin/login/", permanent: false },

@@ -17,7 +17,7 @@ import { consumeToken, issueToken, tokenLink, type TokenPurpose } from "./tokens
 export type AuthResult = { ok: true; redirectTo: string } | { ok: false; error: string };
 export type PlainResult = { ok: true } | { ok: false; error: string };
 
-export const MAX_FAILED_LOGINS = 5;
+export const MAX_FAILED_LOGINS = 10;
 export const LOCKOUT_MS = 15 * 60 * 1000;
 const HOME = "/admin/";
 const INVALID = "Incorrect email or password.";
@@ -34,7 +34,8 @@ export async function loginWithPassword(opts: { email: string; password: string;
   const email = opts.email.toLowerCase();
   const { password, ctx } = opts;
   const limited = await rateLimitAll([
-    ["loginByEmail", emailKey(email)],
+    ["loginByEmail", `${emailKey(email)}:${ctx.ipHash ?? "unknown"}`],
+    ["loginByEmailAll", emailKey(email)],
     ["loginByIp", ctx.ipHash ?? "unknown"],
   ]);
   if (!limited.success) return { ok: false, error: "Too many sign-in attempts. Please wait a few minutes and try again." };
@@ -46,7 +47,8 @@ export async function loginWithPassword(opts: { email: string; password: string;
   }
   if (user.lockedUntil && user.lockedUntil.getTime() > Date.now()) {
     await verifyAgainstDummy(password);
-    return { ok: false, error: "This account is temporarily locked after too many attempts. Try again later or reset your password." };
+    // Same answer as a wrong password, so the lock doesn't reveal that the account exists.
+    return { ok: false, error: INVALID };
   }
   const db = await getDb();
   if (!(await verifyPassword(password, user.passwordHash))) {
@@ -94,7 +96,8 @@ export async function sendInvite(userId: string, invitedBy: { id: string; name: 
 export async function requestPasswordReset(opts: { email: string; ctx: RequestContext }): Promise<PlainResult> {
   const email = opts.email.toLowerCase();
   const limited = await rateLimitAll([
-    ["passwordResetByEmail", emailKey(email)],
+    ["passwordResetByEmail", `${emailKey(email)}:${opts.ctx.ipHash ?? "unknown"}`],
+    ["passwordResetByEmailAll", emailKey(email)],
     ["passwordResetByIp", opts.ctx.ipHash ?? "unknown"],
   ]);
   if (!limited.success) return { ok: false, error: "Too many requests. Please wait a while and try again." };
@@ -142,6 +145,9 @@ export async function redeemToken(opts: { purpose: TokenPurpose; token: string; 
   const userId = await db.transaction(async (tx) => {
     const id = await consumeToken(opts.purpose, opts.token, tx);
     if (!id) return null;
+    // Never set a password on a deactivated account (a link issued before deactivation).
+    const [target] = await tx.select({ isActive: users.isActive }).from(users).where(eq(users.id, id));
+    if (!target?.isActive) return null;
     await tx.update(users).set({ passwordHash, passwordUpdatedAt: new Date(), failedLoginAttempts: 0, lockedUntil: null }).where(eq(users.id, id));
     return id;
   });

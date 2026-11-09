@@ -112,11 +112,17 @@ export function mediaUrl(key: string): string {
   return `${mediaBaseUrl()}/${safeKey(key)}`;
 }
 
+// Presigned PUTs sign the exact Content-Type and Content-Length (the presigner
+// leaves Content-Type unsigned by default), so a link can only upload the file
+// that was checked: no other type (e.g. HTML on the public media bucket) and no
+// other size. Links expire after two minutes.
+const SIGNED_PUT = { expiresIn: 120, signableHeaders: new Set(["content-type", "content-length"]) };
+
 /** Browser upload target for a private client document (presigned PUT, or the dev route). */
-export async function createUploadTarget(key: string, contentType: string): Promise<{ url: string; headers: Record<string, string> }> {
+export async function createUploadTarget(key: string, contentType: string, size: number): Promise<{ url: string; headers: Record<string, string> }> {
   assertConfigured();
   if (usesS3()) {
-    const url = await getSignedUrl(client(), new PutObjectCommand({ Bucket: bucket("uploads"), Key: safeKey(key), ContentType: contentType }), { expiresIn: 600 });
+    const url = await getSignedUrl(client(), new PutObjectCommand({ Bucket: bucket("uploads"), Key: safeKey(key), ContentType: contentType, ContentLength: size }), SIGNED_PUT);
     return { url, headers: { "Content-Type": contentType } };
   }
   const sig = hmac("local-upload", key).slice(0, 32);
@@ -150,10 +156,10 @@ export function localStream(store: Store, key: string): ReadableStream {
 // ---------------------------------------------------------------- public media uploads (admin)
 
 /** Browser upload target for a public media file (presigned PUT, or the dev route). */
-export async function createMediaUploadTarget(key: string, contentType: string): Promise<{ url: string; headers: Record<string, string> }> {
+export async function createMediaUploadTarget(key: string, contentType: string, size: number): Promise<{ url: string; headers: Record<string, string> }> {
   assertConfigured();
   if (usesS3()) {
-    const url = await getSignedUrl(client(), new PutObjectCommand({ Bucket: bucket("media"), Key: safeKey(key), ContentType: contentType }), { expiresIn: 600 });
+    const url = await getSignedUrl(client(), new PutObjectCommand({ Bucket: bucket("media"), Key: safeKey(key), ContentType: contentType, ContentLength: size }), SIGNED_PUT);
     return { url, headers: { "Content-Type": contentType } };
   }
   const sig = hmac("local-media-upload", key).slice(0, 32);
