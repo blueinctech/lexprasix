@@ -14,7 +14,7 @@ export function BlogListCard({ post, priority = false }: { post: PostCard; prior
     <article className="rounded-[1.25rem] border border-[#e6e6e6] bg-white p-6 sm:p-10">
       {post.image && (
         <Link href={`/${post.slug}/`} className="relative mb-10 block aspect-[774/430] overflow-hidden rounded-[1.25rem] bg-paper-warm" tabIndex={-1} aria-hidden="true">
-          <Image src={post.image.url} alt="" fill sizes="(min-width: 1024px) 774px, 100vw" priority={priority} className="object-cover transition-transform duration-700 hover:scale-[1.03]" />
+          <Image src={post.image.url} alt="" fill sizes="(min-width: 1024px) 774px, 100vw" {...(priority ? { loading: "eager" as const, fetchPriority: "high" as const } : {})} className="object-cover transition-transform duration-700 hover:scale-[1.03]" />
         </Link>
       )}
       <PostMeta post={post} className="text-[0.875rem]" />

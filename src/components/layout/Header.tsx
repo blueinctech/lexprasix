@@ -33,7 +33,7 @@ export async function Header() {
         aria-label={`${site.name} home`}
         className="absolute top-0 left-0 z-10 hidden h-[9.75rem] w-[18.75rem] items-center justify-center rounded-br-[3.75rem] border-r border-b border-gold-400 bg-paper-warm xl:flex"
       >
-        <Image src="/theme/lexpraxis-logo.png" alt={site.name} width={220} height={73} priority className="h-auto w-[12.5rem]" />
+        <Image src="/theme/lexpraxis-logo.png" alt={site.name} width={220} height={73} loading="eager" className="h-auto w-[12.5rem]" />
       </Link>
 
       <div className="hidden bg-navy-700 text-[0.94rem] text-white xl:block">
@@ -79,7 +79,7 @@ export async function Header() {
       <div className="border-b border-line">
         <div className="flex h-[4.5rem] items-center justify-between gap-6 px-4 sm:px-6 xl:h-[6.75rem] xl:pr-[3.75rem] xl:pl-[21.5rem]">
           <Link href="/" aria-label={`${site.name} home`} className="shrink-0 xl:hidden">
-            <Image src="/theme/lexpraxis-logo.png" alt={site.name} width={165} height={54} priority className="h-auto w-[9.5rem] sm:w-[10.5rem]" />
+            <Image src="/theme/lexpraxis-logo.png" alt={site.name} width={165} height={54} loading="eager" className="h-auto w-[9.5rem] sm:w-[10.5rem]" />
           </Link>
           <nav aria-label="Main" className="flex flex-1 items-center justify-end gap-3 xl:justify-between">
             <Suspense

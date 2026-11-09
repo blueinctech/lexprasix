@@ -167,7 +167,7 @@ async function HeroBlock({ block, asH1 }: { block: BlockOf<"hero">; asH1: boolea
             {/* Gold outline frame offset behind the photo. */}
             <span aria-hidden="true" className="absolute top-0 right-0 bottom-10 left-6 rounded-tr-[5rem] border-2 border-gold-400 border-b-0 border-l-0" />
             <div className="relative aspect-[499/599] overflow-hidden rounded-tr-[5rem] rounded-bl-[5rem]">
-              <Image src={src} alt={media?.alt ?? ""} fill priority sizes="(min-width: 1024px) 500px, 90vw" className="object-cover" />
+              <Image src={src} alt={media?.alt ?? ""} fill loading="eager" fetchPriority="high" sizes="(min-width: 1024px) 500px, 90vw" className="object-cover" />
             </div>
             <span aria-hidden="true" className="absolute top-[30%] -left-4 hidden size-[4.4rem] place-items-center rounded-full border border-gold-500/70 sm:grid">
               <Image src="/theme/logo-icon.png" alt="" width={48} height={45} className="h-auto w-10 opacity-80" />
@@ -379,8 +379,8 @@ async function LatestPostsBlock({ block }: { block: BlockOf<"latestPosts"> }) {
     <section className="pt-16 pb-14 lg:pt-[7.5rem]">
       <Container>
         <Carousel header={<SectionHeading eyebrow={block.eyebrow} heading={block.heading || "Our Blog"} />} label="articles">
-          {posts.map((p, i) => (
-            <PostCard key={p.slug} post={p} priority={i < 3} />
+          {posts.map((p) => (
+            <PostCard key={p.slug} post={p} />
           ))}
         </Carousel>
       </Container>

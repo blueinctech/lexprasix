@@ -19,7 +19,7 @@ export const PRICE_ON_REQUEST = "Price on request";
 
 function Cover({ image, title, sizes, priority = false }: { image: ImageInfo | null; title: string; sizes: string; priority?: boolean }) {
   return image ? (
-    <Image src={image.url} alt={image.alt || title} fill sizes={sizes} priority={priority} className="object-contain p-6" />
+    <Image src={image.url} alt={image.alt || title} fill sizes={sizes} {...(priority ? { loading: "eager" as const } : {})} className="object-contain p-6" />
   ) : (
     <div className="grid h-full place-items-center text-navy-700">
       <Icon name="file-text" className="size-14" />
