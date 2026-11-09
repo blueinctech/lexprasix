@@ -62,8 +62,10 @@ export default async function PanelLayout({ children }: { children: ReactNode })
         </Link>
         <AdminNav items={items} />
         <div className="mt-auto border-t border-white/10 px-3 pt-4 text-xs">
-          <p className="truncate font-medium text-white">{user.name}</p>
-          <p className="text-slate-400">{ROLE_LABELS[user.role]}</p>
+          <Link href="/admin/account/" className="group block" title="My account">
+            <span className="block truncate font-medium text-white group-hover:underline">{user.name}</span>
+            <span className="block text-slate-400">{ROLE_LABELS[user.role]} · My account</span>
+          </Link>
           <div className="mt-3 flex items-center gap-4">
             <a href="/" target="_blank" rel="noopener" className="inline-flex items-center gap-1 hover:text-white">
               View site <Icon name="external" className="size-3" />

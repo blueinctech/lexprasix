@@ -17,6 +17,11 @@ export const RATE_LIMITS = {
   passwordResetByEmailAll: { limit: 10, windowSeconds: 60 * 60 },
   passwordResetByIp: { limit: 10, windowSeconds: 60 * 60 },
   tokenRedeemByIp: { limit: 20, windowSeconds: 15 * 60 },
+  // Second sign-in step (each challenge also allows only 5 attempts).
+  twoFactorByUser: { limit: 10, windowSeconds: 15 * 60 },
+  twoFactorByIp: { limit: 30, windowSeconds: 15 * 60 },
+  // Password and code checks on My account (2FA setup/off, recovery codes, password change).
+  accountVerifyByUser: { limit: 10, windowSeconds: 15 * 60 },
   formSubmitByIp: { limit: 8, windowSeconds: 10 * 60 },
   formUploadByIp: { limit: 40, windowSeconds: 60 * 60 },
   clientEmailByRecipient: { limit: 3, windowSeconds: 24 * 60 * 60 },

@@ -11,6 +11,7 @@ import { fail, ok, type ActionState } from "@/lib/admin/types";
 import { audit } from "@/lib/audit";
 import { createResetLink, sendInvite } from "@/lib/auth/service";
 import { revokeAllSessions } from "@/lib/auth/session";
+import { clearTwoFactor } from "@/lib/auth/two-factor";
 
 const role = z.enum(userRole.enumValues, { error: "Choose a role" });
 const optionalUuid = z
@@ -125,6 +126,22 @@ export async function signOutEverywhere(_prev: ActionState, fd: FormData): Promi
     await audit({ userId: me.id, action: "user.sessions_revoked", entityType: "user", entityId: id });
     if (id === me.id) redirect("/admin/login/");
     return ok("Signed out on all devices.");
+  });
+}
+
+/** For someone who lost their phone and recovery codes: they sign in with the password only, then set 2FA up again. */
+export async function resetUserTwoFactor(_prev: ActionState, fd: FormData): Promise<ActionState> {
+  return adminAction("users.manage", async (me) => {
+    const id = z.uuid().safeParse(fd.get("id"));
+    if (!id.success) return fail("User not found.");
+    if (id.data === me.id) return fail("Manage your own two-factor authentication on My account.");
+    const db = await getDb();
+    const [target] = await db.select({ id: users.id }).from(users).where(eq(users.id, id.data));
+    if (!target) return fail("User not found.");
+    await clearTwoFactor(id.data);
+    await revokeAllSessions(id.data);
+    await audit({ userId: me.id, action: "user.2fa_reset", entityType: "user", entityId: id.data });
+    return ok("Two-factor authentication was reset and they were signed out everywhere. They can sign in with their password and set it up again.");
   });
 }
 

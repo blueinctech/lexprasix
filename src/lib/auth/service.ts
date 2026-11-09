@@ -13,6 +13,7 @@ import { hashPassword, verifyAgainstDummy, verifyPassword } from "./password";
 import { ROLE_LABELS } from "./permissions";
 import { createSession, revokeAllSessions } from "./session";
 import { consumeToken, issueToken, tokenLink, type TokenPurpose } from "./tokens";
+import { createChallenge, endChallenge, takeChallengeAttempt, verifySecondFactor } from "./two-factor";
 
 export type AuthResult = { ok: true; redirectTo: string } | { ok: false; error: string };
 export type PlainResult = { ok: true } | { ok: false; error: string };
@@ -20,7 +21,11 @@ export type PlainResult = { ok: true } | { ok: false; error: string };
 export const MAX_FAILED_LOGINS = 10;
 export const LOCKOUT_MS = 15 * 60 * 1000;
 const HOME = "/admin/";
+export const VERIFY_PATH = "/admin/login/verify/";
 const INVALID = "Incorrect email or password.";
+
+const safeNext = (next: string | null | undefined) => (next && next.startsWith("/admin/") && !next.startsWith("//") && !next.includes("\\") ? next : HOME);
+const hasTwoFactor = (u: { totpEnabledAt: Date | null; totpSecret: string | null }) => Boolean(u.totpEnabledAt && u.totpSecret);
 
 const emailKey = (email: string) => hmac("rl-email", email).slice(0, 32);
 
@@ -64,11 +69,47 @@ export async function loginWithPassword(opts: { email: string; password: string;
     return { ok: false, error: INVALID };
   }
 
+  if (hasTwoFactor(user)) {
+    // Password was right; no session until the second factor is checked.
+    await db.update(users).set({ failedLoginAttempts: 0, lockedUntil: null }).where(eq(users.id, user.id));
+    await createChallenge(user.id, safeNext(opts.next));
+    return { ok: true, redirectTo: VERIFY_PATH };
+  }
   await db.update(users).set({ failedLoginAttempts: 0, lockedUntil: null, lastLoginAt: new Date() }).where(eq(users.id, user.id));
   await createSession(user.id, ctx);
   await audit({ userId: user.id, action: "auth.login", entityType: "user", entityId: user.id, ipHash: ctx.ipHash });
-  const next = opts.next && opts.next.startsWith("/admin/") && !opts.next.startsWith("//") ? opts.next : HOME;
-  return { ok: true, redirectTo: next };
+  return { ok: true, redirectTo: safeNext(opts.next) };
+}
+
+const CHALLENGE_GONE = "This sign-in has expired or had too many attempts. Please sign in again.";
+
+/** Second sign-in step: a TOTP code (or a recovery code) for the challenge in the cookie. */
+export async function verifyTwoFactorLogin(opts: { code: string; ctx: RequestContext }): Promise<AuthResult & { restart?: boolean }> {
+  const { ctx } = opts;
+  const challenge = await takeChallengeAttempt();
+  if (!challenge) return { ok: false, error: CHALLENGE_GONE, restart: true };
+  const limited = await rateLimitAll([
+    ["twoFactorByUser", challenge.userId],
+    ["twoFactorByIp", ctx.ipHash ?? "unknown"],
+  ]);
+  if (!limited.success) return { ok: false, error: "Too many attempts. Please wait a few minutes and try again." };
+
+  const db = await getDb();
+  const [user] = await db.select({ isActive: users.isActive, lockedUntil: users.lockedUntil }).from(users).where(eq(users.id, challenge.userId));
+  const method = user?.isActive && !(user.lockedUntil && user.lockedUntil.getTime() > Date.now()) ? await verifySecondFactor(challenge.userId, opts.code) : null;
+  if (!method) {
+    await audit({ userId: challenge.userId, action: "auth.2fa_failed", entityType: "user", entityId: challenge.userId, ipHash: ctx.ipHash });
+    if (challenge.attemptsLeft <= 0) {
+      await endChallenge(challenge.id);
+      return { ok: false, error: CHALLENGE_GONE, restart: true };
+    }
+    return { ok: false, error: "That code didn't work. Check your authenticator app and try again." };
+  }
+  if (!(await endChallenge(challenge.id))) return { ok: false, error: CHALLENGE_GONE, restart: true };
+  await db.update(users).set({ lastLoginAt: new Date() }).where(eq(users.id, challenge.userId));
+  await createSession(challenge.userId, ctx);
+  await audit({ userId: challenge.userId, action: "auth.login", entityType: "user", entityId: challenge.userId, details: { method }, ipHash: ctx.ipHash });
+  return { ok: true, redirectTo: safeNext(challenge.next) };
 }
 
 /** Queue an invitation email (new users, or users who never set a password). Returns the link for the inviter to copy if email is down. */
@@ -160,8 +201,13 @@ export async function redeemToken(opts: { purpose: TokenPurpose; token: string; 
   }
   // End every existing session (possibly an attacker's), then sign in fresh.
   await revokeAllSessions(user.id);
+  await audit({ userId: user.id, action: opts.purpose === "invite" ? "auth.invite_accepted" : "auth.password_reset", entityType: "user", entityId: user.id, ipHash: opts.ctx.ipHash });
+  // A reset link proves access to the mailbox only; 2FA accounts still need their code.
+  if (hasTwoFactor(user)) {
+    await createChallenge(user.id, HOME);
+    return { ok: true, redirectTo: VERIFY_PATH };
+  }
   await db.update(users).set({ lastLoginAt: new Date() }).where(eq(users.id, user.id));
   await createSession(user.id, opts.ctx);
-  await audit({ userId: user.id, action: opts.purpose === "invite" ? "auth.invite_accepted" : "auth.password_reset", entityType: "user", entityId: user.id, ipHash: opts.ctx.ipHash });
   return { ok: true, redirectTo: HOME };
 }

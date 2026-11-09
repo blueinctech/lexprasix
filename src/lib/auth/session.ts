@@ -1,5 +1,5 @@
 import "server-only";
-import { and, eq, gt, isNull } from "drizzle-orm";
+import { and, eq, gt, isNull, ne } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { getDb } from "@/db";
 import { sessions } from "@/db/schema";
@@ -75,4 +75,10 @@ export async function destroySession(): Promise<void> {
 export async function revokeAllSessions(userId: string): Promise<void> {
   const db = await getDb();
   await db.update(sessions).set({ revokedAt: new Date() }).where(and(eq(sessions.userId, userId), isNull(sessions.revokedAt)));
+}
+
+/** Revoke a user's sessions except the one in use (after changing the password). */
+export async function revokeOtherSessions(userId: string, keepSessionId: string): Promise<void> {
+  const db = await getDb();
+  await db.update(sessions).set({ revokedAt: new Date() }).where(and(eq(sessions.userId, userId), isNull(sessions.revokedAt), ne(sessions.id, keepSessionId)));
 }

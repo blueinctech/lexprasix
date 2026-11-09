@@ -1,5 +1,6 @@
 import { sql } from "drizzle-orm";
 import {
+  bigint,
   boolean,
   index,
   integer,
@@ -73,6 +74,15 @@ export const users = pgTable(
     /** Public author profile this account writes as, if any. */
     authorId: uuid("author_id"),
     invitedById: uuid("invited_by_id"),
+    /** Two-factor (TOTP): secrets are AES-256-GCM encrypted (src/lib/auth/two-factor.ts), never plaintext. */
+    totpSecret: text("totp_secret"),
+    /** Set during setup; becomes totpSecret once the user confirms a code. */
+    totpPendingSecret: text("totp_pending_secret"),
+    totpEnabledAt: timestamp("totp_enabled_at", { withTimezone: true }),
+    /** Last accepted 30-second step, so a code can't be replayed. */
+    totpLastStep: bigint("totp_last_step", { mode: "number" }),
+    /** SHA-256 hashes of unused one-time recovery codes. */
+    recoveryCodes: jsonb("recovery_codes").$type<string[]>().notNull().default([]),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
@@ -99,6 +109,26 @@ export const sessions = pgTable(
 );
 
 /** Single-use hashed tokens for invitations and password resets. */
+/** Pending second sign-in step: the password was right, a TOTP or recovery code is still needed. */
+export const twoFactorChallenges = pgTable(
+  "two_factor_challenges",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    /** SHA-256 of the cookie token. */
+    tokenHash: text("token_hash").notNull(),
+    /** Where to go after verifying (an /admin/ path). */
+    next: text("next"),
+    attempts: integer("attempts").notNull().default(0),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    consumedAt: timestamp("consumed_at", { withTimezone: true }),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex("two_factor_challenges_token_idx").on(t.tokenHash), index("two_factor_challenges_user_idx").on(t.userId)],
+);
+
 export const authTokens = pgTable(
   "auth_tokens",
   {

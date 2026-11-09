@@ -7,7 +7,7 @@ import { fail, ok, type ActionState } from "@/lib/admin/types";
 import { audit } from "@/lib/audit";
 import { getCurrentUser } from "@/lib/auth/current";
 import { newPasswordSchema } from "@/lib/auth/password";
-import { loginWithPassword, redeemToken, requestPasswordReset } from "@/lib/auth/service";
+import { loginWithPassword, redeemToken, requestPasswordReset, verifyTwoFactorLogin } from "@/lib/auth/service";
 import { destroySession } from "@/lib/auth/session";
 import { getRequestContext } from "@/lib/security/request";
 
@@ -21,6 +21,14 @@ export async function login(_prev: ActionState, fd: FormData): Promise<ActionSta
   if (!parsed.success) return invalid(parsed.error);
   const result = await loginWithPassword({ ...parsed.data, ctx: await getRequestContext() });
   if (!result.ok) return fail(result.error);
+  redirect(result.redirectTo);
+}
+
+export async function verifyLogin(_prev: ActionState, fd: FormData): Promise<ActionState> {
+  const parsed = z.object({ code: z.string().trim().min(1, { error: "Enter the code" }).max(20) }).safeParse(Object.fromEntries(fd));
+  if (!parsed.success) return invalid(parsed.error);
+  const result = await verifyTwoFactorLogin({ code: parsed.data.code, ctx: await getRequestContext() });
+  if (!result.ok) return fail(result.error, result.restart ? undefined : { code: "Incorrect code" });
   redirect(result.redirectTo);
 }
 

@@ -58,6 +58,10 @@ export default async function UserPage({ params }: { params: Promise<{ id: strin
               <dd>{formatDateTime(user.lastLoginAt)}</dd>
             </div>
             <div className="flex justify-between">
+              <dt className="text-slate-500">Two-factor</dt>
+              <dd>{user.totpEnabledAt && user.totpSecret ? `On (${user.recoveryCodes.length} recovery codes left)` : "Off"}</dd>
+            </div>
+            <div className="flex justify-between">
               <dt className="text-slate-500">Signed-in devices</dt>
               <dd>{sessionCount}</dd>
             </div>
@@ -68,7 +72,7 @@ export default async function UserPage({ params }: { params: Promise<{ id: strin
               </div>
             )}
           </dl>
-          <UserAccessActions id={user.id} active={user.isActive} hasPassword={Boolean(user.passwordHash)} isSelf={isSelf} />
+          <UserAccessActions id={user.id} active={user.isActive} hasPassword={Boolean(user.passwordHash)} isSelf={isSelf} twoFactor={Boolean(user.totpEnabledAt && user.totpSecret)} />
         </Card>
       </div>
     </>

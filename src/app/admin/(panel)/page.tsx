@@ -6,6 +6,7 @@ import { getDb } from "@/db";
 import { auditLog, documents, emailOutbox, pages, posts, services, submissions, users } from "@/db/schema";
 import { requireUserPage } from "@/lib/auth/current";
 import { can } from "@/lib/auth/permissions";
+import { twoFactorStatus } from "@/lib/auth/two-factor";
 
 export const metadata: Metadata = { title: "Dashboard" };
 
@@ -21,7 +22,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const seeEnquiries = can(user.role, "submissions.view");
   const since = daysAgo(30);
 
-  const [postStats, pageStats, svc, docs, recentSubs, subStats, recentPosts, activity, failed] = await Promise.all([
+  const [postStats, pageStats, svc, docs, recentSubs, subStats, recentPosts, activity, failed, twoFactor] = await Promise.all([
     db.select({ status: posts.status, n: count() }).from(posts).groupBy(posts.status),
     db.select({ status: pages.status, n: count() }).from(pages).groupBy(pages.status),
     db.select({ n: count() }).from(services).where(eq(services.status, "published")),
@@ -37,6 +38,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
       ? db.select({ action: auditLog.action, entityType: auditLog.entityType, createdAt: auditLog.createdAt, who: users.name }).from(auditLog).leftJoin(users, eq(users.id, auditLog.userId)).orderBy(desc(auditLog.createdAt)).limit(8)
       : Promise.resolve([]),
     can(user.role, "email.view") ? db.select({ n: count() }).from(emailOutbox).where(inArray(emailOutbox.status, ["failed"])) : Promise.resolve([{ n: 0 }]),
+    twoFactorStatus(user.id),
   ]);
 
   const by = (rows: { status: string; n: number }[], s: string) => rows.find((r) => r.status === s)?.n ?? 0;
@@ -67,6 +69,14 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         }
       />
       {denied && <p className="mb-6 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900">You don&apos;t have permission to open that section.</p>}
+      {!twoFactor.enabled && (
+        <p className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-navy-700/15 bg-navy-50 px-4 py-3 text-sm text-navy-900">
+          <span>Protect your account: turn on two-factor authentication.</span>
+          <Link href="/admin/account/" className="font-medium underline-offset-2 hover:underline">
+            Set it up
+          </Link>
+        </p>
+      )}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {stats.map((s) => (
           <Link key={s.label} href={s.href} className="rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-navy-700/40">

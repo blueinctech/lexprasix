@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteAuthor, inviteUser, makeResetLink, resendInvite, saveAuthor, setUserActive, signOutEverywhere, updateUser } from "@/app/admin/_actions/users";
+import { deleteAuthor, inviteUser, makeResetLink, resendInvite, resetUserTwoFactor, saveAuthor, setUserActive, signOutEverywhere, updateUser } from "@/app/admin/_actions/users";
 import { ROLE_DESCRIPTIONS, ROLE_LABELS } from "@/lib/auth/permissions";
 import { ActionForm, Select, SubmitButton, TextArea, TextInput } from "./ui";
 
@@ -41,9 +41,20 @@ export function EditUserForm({ user, authors, isSelf }: { user: { id: string; na
   );
 }
 
-export function UserAccessActions({ id, active, hasPassword, isSelf }: { id: string; active: boolean; hasPassword: boolean; isSelf: boolean }) {
+export function UserAccessActions({ id, active, hasPassword, isSelf, twoFactor }: { id: string; active: boolean; hasPassword: boolean; isSelf: boolean; twoFactor: boolean }) {
   return (
     <div className="grid gap-5">
+      {twoFactor && !isSelf && (
+        <ActionForm action={resetUserTwoFactor}>
+          <input type="hidden" name="id" value={id} />
+          <p className="text-sm text-slate-600">Lost their phone and recovery codes? Reset two-factor so they can sign in with their password and set it up again.</p>
+          <div>
+            <SubmitButton variant="secondary" pendingLabel="Resetting…" confirm="Reset two-factor authentication for this user? They will be signed out and can then sign in with just their password.">
+              Reset two-factor
+            </SubmitButton>
+          </div>
+        </ActionForm>
+      )}
       {active && !hasPassword && (
         <ActionForm action={resendInvite}>
           <input type="hidden" name="id" value={id} />

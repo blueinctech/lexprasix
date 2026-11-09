@@ -1,6 +1,7 @@
 // Creates (or re-invites) an administrator from the command line. Prints a
 // one-time link to set the password; nothing secret is stored or logged.
 //   npm run admin:create -- --email you@lexpraxisng.com --name "Your Name"
+// Add --reset-2fa to also turn off two-factor authentication (lost phone and recovery codes).
 import { randomBytes, createHash } from "node:crypto";
 import { config } from "dotenv";
 import { eq } from "drizzle-orm";
@@ -23,7 +24,13 @@ const { db, close } = await createDatabase(url, { max: 1 });
 
 const [existing] = await db.select().from(users).where(eq(users.email, email));
 const user = existing
-  ? (await db.update(users).set({ role: "administrator", isActive: true, name }).where(eq(users.id, existing.id)).returning())[0]
+  ? (
+      await db
+        .update(users)
+        .set({ role: "administrator", isActive: true, name, ...("reset-2fa" in args ? { totpSecret: null, totpPendingSecret: null, totpEnabledAt: null, totpLastStep: null, recoveryCodes: [] } : {}) })
+        .where(eq(users.id, existing.id))
+        .returning()
+    )[0]
   : (await db.insert(users).values({ email, name, role: "administrator" }).returning())[0];
 
 const token = randomBytes(32).toString("base64url");
