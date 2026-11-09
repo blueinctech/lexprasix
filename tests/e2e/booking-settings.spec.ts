@@ -12,7 +12,7 @@ test("an administrator manages the Calendly link and the booking page falls back
   test.setTimeout(120_000);
   await page.goto("/admin/login/");
   await page.getByLabel("Email").fill(admin().email);
-  await page.getByLabel("Password").fill(admin().password);
+  await page.getByLabel(/^Password/).fill(admin().password);
   await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page).toHaveURL(/\/admin\/$/, { timeout: 30_000 });
 

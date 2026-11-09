@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createContext, startTransition, useActionState, useContext, useEffect, useId, useRef, type ReactNode } from "react";
+import { createContext, startTransition, useActionState, useContext, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import { Icon } from "@/components/ui/Icon";
 import { IDLE, type ActionState } from "@/lib/admin/types";
@@ -144,13 +144,35 @@ export function Field({ label, hint, children, className }: { label: string; hin
 
 export function TextInput({ label, hint, className, ...props }: { label: string; hint?: ReactNode; className?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   const id = useId();
+  const [shown, setShown] = useState(false);
+  const isPassword = props.type === "password";
   return (
     <div data-field className={cx("grid gap-1.5", className)}>
       <label htmlFor={id} className="text-sm font-medium text-slate-800">
         {label}
         {props.required && <span className="text-red-700"> *</span>}
       </label>
-      <input id={id} {...props} className={inputCls} />
+      {isPassword ? (
+        // Password fields get an eye button to show/hide what was typed.
+        <div className="relative">
+          <input id={id} {...props} type={shown ? "text" : "password"} className={cx(inputCls, "pr-11")} />
+          <button
+            type="button"
+            onClick={() => setShown((v) => !v)}
+            aria-label={shown ? "Hide password" : "Show password"}
+            aria-pressed={shown}
+            className="absolute inset-y-0 right-0 grid w-11 place-items-center rounded-r-lg text-slate-500 hover:text-slate-800"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="size-5" aria-hidden="true">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+              <circle cx="12" cy="12" r="3" />
+              {shown && <path d="M3 3l18 18" />}
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <input id={id} {...props} className={inputCls} />
+      )}
       {hint && <span className="text-xs text-slate-500">{hint}</span>}
     </div>
   );

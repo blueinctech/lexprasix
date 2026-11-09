@@ -61,7 +61,7 @@ test("administrator sees the ebook under Admin → Shop", async ({ page }) => {
   const admin = (JSON.parse(readFileSync(".data/e2e-users.json", "utf8")) as Record<string, { email: string; password: string }>).administrator;
   await page.goto("/admin/login/");
   await page.getByLabel("Email").fill(admin.email);
-  await page.getByLabel("Password").fill(admin.password);
+  await page.getByLabel(/^Password/).fill(admin.password);
   await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page).toHaveURL(/\/admin\/$/, { timeout: 30_000 });
   await page.goto("/admin/products/");

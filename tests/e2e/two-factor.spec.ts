@@ -11,7 +11,7 @@ const account = () => (JSON.parse(readFileSync(".data/e2e-users.json", "utf8")) 
 async function enterPassword(page: Page) {
   await page.goto("/admin/login/");
   await page.getByLabel("Email").fill(account().email);
-  await page.getByLabel("Password").fill(account().password);
+  await page.getByLabel(/^Password/).fill(account().password);
   await page.getByRole("button", { name: "Sign in" }).click();
 }
 
@@ -21,7 +21,7 @@ test("staff member turns on two-factor, signs in with a code, and turns it off",
 
   await enterPassword(page);
   await expect(page).toHaveURL(/\/admin\/$/, { timeout: 30_000 });
-  await expect(page.getByText("Protect your account: turn on two-factor authentication.")).toBeVisible();
+  await expect(page.getByText("Turn on two-factor authentication", { exact: true })).toBeVisible();
 
   // Set up: read the manual-entry key and answer with the code an app would show.
   await page.goto("/admin/account/");
@@ -57,7 +57,7 @@ test("staff member turns on two-factor, signs in with a code, and turns it off",
   await codeInput.fill(totp(secret, Date.now() + 30_000));
   await page.getByRole("button", { name: "Verify" }).click();
   await expect(page).toHaveURL(/\/admin\/$/, { timeout: 30_000 });
-  await expect(page.getByText("Protect your account: turn on two-factor authentication.")).toHaveCount(0);
+  await expect(page.getByText("Turn on two-factor authentication", { exact: true })).toHaveCount(0);
 
   // Turn it off with the password and a recovery code.
   await page.goto("/admin/account/");

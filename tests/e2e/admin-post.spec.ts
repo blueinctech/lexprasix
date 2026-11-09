@@ -22,7 +22,7 @@ test("administrator uploads an image and publishes an article that uses it", asy
 
   await page.goto("/admin/login/");
   await page.getByLabel("Email").fill(admin().email);
-  await page.getByLabel("Password").fill(admin().password);
+  await page.getByLabel(/^Password/).fill(admin().password);
   await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page).toHaveURL(/\/admin\/$/, { timeout: 30_000 });
 

@@ -15,7 +15,7 @@ export default async function AccountPage() {
     <>
       <PageTitle title="My account" description="Your sign-in details and security." />
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_22rem]">
-        <div className="grid content-start gap-6">
+        <div id="two-factor" className="grid scroll-mt-6 content-start gap-6">
           <Card title="Two-factor authentication" actions={<Badge value={status.enabled ? "active" : "inactive"} label={status.enabled ? "On" : "Off"} />}>
             <TwoFactorPanel status={{ enabled: status.enabled, enabledAt: status.enabledAt ? formatDateTime(status.enabledAt) : null, recoveryCodesLeft: status.recoveryCodesLeft }} setup={setup} />
           </Card>

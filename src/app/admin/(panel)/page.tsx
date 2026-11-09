@@ -70,12 +70,15 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
       />
       {denied && <p className="mb-6 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900">You don&apos;t have permission to open that section.</p>}
       {!twoFactor.enabled && (
-        <p className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-navy-700/15 bg-navy-50 px-4 py-3 text-sm text-navy-900">
-          <span>Protect your account: turn on two-factor authentication.</span>
-          <Link href="/admin/account/" className="font-medium underline-offset-2 hover:underline">
-            Set it up
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-amber-300 bg-amber-50 px-5 py-4 text-amber-950">
+          <span className="text-sm">
+            <strong className="block text-base">Turn on two-factor authentication</strong>
+            Add a code from an authenticator app to your sign-in so a stolen password isn&apos;t enough to get in.
+          </span>
+          <Link href="/admin/account/#two-factor" className={btn("primary")}>
+            Set up 2FA
           </Link>
-        </p>
+        </div>
       )}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {stats.map((s) => (

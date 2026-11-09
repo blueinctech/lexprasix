@@ -33,6 +33,8 @@ const NAV: (NavItem & { permission: Permission })[] = [
   { href: "/admin/users/", label: "Users", icon: "user", permission: "users.manage", group: "System" },
   { href: "/admin/emails/", label: "Email log", icon: "mail", permission: "email.view", group: "System" },
   { href: "/admin/activity/", label: "Activity log", icon: "clock", permission: "audit.view", group: "System" },
+  // Everyone: password and two-factor sign-in.
+  { href: "/admin/account/", label: "My account & 2FA", icon: "lock", permission: "dashboard.view", group: "Account" },
 ];
 
 export default async function PanelLayout({ children }: { children: ReactNode }) {

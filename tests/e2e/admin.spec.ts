@@ -10,7 +10,7 @@ async function signIn(page: Page, who: keyof ReturnType<typeof accounts>) {
   const a = accounts()[who];
   await page.goto("/admin/login/");
   await page.getByLabel("Email").fill(a.email);
-  await page.getByLabel("Password").fill(a.password);
+  await page.getByLabel(/^Password/).fill(a.password);
   await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page).toHaveURL(/\/admin\/$/);
 }
@@ -35,7 +35,7 @@ test("private routes reject requests without a valid session", async ({ request 
 test("wrong password shows a generic error", async ({ page }) => {
   await page.goto("/admin/login/");
   await page.getByLabel("Email").fill(accounts().editor.email);
-  await page.getByLabel("Password").fill("definitely not the password");
+  await page.getByLabel(/^Password/).fill("definitely not the password");
   await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page.getByText("Incorrect email or password.")).toBeVisible();
 });
@@ -67,4 +67,15 @@ test("author cannot see client enquiries", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Enquiries/ })).toHaveCount(0);
   await page.goto("/admin/submissions/");
   await expect(page).toHaveURL(/\/admin\/\?denied=1$/);
+});
+
+test("the password field has a show/hide button", async ({ page }) => {
+  await page.goto("/admin/login/");
+  const field = page.getByLabel(/^Password/);
+  await field.fill("typed secret");
+  await expect(field).toHaveAttribute("type", "password");
+  await page.getByRole("button", { name: "Show password" }).click();
+  await expect(field).toHaveAttribute("type", "text");
+  await page.getByRole("button", { name: "Hide password" }).click();
+  await expect(field).toHaveAttribute("type", "password");
 });
