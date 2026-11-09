@@ -77,6 +77,8 @@ export function SiteChrome({ gtmId, tawk, whatsapp, copyProtection = false }: { 
     const load = () => {
       if (document.getElementById("tawk-script")) return;
       window.Tawk_API = window.Tawk_API || {};
+      // Chat bubble on the bottom-left; the WhatsApp button sits bottom-right.
+      window.Tawk_API.customStyle = { visibility: { desktop: { position: "bl", xOffset: 20, yOffset: 20 }, mobile: { position: "bl", xOffset: 10, yOffset: 10 } } };
       const s = document.createElement("script");
       s.id = "tawk-script";
       s.async = true;
@@ -120,7 +122,7 @@ gtag('consent','default',{ad_storage:c==='granted'?'granted':'denied',analytics_
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => (window.dataLayer ??= []).push({ event: "whatsapp_click" })}
-          className={`fixed bottom-5 left-5 z-40 grid size-14 place-items-center rounded-full bg-[#1f9d55] text-white shadow-[0_12px_30px_-8px_rgba(31,157,85,.6)] transition-transform hover:scale-105 ${consent === null ? "bottom-28 sm:bottom-5" : ""}`}
+          className={`fixed right-5 bottom-5 z-40 grid size-14 place-items-center rounded-full bg-[#1f9d55] text-white shadow-[0_12px_30px_-8px_rgba(31,157,85,.6)] transition-transform hover:scale-105 ${consent === null ? "bottom-28 sm:bottom-5" : ""}`}
         >
           <Icon name="whatsapp" className="size-7" label="Chat with us on WhatsApp" />
         </a>
