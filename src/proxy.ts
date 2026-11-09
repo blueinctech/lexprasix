@@ -11,7 +11,7 @@ import { NextResponse, type NextFetchEvent, type NextRequest } from "next/server
 
 const SESSION_COOKIE = "lp_session";
 const PUBLIC_ADMIN = /^\/admin\/(login|forgot-password|reset-password|accept-invite)(\/|$)/;
-const isProduction = process.env.SITE_ENV === "production";
+const isProduction = process.env.SITE_ENV === "production" || process.env.VERCEL_ENV === "production";
 
 type RedirectRule = { destination: string; statusCode: number };
 const REDIRECT_TTL_MS = 60_000;
@@ -139,8 +139,9 @@ async function notFoundResponse(request: NextRequest): Promise<NextResponse> {
   }
 }
 
-function withHeaders(res: NextResponse, admin = false) {
-  if (!isProduction || admin) res.headers.set("X-Robots-Tag", "noindex, nofollow");
+function withHeaders(res: NextResponse, admin = false, host = "") {
+  // The *.vercel.app addresses of the production deployment must not compete with the real domain.
+  if (!isProduction || admin || host.endsWith(".vercel.app")) res.headers.set("X-Robots-Tag", "noindex, nofollow");
   return res;
 }
 
@@ -202,7 +203,7 @@ export async function proxy(request: NextRequest, event: NextFetchEvent) {
       if (fresh && contentExists(fresh, path) === false) return notFoundResponse(request);
     }
   }
-  return withHeaders(NextResponse.next());
+  return withHeaders(NextResponse.next(), false, request.nextUrl.hostname);
 }
 
 export const config = {

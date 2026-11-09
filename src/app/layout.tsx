@@ -8,7 +8,7 @@ const kotta = Kotta_One({ subsets: ["latin"], variable: "--font-kotta", display:
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lexpraxisng.com";
-const isProduction = process.env.SITE_ENV === "production";
+const isProduction = process.env.SITE_ENV === "production" || process.env.VERCEL_ENV === "production";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

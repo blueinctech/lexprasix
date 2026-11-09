@@ -9,7 +9,8 @@ export class ConfigurationError extends Error {
   }
 }
 
-export const isProductionSite = process.env.SITE_ENV === "production";
+/** Indexable site: SITE_ENV=production, or Vercel's production deployment (the custom domain). Preview builds stay noindex; *.vercel.app hosts get noindex in proxy.ts. */
+export const isProductionSite = process.env.SITE_ENV === "production" || process.env.VERCEL_ENV === "production";
 export const isDev = process.env.NODE_ENV !== "production";
 
 export function siteUrl(): string {
