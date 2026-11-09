@@ -54,6 +54,7 @@ function valueFrom(key: SettingKey, fd: FormData): unknown {
         tawkPropertyId: str(fd, "tawkPropertyId"),
         tawkEnabled: fd.get("tawkEnabled") === "on",
         whatsappEnabled: fd.get("whatsappEnabled") === "on",
+        copyProtection: fd.get("copyProtection") === "on",
         trustindexWidgetId: str(fd, "trustindexWidgetId"),
         googleSiteVerification: str(fd, "googleSiteVerification"),
       };

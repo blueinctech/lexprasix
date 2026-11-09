@@ -15,14 +15,16 @@ const SOCIAL_LABEL: Record<string, string> = { facebook: "Facebook", instagram: 
 /** "Sign Up To Get Latest Update" band; on the live site it sits above the footer on the homepage only. */
 export function NewsletterBand() {
   return (
-    <section aria-labelledby="newsletter-title" className="grid grid-cols-1 lg:grid-cols-[49%_51%]">
-      <div className="bg-navy-900 px-4 py-14 sm:px-6 lg:py-[5.5rem] lg:pl-[3.75rem]">
+    // As on the live site: a photo of law books across the band, with a navy
+    // panel over its left 49% holding the heading.
+    <section aria-labelledby="newsletter-title" className="grid grid-cols-1 bg-[#112347] bg-[url('/theme/newsletter-bg.jpg')] bg-cover bg-[position:100%_0] lg:grid-cols-[49%_51%]">
+      <div className="bg-[#112347] px-4 py-14 sm:px-6 lg:flex lg:min-h-[14.875rem] lg:flex-col lg:justify-center lg:py-12 lg:pl-[6.25rem]">
         <p className="font-display text-lg font-semibold text-white">Newsletter</p>
-        <h2 id="newsletter-title" className="mt-2 text-3xl font-semibold text-white sm:text-[2.75rem]">
+        <h2 id="newsletter-title" className="mt-2 text-3xl font-semibold text-white sm:text-[2.625rem]">
           Sign Up To Get Latest Update
         </h2>
       </div>
-      <div className="flex min-w-0 items-center bg-[#e4e4e4] px-4 py-10 sm:px-6 lg:px-11">
+      <div className="flex min-w-0 items-center px-4 py-10 sm:px-6 lg:py-0 lg:pr-[6.25rem] lg:pl-11">
         <NewsletterForm variant="band" />
       </div>
     </section>

@@ -114,6 +114,7 @@ export function IntegrationsSettingsForm({ value }: { value: Settings["integrati
       <div className="grid gap-3">
         <Checkbox name="tawkEnabled" label="Show Tawk.to live chat" defaultChecked={value.tawkEnabled} hint="Loads after the visitor first interacts with the page." />
         <Checkbox name="whatsappEnabled" label="Show the WhatsApp chat button" defaultChecked={value.whatsappEnabled} hint="Uses the WhatsApp number from business details." />
+        <Checkbox name="copyProtection" label="Copy protection" defaultChecked={value.copyProtection} hint="Stops visitors right-clicking, selecting and copying text or images on the public website. Form fields still work. Does not affect the admin area." />
       </div>
       <div>
         <SubmitButton>Save integrations</SubmitButton>

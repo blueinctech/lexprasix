@@ -13,7 +13,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <Header />
       <main id="main">{children}</main>
       <Footer />
-      <SiteChrome gtmId={integrations.gtmId} tawk={integrations.tawkEnabled ? integrations.tawkPropertyId : ""} whatsapp={integrations.whatsappEnabled ? site.whatsapp : ""} />
+      <SiteChrome gtmId={integrations.gtmId} tawk={integrations.tawkEnabled ? integrations.tawkPropertyId : ""} whatsapp={integrations.whatsappEnabled ? site.whatsapp : ""} copyProtection={integrations.copyProtection} />
     </>
   );
 }

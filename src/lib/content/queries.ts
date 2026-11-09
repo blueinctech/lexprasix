@@ -25,7 +25,8 @@ export const TAGS = {
   redirects: "redirects",
 } as const;
 
-export const PER_PAGE = 12;
+// Same as WordPress (Settings → Reading: 10 posts per page), so /blog/page/N/ and archives list the same posts.
+export const PER_PAGE = 10;
 
 export type ImageInfo = { url: string; alt: string; width: number | null; height: number | null };
 

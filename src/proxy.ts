@@ -72,7 +72,7 @@ async function legacyPath(id: number): Promise<string | null> {
 type Known = { at: number; root: Set<string>; service: Set<string>; product: Set<string>; category: Map<string, number>; tag: Map<string, number>; author: Map<string, number>; posts: number };
 let known: Known | null = null;
 let knownLoad: Promise<Known | null> | null = null;
-const PER_PAGE = 12;
+const PER_PAGE = 10; // keep in sync with PER_PAGE in src/lib/content/queries.ts
 const STATIC_ROOT = new Set(["blog", "service", "shop", "legal-forms", "corporate-filings", "feed", "admin", "api", "media", "category", "tag", "author", "page-not-found"]);
 const LIVE = (t: string) => `${t}.status = 'published' and ${t}.published_at <= now()`;
 

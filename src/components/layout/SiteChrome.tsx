@@ -40,7 +40,7 @@ declare global {
   }
 }
 
-export function SiteChrome({ gtmId, tawk, whatsapp }: { gtmId: string; tawk: string; whatsapp: string }) {
+export function SiteChrome({ gtmId, tawk, whatsapp, copyProtection = false }: { gtmId: string; tawk: string; whatsapp: string; copyProtection?: boolean }) {
   // "unknown" while server-rendering, then the stored choice (null = not asked yet).
   const consent = useSyncExternalStore(subscribeConsent, readConsent, () => "unknown" as const);
 
@@ -53,6 +53,24 @@ export function SiteChrome({ gtmId, tawk, whatsapp }: { gtmId: string; tawk: str
     window.gtag?.("consent", "update", { ad_storage: value, analytics_storage: value, ad_user_data: value, ad_personalization: value });
     window.dispatchEvent(new Event(CONSENT_EVENT));
   };
+
+  // Copy protection (Admin → Settings → Integrations): no right-click menu,
+  // text selection, copying or image dragging on public pages. Form fields
+  // keep working so visitors can still type, select and paste.
+  useEffect(() => {
+    if (!copyProtection) return;
+    const editable = (t: EventTarget | null) => t instanceof Element && !!t.closest("input, textarea, select, [contenteditable=true]");
+    const block = (e: Event) => {
+      if (!editable(e.target)) e.preventDefault();
+    };
+    const events = ["contextmenu", "selectstart", "copy", "cut", "dragstart"] as const;
+    events.forEach((ev) => document.addEventListener(ev, block));
+    document.documentElement.classList.add("lp-no-copy");
+    return () => {
+      events.forEach((ev) => document.removeEventListener(ev, block));
+      document.documentElement.classList.remove("lp-no-copy");
+    };
+  }, [copyProtection]);
 
   useEffect(() => {
     if (!tawk) return;

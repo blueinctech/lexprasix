@@ -47,6 +47,8 @@ export const settingsSchemas = {
     tawkPropertyId: z.string().trim().regex(/^([a-z0-9]+\/[a-z0-9]+)?$/i, "Use the property/widget format").default(""),
     tawkEnabled: z.boolean().default(false),
     whatsappEnabled: z.boolean().default(true),
+    /** Blocks right-click, text selection and copying on public pages (as the WordPress copy-protection plugin did). */
+    copyProtection: z.boolean().default(true),
     trustindexWidgetId: z.string().trim().regex(/^[a-z0-9]*$/i).default(""),
     googleSiteVerification: z.string().trim().max(100).default(""),
   }),
@@ -98,6 +100,7 @@ export const DEFAULT_SETTINGS: Settings = {
     tawkPropertyId: "69a7f54bd9992f1c3736409c/default",
     tawkEnabled: true,
     whatsappEnabled: true,
+    copyProtection: true,
     trustindexWidgetId: "6e3bab8417f386200856e629116",
     googleSiteVerification: "",
   },

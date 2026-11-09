@@ -8,6 +8,7 @@ import { sanitizeRichHtml } from "@/lib/sanitize";
 import { FormRenderer } from "@/components/forms/FormRenderer";
 import { getFormDefinition } from "@/forms/registry";
 import { Carousel } from "@/components/ui/Carousel";
+import { CountUp } from "@/components/ui/CountUp";
 import { Icon } from "@/components/ui/Icon";
 import { ButtonLink, Container, Eyebrow, SectionHeading } from "@/components/ui/primitives";
 import { DocumentCard, PostCard, Prose, ServiceCard } from "@/components/content/common";
@@ -130,17 +131,21 @@ async function HeroBlock({ block, asH1 }: { block: BlockOf<"hero">; asH1: boolea
     <section className="relative overflow-hidden bg-band">
       <Container className="relative grid items-center gap-12 py-16 lg:min-h-[52.5rem] lg:grid-cols-[7fr_5fr] lg:gap-0 lg:py-24">
         <div>
-          {block.eyebrow && <Eyebrow>{block.eyebrow}</Eyebrow>}
+          {block.eyebrow && (
+            <div className="lp-slide-in-up">
+              <Eyebrow>{block.eyebrow}</Eyebrow>
+            </div>
+          )}
           <div className="mt-5">
             <H className="inline text-[3rem] leading-[1.11] font-semibold text-navy-600 sm:text-6xl lg:text-[5.25rem]">{block.heading}</H>
             {(block.badgeTitle || block.badgeText) && (
-              <span className="mt-6 inline-flex items-center gap-4 align-middle lg:mt-0 lg:ml-10 lg:translate-y-[-0.9rem]">
+              <span className="lp-slide-in-up mt-6 inline-flex items-center gap-4 align-middle lg:mt-0 lg:ml-10 lg:translate-y-[-0.9rem]">
                 <Image src="/theme/rev.png" alt="" width={112} height={56} className="h-auto w-24" />
                 <span className="block">
-                  {block.badgeTitle && <span className="block font-display text-lg text-navy-600">{block.badgeTitle}</span>}
+                  {block.badgeTitle && <CountUp text={block.badgeTitle} className="block font-display text-lg text-navy-600" />}
                   {block.badgeText && (
                     <span className="flex items-center gap-1 text-[0.875rem] font-medium text-heading">
-                      <Stars /> {block.badgeText}
+                      <Stars /> <CountUp text={block.badgeText} />
                     </span>
                   )}
                 </span>
@@ -148,7 +153,7 @@ async function HeroBlock({ block, asH1 }: { block: BlockOf<"hero">; asH1: boolea
             )}
           </div>
           {block.text && <p className="mt-6 max-w-xl text-ink">{block.text}</p>}
-          <div className="mt-12 flex flex-wrap gap-3">
+          <div className="lp-slide-in-up mt-12 flex flex-wrap gap-3">
             {block.primary.href && (
               <ButtonLink href={block.primary.href} arrow>
                 {block.primary.label}
@@ -164,10 +169,12 @@ async function HeroBlock({ block, asH1 }: { block: BlockOf<"hero">; asH1: boolea
         </div>
         {src && (
           <div className="relative mx-auto w-full max-w-[32rem] pt-5 pr-5">
-            {/* Gold outline frame offset behind the photo. */}
-            <span aria-hidden="true" className="absolute top-0 right-0 bottom-10 left-6 rounded-tr-[5rem] border-2 border-gold-400 border-b-0 border-l-0" />
-            <div className="relative aspect-[499/599] overflow-hidden rounded-tr-[5rem] rounded-bl-[5rem]">
-              <Image src={src} alt={media?.alt ?? ""} fill loading="eager" fetchPriority="high" sizes="(min-width: 1024px) 500px, 90vw" className="object-cover" />
+            <div className="relative">
+              {/* Live site: a full gold outline the size of the photo, shifted 18px up and right, behind it. */}
+              <span aria-hidden="true" className="absolute inset-0 translate-x-[18px] -translate-y-[18px] rounded-tr-[100px] rounded-bl-[100px] border-[2.4px] border-gold-400" />
+              <div className="relative aspect-[499/599] overflow-hidden rounded-tr-[100px] rounded-bl-[100px]">
+                <Image src={src} alt={media?.alt ?? ""} fill loading="eager" fetchPriority="high" sizes="(min-width: 1024px) 500px, 90vw" className="object-cover" />
+              </div>
             </div>
             <span aria-hidden="true" className="absolute top-[30%] -left-4 hidden size-[4.4rem] place-items-center rounded-full border border-gold-500/70 sm:grid">
               <Image src="/theme/logo-icon.png" alt="" width={48} height={45} className="h-auto w-10 opacity-80" />
@@ -216,9 +223,10 @@ function IntroBlock({ block }: { block: BlockOf<"intro"> }) {
             </div>
           ) : (
             a && (
-              <div className="relative pt-6 pl-6">
-                <span aria-hidden="true" className="absolute top-0 left-0 h-[90%] w-[94%] rounded-tl-[3.75rem] border border-navy-700 border-r-0 border-b-0" />
-                <div className="relative aspect-[499/565] overflow-hidden rounded-tl-[3.75rem] rounded-br-[3.75rem]">
+              <div className="relative ml-6 mt-6">
+                {/* Live site: a full navy outline shifted 24px up and left, slightly shorter than the photo. */}
+                <span aria-hidden="true" className="absolute -top-6 right-6 bottom-[35px] -left-6 rounded-[90px_0_100px_100px] border border-navy-700" />
+                <div className="relative aspect-[499/565] overflow-hidden rounded-[90px_0_100px_100px]">
                   <Image src={a} alt="" fill sizes="(min-width: 1024px) 500px, 90vw" className="object-cover" />
                 </div>
               </div>
@@ -258,7 +266,7 @@ function StatsBlock({ block }: { block: BlockOf<"stats"> }) {
             <li key={s.label} className={`flex items-center gap-4 lg:px-6 ${i > 0 ? "lg:border-l lg:border-white/20 lg:pl-14" : ""}`}>
               {s.iconSrc && <Image src={imageUrl(s.iconSrc)!} alt="" width={60} height={60} className="size-[3.75rem] shrink-0 object-contain" />}
               <span>
-                <span className="block text-[2.25rem] leading-none font-medium">{s.value.replace(/\+$/, " +")}</span>
+                <CountUp text={s.value.replace(/\+$/, " +")} className="block text-[2.25rem] leading-none font-medium" />
                 <span className="mt-1 block">{s.label}</span>
               </span>
             </li>
@@ -396,8 +404,12 @@ function SplitBlock({ block }: { block: BlockOf<"split"> }) {
     <section>
       <div className="mx-auto grid max-w-[84.375rem] items-center gap-12 bg-[#f3f3f3] py-16 lg:grid-cols-[41.375rem_1fr] lg:gap-[4.375rem] lg:py-[7.5rem] lg:pr-6">
         {src && (
-          <div className="relative aspect-[667/595] overflow-hidden rounded-r-[1.25rem] lg:rounded-[1.25rem]">
-            <Image src={src} alt="" fill sizes="(min-width: 1024px) 667px, 100vw" className="object-cover" />
+          <div className="relative aspect-[667/595]">
+            {/* Live site: a thin gold outline shifted 22px up, behind the photo. */}
+            <span aria-hidden="true" className="absolute -top-[22px] right-0 bottom-[22px] left-[27px] rounded-[24px] border border-gold-400" />
+            <div className="relative size-full overflow-hidden rounded-r-[24px] lg:rounded-[24px]">
+              <Image src={src} alt="" fill sizes="(min-width: 1024px) 667px, 100vw" className="object-cover" />
+            </div>
           </div>
         )}
         <div className="px-4 sm:px-6 lg:px-0">

@@ -41,12 +41,12 @@ export function NewsletterForm({ variant = "dark" }: { variant?: "dark" | "band"
       }}
     >
       {message?.ok ? (
-        <p role="status" className={`flex items-center gap-2 ${band ? "text-base text-navy-700" : "text-sm text-gold-300"}`}>
+        <p role="status" className={`flex items-center gap-2 ${band ? "text-base text-white" : "text-sm text-gold-300"}`}>
           <Icon name="check" className="size-4" /> {message.text}
         </p>
       ) : (
         <>
-          <div className={band ? "flex h-14 items-center rounded-full border border-white/70 bg-[#e4e4e4] p-0.5" : "flex gap-2"}>
+          <div className={band ? "flex h-14 items-center rounded-full border border-white/25 bg-white/[0.13] p-0.5" : "flex gap-2"}>
             <label htmlFor={`${id}-email`} className="sr-only">
               Email address
             </label>
@@ -58,7 +58,7 @@ export function NewsletterForm({ variant = "dark" }: { variant?: "dark" | "band"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={band ? "Enter your Email" : "you@company.com"}
-              className={band ? "h-full min-w-0 flex-1 rounded-full bg-transparent px-5 text-sm text-heading placeholder:text-ink-muted focus:outline-none" : "h-11 min-w-0 flex-1 rounded-full border border-white/15 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-gold-300 focus:outline-none"}
+              className={band ? "h-full min-w-0 flex-1 rounded-full bg-transparent px-5 text-sm text-white placeholder:text-white focus:outline-none" : "h-11 min-w-0 flex-1 rounded-full border border-white/15 bg-white/5 px-4 text-sm text-white placeholder:text-white/40 focus:border-gold-300 focus:outline-none"}
             />
             <button type="submit" disabled={pending} className={band ? "inline-flex h-full shrink-0 items-center gap-2 rounded-full bg-gold-500 px-6 text-sm sm:px-10 font-semibold text-white hover:bg-navy-700 disabled:opacity-60" : "h-11 shrink-0 rounded-full bg-gold-400 px-5 text-sm font-medium text-navy-950 hover:bg-gold-300 disabled:opacity-60"}>
               {pending ? "…" : "Subscribe"}
@@ -66,12 +66,12 @@ export function NewsletterForm({ variant = "dark" }: { variant?: "dark" | "band"
             </button>
           </div>
           <input className="absolute -left-[9999px]" tabIndex={-1} aria-hidden="true" autoComplete="off" value={hp} onChange={(e) => setHp(e.target.value)} />
-          <label className={`mt-3 flex items-start gap-2 text-xs ${band ? "text-ink-muted" : "text-white/60"}`}>
+          <label className={`mt-3 flex items-start gap-2 text-xs ${band ? "text-white [text-shadow:0_1px_2px_rgb(0_0_0/0.8)]" : "text-white/60"}`}>
             <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-0.5 accent-gold-500" />
             {CONSENT}
           </label>
           {message && (
-            <p role="alert" className={`mt-2 text-xs ${band ? "text-red-700" : "text-red-300"}`}>
+            <p role="alert" className={`mt-2 text-xs ${band ? "font-medium text-red-200 [text-shadow:0_1px_2px_rgb(0_0_0/0.8)]" : "text-red-300"}`}>
               {message.text}
             </p>
           )}

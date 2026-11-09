@@ -33,21 +33,21 @@ export const TESTIMONIAL_PHOTO: Record<string, string> = {
   "Femi Fasae Jr.": "/theme/unnamed-5.png",
 };
 
-/** Order of the "Our Services" footer column on the live site. */
-const FOOTER_SERVICE_ORDER = [
-  "legal-service-subscription",
-  "access-to-foreign-markets",
-  "obtaining-business-licenses-and-permits",
-  "company-formation-and-restructuring",
-  "contract-review-drafting-and-negotiation",
-  "formation-of-non-profit-organizations-charities",
-  "intellectual-property-registration",
-  "investor-due-diligence",
-  "vc-and-equity-funding-advisory",
-  "tax-registration-filing-and-compliance",
-  "real-estate-transactions",
-  "data-protection-and-compliance",
-  "data-protection-officer-dpo-services-in-nigeria",
+/** Order and labels of the live footer's "Our Services" links (shorter than the page titles). */
+const FOOTER_SERVICES: [slug: string, label: string][] = [
+  ["legal-service-subscription", "Legal Service Subscription"],
+  ["access-to-foreign-markets", "Access to Foreign Markets"],
+  ["obtaining-business-licenses-and-permits", "Obtaining Business Licenses and Permits"],
+  ["company-formation-and-restructuring", "Company Formation and Restructuring"],
+  ["contract-review-drafting-and-negotiation", "Contract Review, Drafting, and Negotiation"],
+  ["formation-of-non-profit-organizations-charities", "Formation of Non-Profit Organizations & Charities"],
+  ["intellectual-property-registration", "Intellectual Property Registration"],
+  ["investor-due-diligence", "Investor Due Diligence"],
+  ["vc-and-equity-funding-advisory", "VC and Equity Funding Advisory"],
+  ["tax-registration-filing-and-compliance", "Tax Registration, Filing, and Compliance"],
+  ["real-estate-transactions", "Real Estate Transactions"],
+  ["data-protection-and-compliance", "Data Protection and Compliance"],
+  ["data-protection-officer-dpo-services-in-nigeria", "Data Protection Officer (DPO) Services In Nigeria"],
 ];
 
 type Doc = { slug: string; title: string; group: string; sortOrder: number };
@@ -60,9 +60,9 @@ export function liveMenus(services: Svc[], docs: Doc[]): { key: string; label: s
       .sort((a, b) => a.sortOrder - b.sortOrder)
       .map((d) => ({ id: `doc-${d.slug}`, label: d.title, href: `/${d.slug}/` }));
   const bySlug = new Map(services.map((s) => [s.slug, s]));
-  const footerServices = FOOTER_SERVICE_ORDER.filter((slug) => bySlug.has(slug)).map((slug) => ({
+  const footerServices = FOOTER_SERVICES.filter(([slug]) => bySlug.has(slug)).map(([slug, label]) => ({
     id: `svc-${slug}`,
-    label: bySlug.get(slug)!.title,
+    label,
     href: `/service/${slug}/`,
   }));
   return [
@@ -96,7 +96,11 @@ export function liveMenus(services: Svc[], docs: Doc[]): { key: string; label: s
         { id: "f-docs", label: "Legal Forms", href: "/legal-forms/" },
         { id: "f-about", label: "About Us", href: "/about-us/" },
         { id: "f-book", label: "Book Appointment", href: "/book-appointment/" },
+        // Same order as the live footer.
+        { id: "f-privacy", label: "Privacy Policy", href: "/privacy-policy/" },
+        { id: "f-terms", label: "Terms and Condition", href: "/terms-and-condition/" },
         { id: "f-shop", label: "Our Shop", href: "/shop/" },
+        { id: "f-contact", label: "Contact", href: "/contact-us/" },
       ],
     },
     {

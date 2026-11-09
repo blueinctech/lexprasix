@@ -198,3 +198,29 @@
     transform: translateX(calc(-50% - 2rem));
   }
 }
+
+/* Hero entrance, as on the live site (theme "slideinup", 1.3s). */
+@keyframes lp-slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.lp-slide-in-up {
+  animation: lp-slide-in-up 1.3s ease both;
+}
+
+/* Copy protection (toggled in Admin → Settings → Integrations). */
+.lp-no-copy body {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.lp-no-copy :is(input, textarea, select, [contenteditable="true"]) {
+  -webkit-user-select: text;
+  user-select: text;
+}
