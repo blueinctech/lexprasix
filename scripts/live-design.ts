@@ -96,6 +96,7 @@ export function liveMenus(services: Svc[], docs: Doc[]): { key: string; label: s
         { id: "f-docs", label: "Legal Forms", href: "/legal-forms/" },
         { id: "f-about", label: "About Us", href: "/about-us/" },
         { id: "f-book", label: "Book Appointment", href: "/book-appointment/" },
+        { id: "f-shop", label: "Our Shop", href: "/shop/" },
       ],
     },
     {

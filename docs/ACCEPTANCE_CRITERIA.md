@@ -53,7 +53,7 @@ Launch requires every **Must** item verified, with evidence recorded in `QA_REPO
 | B5 | Spam controls: honeypot, timing, rate limit verified | Must |
 | B6 | Calendly booking works from `/book-appointment/` and the homepage | Must |
 | B7 | Behaviour of Bit Integrations flows (if any) is re-created | Must (if found) |
-| B8 | Ebook purchase works end-to-end, or the shop is retired with redirects (per owner decision) | Must |
+| B8 | Ebook purchase works end-to-end, or the shop is retired with redirects (per owner decision). *Owner decision: keep.* `/shop/` lists the ebook; the product page takes order requests into Enquiries (staff + client email) until a payment link is set in Admin → Shop; WooCommerce URLs 301 to `/shop/` (tests/e2e/shop.spec.ts). Price to be confirmed by the owner | Must |
 
 ## SEO
 

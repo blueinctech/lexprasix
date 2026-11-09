@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-11-06T21:04:20.809Z",
+  "startedAt": "2026-11-09T03:54:13.395Z",
   "source": {
     "media": 846,
     "authors": 7,
@@ -9,6 +9,7 @@
     "comments": 494,
     "services": 13,
     "documents": 23,
+    "products": 1,
     "pages": 54
   },
   "imported": {
@@ -20,9 +21,10 @@
     "comments": 494,
     "services": 13,
     "documents": 23,
+    "products": 1,
     "testimonials": 5,
-    "pages": 12,
-    "legacyIds": 342
+    "pages": 13,
+    "legacyIds": 343
   },
   "skipped": [
     {
@@ -293,25 +295,19 @@
       "type": "page",
       "wpId": 1886,
       "url": "https://lexpraxisng.com/checkout/",
-      "reason": "WooCommerce: awaiting decision on the ebook shop"
+      "reason": "WooCommerce checkout (payment links per product); 301 to /shop/"
     },
     {
       "type": "page",
       "wpId": 1885,
       "url": "https://lexpraxisng.com/cart/",
-      "reason": "WooCommerce: awaiting decision on the ebook shop"
-    },
-    {
-      "type": "page",
-      "wpId": 1884,
-      "url": "https://lexpraxisng.com/shop/",
-      "reason": "WooCommerce: awaiting decision on the ebook shop"
+      "reason": "WooCommerce cart (no cart on the new site); 301 to /shop/"
     },
     {
       "type": "page",
       "wpId": 13,
       "url": "https://lexpraxisng.com/my-account-2/",
-      "reason": "WooCommerce: awaiting decision on the ebook shop"
+      "reason": "WooCommerce customer accounts (none on the new site); 301 to /shop/"
     },
     {
       "type": "page",
@@ -350,6 +346,12 @@
       "wpId": 10051,
       "url": "https://lexpraxisng.com/how-to-launch-a-bureau-de-change-in-nigeria/",
       "reason": "Contains a WordPress shortcode that does not render outside WordPress"
+    },
+    {
+      "type": "product",
+      "wpId": 9203,
+      "url": "https://lexpraxisng.com/product/essential-tax-guide-for-businesses-in-nigeria-ebook/",
+      "reason": "Price not imported (WooCommerce showed USD 3,000.00): set the price and payment link in Admin → Shop"
     }
   ],
   "missingMedia": [
@@ -357,5 +359,5 @@
     "/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-JASON-D.-CRAIN-150x150.jpg",
     "/wp-content/uploads/2022/07/MEET-OUR-SPEAKER-LINDSEY-S.-MIGNANO-150x150.jpg"
   ],
-  "finishedAt": "2026-11-06T21:08:54.764Z"
+  "finishedAt": "2026-11-09T03:54:16.116Z"
 }

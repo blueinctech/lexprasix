@@ -89,7 +89,8 @@ export function SiteChrome({ gtmId, tawk, whatsapp }: { gtmId: string; tawk: str
 var c=null;try{c=localStorage.getItem(${JSON.stringify(CONSENT_KEY)})}catch(e){}
 gtag('consent','default',{ad_storage:c==='granted'?'granted':'denied',analytics_storage:c==='granted'?'granted':'denied',ad_user_data:c==='granted'?'granted':'denied',ad_personalization:c==='granted'?'granted':'denied',wait_for_update:500});`}
           </Script>
-          <Script id="gtm" strategy="afterInteractive">
+          {/* GTM waits for browser idle so it doesn't compete with the page on phones; consent defaults above still run first. */}
+          <Script id="gtm" strategy="lazyOnload">
             {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer',${JSON.stringify(gtmId)});`}
           </Script>
         </>

@@ -28,7 +28,7 @@ export default async function ActivityPage({ searchParams }: { searchParams: Pro
       .limit(PAGE)
       .offset((page - 1) * PAGE),
   ]);
-  const filters = ["auth", "submission", "post", "page", "service", "document", "media", "menu", "settings", "user", "redirect", "email"];
+  const filters = ["auth", "submission", "post", "page", "service", "product", "document", "media", "menu", "settings", "user", "redirect", "email"];
   const link = (entityType: string | null, id: string | null) => {
     if (!id) return null;
     const map: Record<string, string> = { submission: "submissions", post: "posts", page: "pages", service: "services", document: "documents", user: "users" };

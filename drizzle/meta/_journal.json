@@ -22,6 +22,13 @@
       "when": 1793621414291,
       "tag": "0002_testimonial_photo",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794031368495,
+      "tag": "0003_products",
+      "breakpoints": true
     }
   ]
 }

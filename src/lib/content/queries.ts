@@ -16,6 +16,7 @@ export const TAGS = {
   pages: "pages",
   services: "services",
   documents: "documents",
+  products: "products",
   posts: "posts",
   taxonomies: "taxonomies",
   authors: "authors",
@@ -142,6 +143,33 @@ export async function getDocument(slug: string) {
   if (!doc) return null;
   const images = await imagesByIds([doc.featuredImageId, doc.seo.ogImageId]);
   return { ...doc, featuredImage: images.get(doc.featuredImageId ?? "") ?? null, ogImage: images.get(doc.seo.ogImageId ?? "") ?? null };
+}
+
+// ---------------------------------------------------------------- shop
+
+export async function listProducts() {
+  "use cache";
+  cacheTag(TAGS.products, TAGS.media);
+  cacheLife("max");
+  const db = await getDb();
+  const rows = await db
+    .select({ id: s.products.id, slug: s.products.slug, title: s.products.title, summary: s.products.summary, priceLabel: s.products.priceLabel, format: s.products.format, featuredImageId: s.products.featuredImageId })
+    .from(s.products)
+    .where(published(s.products))
+    .orderBy(asc(s.products.sortOrder), asc(s.products.title));
+  const images = await imagesByIds(rows.map((r) => r.featuredImageId));
+  return rows.map(({ featuredImageId, ...r }) => ({ ...r, image: images.get(featuredImageId ?? "") ?? null }));
+}
+
+export async function getProduct(slug: string) {
+  "use cache";
+  cacheTag(TAGS.products, `product:${slug}`, TAGS.media);
+  cacheLife("max");
+  const db = await getDb();
+  const [row] = await db.select().from(s.products).where(and(eq(s.products.slug, slug), published(s.products)));
+  if (!row) return null;
+  const images = await imagesByIds([row.featuredImageId, row.seo.ogImageId]);
+  return { ...row, featuredImage: images.get(row.featuredImageId ?? "") ?? null, ogImage: images.get(row.seo.ogImageId ?? "") ?? null };
 }
 
 // ---------------------------------------------------------------- posts
@@ -371,21 +399,22 @@ export async function rootSlugs(): Promise<string[]> {
 
 export async function sitemapEntries() {
   "use cache";
-  cacheTag(TAGS.posts, TAGS.pages, TAGS.services, TAGS.documents, TAGS.taxonomies, TAGS.authors);
+  cacheTag(TAGS.posts, TAGS.pages, TAGS.services, TAGS.documents, TAGS.products, TAGS.taxonomies, TAGS.authors);
   cacheLife("hours");
   const db = await getDb();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const notNoindex = (t: { seo: any }) => sql`coalesce((${t.seo}->>'noindex')::boolean, false) = false`;
-  const [pages, services, documents, posts, cats, tags, authors] = await Promise.all([
+  const [pages, services, documents, products, posts, cats, tags, authors] = await Promise.all([
     db.select({ path: s.pages.path, updatedAt: s.pages.updatedAt }).from(s.pages).where(and(published(s.pages), notNoindex(s.pages))),
     db.select({ slug: s.services.slug, updatedAt: s.services.updatedAt }).from(s.services).where(and(published(s.services), notNoindex(s.services))),
     db.select({ slug: s.documents.slug, updatedAt: s.documents.updatedAt }).from(s.documents).where(and(published(s.documents), notNoindex(s.documents))),
+    db.select({ slug: s.products.slug, updatedAt: s.products.updatedAt }).from(s.products).where(and(published(s.products), notNoindex(s.products))),
     db.select({ slug: s.posts.slug, updatedAt: s.posts.contentUpdatedAt, imageId: s.posts.featuredImageId }).from(s.posts).where(and(published(s.posts), notNoindex(s.posts))),
     db.select({ slug: s.categories.slug }).from(s.categories).where(sql`exists (select 1 from post_categories pc join posts p on p.id = pc.post_id where pc.category_id = ${s.categories.id} and p.status = 'published')`),
     db.select({ slug: s.tags.slug }).from(s.tags).where(sql`exists (select 1 from post_tags pt join posts p on p.id = pt.post_id where pt.tag_id = ${s.tags.id} and p.status = 'published')`),
     db.select({ slug: s.authors.slug }).from(s.authors).where(sql`exists (select 1 from posts p where p.author_id = ${s.authors.id} and p.status = 'published')`),
   ]);
-  return { pages, services, documents, posts, cats, tags, authors };
+  return { pages, services, documents, products, posts, cats, tags, authors };
 }
 
 export async function getImage(id: string | null): Promise<ImageInfo | null> {

@@ -617,15 +617,40 @@ async function ContactFormBlock({ block }: { block: BlockOf<"contactForm"> }) {
   );
 }
 
+// Shows the Calendly calendar set in Admin → Settings → Integrations. Until a
+// link is set, visitors request a consultation through the contact form instead.
 async function CalendlyBlock({ block }: { block: BlockOf<"calendly"> }) {
-  const { integrations } = await getSettings();
+  const { integrations, site } = await getSettings();
+  const url = integrations.calendlyUrl;
   return (
     <section className="py-16 lg:py-24">
       <Container>
-        {block.heading && <h2 className="text-center text-3xl sm:text-[2.3rem]">{block.heading}</h2>}
-        {block.text && <p className="mx-auto mt-3 max-w-2xl text-center text-ink">{block.text}</p>}
+        {url && block.heading && <h2 className="text-center text-3xl sm:text-[2.3rem]">{block.heading}</h2>}
+        {url && block.text && <p className="mx-auto mt-3 max-w-2xl text-center text-ink">{block.text}</p>}
         <div className="mx-auto mt-10 max-w-5xl">
-          {integrations.calendlyUrl ? <CalendlyEmbed url={integrations.calendlyUrl} /> : <p className="rounded-[1.25rem] bg-paper-warm p-8 text-center text-ink">Online booking is temporarily unavailable. Please call or email us.</p>}
+          {url ? (
+            <CalendlyEmbed url={url} />
+          ) : (
+            <div className="rounded-[1.25rem] bg-paper-warm p-6 sm:p-[3.75rem]">
+              <h2 className="text-3xl sm:text-[2.3rem]">Request a consultation</h2>
+              <p className="mt-3 text-ink">
+                Tell us about your business and what you need, and we&apos;ll contact you to arrange a time. You can also call{" "}
+                {site.phones[0] && (
+                  <a href={`tel:${site.phones[0].replace(/\s+/g, "")}`} className="text-navy-900 underline">
+                    {site.phones[0]}
+                  </a>
+                )}{" "}
+                or email{" "}
+                <a href={`mailto:${site.email}`} className="text-navy-900 underline">
+                  {site.email}
+                </a>
+                .
+              </p>
+              <div className="mt-6">
+                <FormRenderer def={getFormDefinition("contact")!} />
+              </div>
+            </div>
+          )}
         </div>
       </Container>
     </section>

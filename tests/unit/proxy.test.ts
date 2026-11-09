@@ -6,6 +6,7 @@ import { contentExists } from "@/proxy";
 const k = {
   root: new Set(["how-to-register-with-fccpc-in-nigeria", "company-registration", "about-us"]),
   service: new Set(["company-formation-and-restructuring"]),
+  product: new Set(["essential-tax-guide-for-businesses-in-nigeria-ebook"]),
   category: new Map([["business-law", 34]]),
   tag: new Map([["cac", 5]]),
   author: new Map([["janet-okochi", 11]]),
@@ -19,6 +20,8 @@ describe("contentExists", () => {
     ["/missing-page/", false],
     ["/service/company-formation-and-restructuring/", true],
     ["/service/nope/", false],
+    ["/product/essential-tax-guide-for-businesses-in-nigeria-ebook/", true],
+    ["/product/nope/", false],
     ["/blog/page/24/", true],
     ["/blog/page/25/", false],
     ["/blog/page/1/", false],
@@ -33,7 +36,7 @@ describe("contentExists", () => {
     expect(contentExists(k, path)).toBe(expected);
   });
 
-  it.each(["/", "/blog/", "/service/", "/legal-forms/", "/feed/", "/blog/search/", "/admin/posts/", "/api/cron/outbox", "/page-not-found/"])("leaves %s to Next.js", (path) => {
+  it.each(["/", "/blog/", "/service/", "/shop/", "/legal-forms/", "/feed/", "/blog/search/", "/admin/posts/", "/api/cron/outbox", "/page-not-found/"])("leaves %s to Next.js", (path) => {
     expect(contentExists(k, path)).toBeNull();
   });
 });

@@ -69,11 +69,11 @@ async function legacyPath(id: number): Promise<string | null> {
 // status. Known URLs are cached for a minute; a miss reloads before deciding,
 // so newly published content is never 404'd.
 
-type Known = { at: number; root: Set<string>; service: Set<string>; category: Map<string, number>; tag: Map<string, number>; author: Map<string, number>; posts: number };
+type Known = { at: number; root: Set<string>; service: Set<string>; product: Set<string>; category: Map<string, number>; tag: Map<string, number>; author: Map<string, number>; posts: number };
 let known: Known | null = null;
 let knownLoad: Promise<Known | null> | null = null;
 const PER_PAGE = 12;
-const STATIC_ROOT = new Set(["blog", "service", "legal-forms", "corporate-filings", "feed", "admin", "api", "media", "category", "tag", "author", "page-not-found"]);
+const STATIC_ROOT = new Set(["blog", "service", "shop", "legal-forms", "corporate-filings", "feed", "admin", "api", "media", "category", "tag", "author", "page-not-found"]);
 const LIVE = (t: string) => `${t}.status = 'published' and ${t}.published_at <= now()`;
 
 async function loadKnown(force = false): Promise<Known | null> {
@@ -82,9 +82,10 @@ async function loadKnown(force = false): Promise<Known | null> {
     try {
       const { db: conn, orm } = await db();
       const q = <T,>(text: string) => conn.execute(orm.sql.raw(text)) as unknown as Promise<T[]>;
-      const [root, svc, cat, tag, auth, total] = await Promise.all([
+      const [root, svc, prod, cat, tag, auth, total] = await Promise.all([
         q<{ s: string }>(`select p.slug as s from posts p where ${LIVE("p")} union select d.slug from documents d where ${LIVE("d")} union select g.path from pages g where ${LIVE("g")} and g.template <> 'index' and g.path <> ''`),
         q<{ s: string }>(`select v.slug as s from services v where ${LIVE("v")}`),
+        q<{ s: string }>(`select x.slug as s from products x where ${LIVE("x")}`),
         q<{ s: string; n: number }>(`select c.slug as s, count(*)::int as n from post_categories pc join categories c on c.id = pc.category_id join posts p on p.id = pc.post_id where ${LIVE("p")} group by c.slug`),
         q<{ s: string; n: number }>(`select t.slug as s, count(*)::int as n from post_tags pt join tags t on t.id = pt.tag_id join posts p on p.id = pt.post_id where ${LIVE("p")} group by t.slug`),
         q<{ s: string; n: number }>(`select a.slug as s, count(*)::int as n from posts p join authors a on a.id = p.author_id where ${LIVE("p")} group by a.slug`),
@@ -94,6 +95,7 @@ async function loadKnown(force = false): Promise<Known | null> {
         at: Date.now(),
         root: new Set(root.map((r) => r.s)),
         service: new Set(svc.map((r) => r.s)),
+        product: new Set(prod.map((r) => r.s)),
         category: new Map(cat.map((r) => [r.s, r.n])),
         tag: new Map(tag.map((r) => [r.s, r.n])),
         author: new Map(auth.map((r) => [r.s, r.n])),
@@ -118,6 +120,7 @@ export function contentExists(k: Omit<Known, "at">, path: string): boolean | nul
   if (parts.length === 1) return STATIC_ROOT.has(parts[0]) ? null : k.root.has(parts[0]);
   if (parts[0] === "blog") return parts[1] === "search" ? null : parts[1] === "page" && parts.length === 3 ? pageOk(parts[2], k.posts) : false;
   if (parts[0] === "service") return parts.length === 2 && k.service.has(parts[1]);
+  if (parts[0] === "product") return parts.length === 2 && k.product.has(parts[1]);
   if (["category", "tag", "author"].includes(parts[0])) {
     if (!(parts.length === 2 || (parts.length === 4 && parts[2] === "page"))) return false;
     const total = (parts[0] === "category" ? k.category : parts[0] === "tag" ? k.tag : k.author).get(parts[1]);

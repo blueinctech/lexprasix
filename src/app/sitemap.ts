@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...e.pages.map((p) => ({ url: absoluteUrl(p.path ? `/${p.path}/` : "/"), lastModified: p.updatedAt, priority: p.path === "" ? 1 : 0.7 })),
     ...e.services.map((s) => ({ url: absoluteUrl(`/service/${s.slug}/`), lastModified: s.updatedAt, priority: 0.8 })),
+    ...e.products.map((p) => ({ url: absoluteUrl(`/product/${p.slug}/`), lastModified: p.updatedAt, priority: 0.6 })),
     ...e.documents.map((d) => ({ url: absoluteUrl(`/${d.slug}/`), lastModified: d.updatedAt, priority: 0.7 })),
     ...e.posts.map((p) => ({ url: absoluteUrl(`/${p.slug}/`), lastModified: p.updatedAt ?? undefined, priority: 0.6 })),
     ...e.cats.map((c) => ({ url: absoluteUrl(`/category/${c.slug}/`), priority: 0.4 })),

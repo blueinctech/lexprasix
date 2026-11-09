@@ -315,6 +315,43 @@ export const documents = pgTable(
   (t) => [uniqueIndex("documents_slug_idx").on(t.slug), uniqueIndex("documents_wp_idx").on(t.wpId)],
 );
 
+/**
+ * Shop products (the firm's ebooks), served at /product/{slug}/ and listed on /shop/.
+ * There is no cart: a product links to an external payment page (buyUrl), or,
+ * while that is empty, shows an order request form that goes to the enquiries inbox.
+ */
+export const products = pgTable(
+  "products",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    slug: text("slug").notNull(),
+    title: text("title").notNull(),
+    summary: text("summary").notNull().default(""),
+    /** Sanitised HTML. */
+    body: text("body").notNull().default(""),
+    /** Price as shown, e.g. "₦5,000"; empty shows "Price on request". */
+    priceLabel: text("price_label").notNull().default(""),
+    /** Optional machine-readable price for structured data (e.g. "5000.00" + "NGN"). */
+    priceAmount: text("price_amount").notNull().default(""),
+    priceCurrency: text("price_currency").notNull().default("NGN"),
+    /** e.g. "eBook (PDF)". */
+    format: text("format").notNull().default(""),
+    /** External https payment/checkout page (Paystack, Selar…); empty shows the order request form. */
+    buyUrl: text("buy_url").notNull().default(""),
+    buyLabel: text("buy_label").notNull().default("Buy now"),
+    featuredImageId: uuid("featured_image_id").references(() => media.id, { onDelete: "set null" }),
+    sortOrder: integer("sort_order").notNull().default(0),
+    status: status(),
+    publishedAt: publishedAt(),
+    seo: seo(),
+    wpId: wpId(),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+    updatedById: uuid("updated_by_id").references(() => users.id, { onDelete: "set null" }),
+  },
+  (t) => [uniqueIndex("products_slug_idx").on(t.slug), uniqueIndex("products_wp_idx").on(t.wpId)],
+);
+
 export const posts = pgTable(
   "posts",
   {

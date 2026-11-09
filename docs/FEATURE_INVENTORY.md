@@ -22,7 +22,7 @@ Every user-facing and back-office feature found on the current site, and how the
 | 14 | Reviews page | Trustindex widget | Decision (see plugin audit) | Decision |
 | 15 | Privacy policy, terms | Pages | CMS pages; privacy policy needs updating for new processors | Keep |
 | 16 | Webinar landing page (2022) | Elementor canvas | Generic CMS page; owner to confirm keep/redirect | Decision |
-| 17 | Ebook shop (1 product) | WooCommerce | Decision (see plugin audit) | Decision |
+| 17 | Ebook shop (1 product) | WooCommerce | `/shop/` + `/product/{slug}/` (Admin → Shop): external payment link per product, or an order request form into Enquiries; no cart/accounts (old URLs 301 to `/shop/`) | Keep |
 | 18 | Live chat | Tawk.to | Same, deferred load, toggle in settings | Keep |
 | 19 | WhatsApp button | Elementor floating button | Built-in, number in settings | Keep |
 | 20 | RSS feed | `/feed/` | `/feed/` route | Keep |

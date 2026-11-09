@@ -18,8 +18,8 @@ https://lexpraxisng.com/wp-admin/ (pattern),https://lexpraxisng.com/admin/login/
 https://lexpraxisng.com/wp-login.php,https://lexpraxisng.com/admin/login/,302,Staff bookmarks,no
 https://lexpraxisng.com/wp-content/uploads/{path} (pattern),{MEDIA_BASE_URL}/{path},301,Media moved to object storage with identical paths,no
 https://lexpraxisng.com/{UPPERCASE PATH} (pattern),lowercase equivalent,301,Normalise duplicate URLs,no
-https://lexpraxisng.com/cart/,TBD (shop decision),301,WooCommerce,no
-https://lexpraxisng.com/checkout/,TBD (shop decision),301,WooCommerce,no
-https://lexpraxisng.com/my-account-2/,TBD (shop decision),301,WooCommerce,no
-https://lexpraxisng.com/product-category/books/,TBD (shop decision),301,WooCommerce archive,no
-https://lexpraxisng.com/product-tag/essential-tax-guide/,TBD (shop decision),301,WooCommerce archive,no
+https://lexpraxisng.com/cart/,https://lexpraxisng.com/shop/,301,WooCommerce cart (no cart on the new site),no
+https://lexpraxisng.com/checkout/,https://lexpraxisng.com/shop/,301,WooCommerce checkout (payment link per product),no
+https://lexpraxisng.com/my-account-2/,https://lexpraxisng.com/shop/,301,WooCommerce customer account (none on the new site),no
+https://lexpraxisng.com/product-category/books/,https://lexpraxisng.com/shop/,301,WooCommerce archive (one product),no
+https://lexpraxisng.com/product-tag/essential-tax-guide/,https://lexpraxisng.com/shop/,301,WooCommerce archive (one product),no

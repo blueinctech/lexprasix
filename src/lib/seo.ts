@@ -135,6 +135,36 @@ export function faqNode(path: string, items: { question: string; answer: string 
   };
 }
 
+/**
+ * A shop product (the firm's ebooks): always a schema.org Book; also a Product
+ * with an Offer once a machine-readable price is set, since Product markup
+ * without offers/reviews is reported as invalid by Google.
+ */
+export function productNode(opts: { path: string; name: string; description: string; image?: ImageInfo | null; format?: string; price?: { amount: string; currency: string } | null; buyUrl?: string }) {
+  const url = absoluteUrl(opts.path);
+  const amount = opts.price?.amount.replace(/,/g, "");
+  const offer = amount && /^\d+(\.\d+)?$/.test(amount) && /^[A-Z]{3}$/.test(opts.price!.currency);
+  return {
+    "@type": offer ? ["Book", "Product"] : "Book",
+    "@id": `${url}#product`,
+    name: opts.name,
+    url,
+    mainEntityOfPage: { "@id": url },
+    ...(opts.description ? { description: opts.description } : {}),
+    ...(opts.image ? { image: opts.image.url } : {}),
+    ...(/e-?book/i.test(opts.format ?? "") ? { bookFormat: "https://schema.org/EBook" } : {}),
+    author: { "@id": ORG_ID() },
+    publisher: { "@id": ORG_ID() },
+    ...(offer
+      ? {
+          brand: { "@id": ORG_ID() },
+          offers: { "@type": "Offer", price: amount, priceCurrency: opts.price!.currency, availability: "https://schema.org/InStock", url: opts.buyUrl || url, seller: { "@id": ORG_ID() } },
+        }
+      : {}),
+    inLanguage: "en-US",
+  };
+}
+
 export function graph(...nodes: (Record<string, unknown> | null | undefined | false)[]) {
   return { "@context": "https://schema.org", "@graph": nodes.filter(Boolean) };
 }

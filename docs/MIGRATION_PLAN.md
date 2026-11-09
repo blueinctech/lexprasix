@@ -81,7 +81,7 @@ npm run migrate:report     # counts, missing media, broken links → docs/MIGRAT
 
 ## 6. Decisions needed from LexPraxis
 
-1. **Ebook shop:** keep selling (which gateway — Paystack, Flutterwave, Selar?) or retire it? Current price shows as USD 3,000.00.
+1. **Ebook shop:** *Decided: kept* ("if there is anything in the store, keep it"). `/shop/` and `/product/essential-tax-guide-for-businesses-in-nigeria-ebook/` are rebuilt with the one product; cart, checkout, account and the product category/tag archives 301 to `/shop/`. **Owner to do:** set the price (the WooCommerce price, USD 3,000.00, looked misconfigured and was not imported; the page shows "Price on request") and, when ready, paste a payment link (Paystack, Selar, Flutterwave…) in Admin → Shop. Until then the product page shows an order request form whose requests arrive in Enquiries with a staff email.
 2. **Comments:** migrate read-only, keep open with moderation, or drop?
 3. **Reviews page:** keep the Trustindex embed, or import selected Google reviews?
 4. **Homepage figures:** confirm current client/business/country/partner counts and review rating, or remove them.

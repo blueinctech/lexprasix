@@ -39,7 +39,11 @@ export const settingsSchemas = {
   }),
   integrations: z.object({
     gtmId: z.string().trim().regex(/^(GTM-[A-Z0-9]+)?$/, "Use the GTM-XXXX format").default(""),
-    calendlyUrl: z.url().or(z.literal("")).default(""),
+    calendlyUrl: z
+      .url()
+      .refine((u) => /^https:\/\/(www\.)?calendly\.com\/[^/]+/.test(u), "Use a Calendly event link, e.g. https://calendly.com/your-name/30min")
+      .or(z.literal(""))
+      .default(""),
     tawkPropertyId: z.string().trim().regex(/^([a-z0-9]+\/[a-z0-9]+)?$/i, "Use the property/widget format").default(""),
     tawkEnabled: z.boolean().default(false),
     whatsappEnabled: z.boolean().default(true),
@@ -89,7 +93,8 @@ export const DEFAULT_SETTINGS: Settings = {
   },
   integrations: {
     gtmId: "GTM-WXSMSFBP",
-    calendlyUrl: "https://calendly.com/lexpraxisng-info/30min",
+    // The old link (calendly.com/lexpraxisng-info/30min) no longer exists; set a new one in Admin → Settings.
+    calendlyUrl: "",
     tawkPropertyId: "69a7f54bd9992f1c3736409c/default",
     tawkEnabled: true,
     whatsappEnabled: true,

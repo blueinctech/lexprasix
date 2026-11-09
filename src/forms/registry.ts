@@ -77,6 +77,28 @@ const newsletter: FormDefinition = {
   steps: [{ title: "Subscribe", items: [{ kind: "field", id: "email", type: "email", label: "Email address", required: true, role: "email" }] }],
 };
 
+// Order request on /product/{slug}/ while a product has no payment link. The
+// page fills in the product title; the request lands in Enquiries like a contact message.
+const ebookOrder: FormDefinition = {
+  id: "ebook-order",
+  title: "eBook order",
+  kind: "contact",
+  submitLabel: "Request this eBook",
+  successMessage: "Thank you for your order. We will email you the price and payment details shortly, and send the eBook as soon as payment is confirmed.",
+  steps: [
+    {
+      title: "Order request",
+      items: [
+        { kind: "field", id: "product", type: "text", label: "Product", required: true, readOnly: true, width: "full" },
+        { kind: "field", id: "name", type: "text", label: "Full name", required: true, role: "name", width: "half" },
+        { kind: "field", id: "email", type: "email", label: "Email address", required: true, role: "email", width: "half", description: "We send the eBook to this address." },
+        { kind: "field", id: "phone", type: "tel", label: "Phone number", required: true, role: "phone", width: "half" },
+        { kind: "field", id: "message", type: "textarea", label: "Anything else?", required: false, width: "full", placeholder: "For example, the number of copies or a company name for the invoice." },
+      ],
+    },
+  ],
+};
+
 
 // Generated definitions, one per legal-document page.
 const documents = [
@@ -86,7 +108,7 @@ const documents = [
   resolutionOfBoardOfDirectors, tenancyAgreement, trademarkAssignment, trademarkRegistration, usCompanyRegistration,
 ] as unknown as FormDefinition[];
 
-const FORMS = new Map<string, FormDefinition>([contact, newsletter, ...documents].map((f) => [f.id, f]));
+const FORMS = new Map<string, FormDefinition>([contact, newsletter, ebookOrder, ...documents].map((f) => [f.id, f]));
 
 export function getFormDefinition(id: string): FormDefinition | null {
   return FORMS.get(id) ?? null;

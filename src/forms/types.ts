@@ -19,6 +19,8 @@ export type FieldDef = {
   width?: "full" | "half";
   /** Which submission column this value fills. */
   role?: "name" | "email" | "phone";
+  /** Filled in by the page (FormRenderer initialValues) and shown read-only, e.g. the product being ordered. */
+  readOnly?: boolean;
 };
 
 export type NoteDef = { kind: "note"; id: string; text: string; style: "subheading" | "paragraph" };

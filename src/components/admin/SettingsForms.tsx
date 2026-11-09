@@ -106,7 +106,7 @@ export function IntegrationsSettingsForm({ value }: { value: Settings["integrati
       <input type="hidden" name="key" value="integrations" />
       <div className="grid gap-4 md:grid-cols-2">
         <TextInput label="Google Tag Manager container ID" name="gtmId" defaultValue={value.gtmId} placeholder="GTM-XXXXXXX" hint="Loads GA4, Google Ads and other tags configured in GTM. Analytics only run after a visitor accepts cookies. Leave empty to turn tracking off." />
-        <TextInput label="Calendly booking link" name="calendlyUrl" type="url" defaultValue={value.calendlyUrl} hint="The event page embedded on Book Appointment, e.g. https://calendly.com/lexpraxisng-info/30min." />
+        <TextInput label="Calendly booking link" name="calendlyUrl" type="url" defaultValue={value.calendlyUrl} placeholder="https://calendly.com/your-name/30min" hint="Paste the event link from Calendly (Event types → Copy link). It is shown as a booking calendar on Book Appointment. Leave empty and that page shows a consultation request form instead." />
         <TextInput label="Tawk.to property / widget" name="tawkPropertyId" defaultValue={value.tawkPropertyId} placeholder="property-id/widget-id" hint="From Tawk.to → Administration → Chat Widget (the part after embed.tawk.to/)." />
         <TextInput label="Trustindex widget ID" name="trustindexWidgetId" defaultValue={value.trustindexWidgetId} hint="Shows Google reviews on request on the Reviews section. Leave empty to show only testimonials." />
         <TextInput label="Google site verification code" name="googleSiteVerification" defaultValue={value.googleSiteVerification} hint="Only if Search Console asks for an HTML meta tag (DNS verification is preferred)." />

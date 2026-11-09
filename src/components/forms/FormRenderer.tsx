@@ -38,11 +38,15 @@ function randomKey() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}${Math.random().toString(36).slice(2)}`;
 }
 
-export function FormRenderer({ def, compact = false }: { def: FormDefinition; compact?: boolean }) {
+/**
+ * `initialValues` pre-fills fields from the page (e.g. the product on an order
+ * form); they always win over a restored draft.
+ */
+export function FormRenderer({ def, compact = false, initialValues }: { def: FormDefinition; compact?: boolean; initialValues?: FormValues }) {
   const formId = useId();
   const draftKey = `lp-form-draft:${def.id}`;
   const [step, setStep] = useState(0);
-  const [values, setValues] = useState<FormValues>({});
+  const [values, setValues] = useState<FormValues>(() => ({ ...initialValues }));
   const [errors, setErrors] = useState<FieldErrors>({});
   const [uploads, setUploads] = useState<Record<string, Upload[]>>({});
   const [result, setResult] = useState<SubmitResult | null>(null);
@@ -68,14 +72,15 @@ export function FormRenderer({ def, compact = false }: { def: FormDefinition; co
     () => null,
   );
   const [draftDismissed, setDraftDismissed] = useState(false);
-  const offerDraft = Boolean(savedDraft) && !draftDismissed && Object.keys(values).length === 0;
+  const presetCount = Object.keys(initialValues ?? {}).length;
+  const offerDraft = Boolean(savedDraft) && !draftDismissed && Object.keys(values).length === presetCount;
 
   const restoreDraft = () => {
     try {
       const parsed = JSON.parse(savedDraft ?? "{}") as { values?: FormValues; step?: number };
       // Files are not kept in drafts; drop any stale upload ids.
       const fileIds = new Set(def.steps.flatMap((s) => s.items).filter((i) => i.kind === "field" && i.type === "file").map((i) => i.id));
-      setValues(Object.fromEntries(Object.entries(parsed.values ?? {}).filter(([k]) => !fileIds.has(k))));
+      setValues({ ...Object.fromEntries(Object.entries(parsed.values ?? {}).filter(([k]) => !fileIds.has(k))), ...initialValues });
       setStep(Math.min(parsed.step ?? 0, def.steps.length - 1));
     } catch {
       /* corrupt draft */
@@ -95,11 +100,11 @@ export function FormRenderer({ def, compact = false }: { def: FormDefinition; co
   useEffect(() => {
     if (result?.status === "success") return;
     try {
-      if (Object.keys(values).length) sessionStorage.setItem(draftKey, JSON.stringify({ values, step }));
+      if (Object.keys(values).length > presetCount) sessionStorage.setItem(draftKey, JSON.stringify({ values, step }));
     } catch {
       /* storage unavailable */
     }
-  }, [values, step, draftKey, result]);
+  }, [values, step, draftKey, result, presetCount]);
 
   const set = (id: string, v: string | string[]) => {
     setValues((prev) => ({ ...prev, [id]: v }));
@@ -472,10 +477,11 @@ function Field({
           type={field.type === "tel" ? "tel" : field.type === "email" ? "email" : field.type === "date" ? "date" : field.type === "number" ? "text" : "text"}
           inputMode={field.type === "number" ? "decimal" : undefined}
           autoComplete={autoComplete}
+          readOnly={field.readOnly || undefined}
           value={str}
           placeholder={field.placeholder}
           onChange={(e) => onChange(e.target.value)}
-          className={inputCls}
+          className={`${inputCls} read-only:cursor-default read-only:bg-paper-warm read-only:font-medium read-only:text-heading`}
         />
       )}
       {help}

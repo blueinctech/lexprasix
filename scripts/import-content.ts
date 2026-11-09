@@ -23,8 +23,8 @@ const ORIGIN_RE = /https?:\/\/(?:www\.)?lexpraxisng\.com/gi;
 
 type WP = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 const load = async (name: string): Promise<WP[]> => JSON.parse(await readFile(`${EXPORT}/${name}.json`, "utf8"));
-const [wpPosts, wpPages, wpMedia, wpCats, wpTags, wpUsers, wpComments] = await Promise.all(
-  ["posts", "pages", "media", "categories", "tags", "users", "comments"].map(load),
+const [wpPosts, wpPages, wpMedia, wpCats, wpTags, wpUsers, wpComments, wpProducts] = await Promise.all(
+  ["posts", "pages", "media", "categories", "tags", "users", "comments", "product"].map(load),
 );
 const formIndex: { id: number; page: string; title: string }[] = JSON.parse(await readFile("migration/forms/index.json", "utf8"));
 
@@ -345,6 +345,59 @@ const docRows = docPages.map((p) => {
 const documents = await upsertBy(s.documents, docRows, s.documents.wpId, ["slug", "formId", "seo", "group", "sortOrder"]);
 report.imported.documents = documents.length;
 
+// ---------------------------------------------------------------- shop products (the WooCommerce ebook)
+
+/** The product description without the WooBuilder/Caxton layout wrappers: from "About the Book" on, numbered lines as a list. */
+function productBody(html: string): string {
+  const root = parse(html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ""));
+  const blocks = root.querySelectorAll("h2, h3, h4, p, ul, ol").filter((el) => !el.parentNode?.closest?.("ul, ol"));
+  const start = blocks.findIndex((el) => /^h\d$/i.test(el.tagName) && /about the book/i.test(el.text));
+  const out: string[] = [];
+  let list: string[] = [];
+  const flush = () => {
+    if (list.length) out.push(`<ol>${list.map((li) => `<li>${li}</li>`).join("")}</ol>`);
+    list = [];
+  };
+  for (const el of blocks.slice(Math.max(0, start))) {
+    const text = el.text.replace(/\s+/g, " ").trim();
+    if (!text) continue;
+    const numbered = el.tagName === "P" && /^\d+\.\s+/.test(text);
+    if (numbered) {
+      list.push(el.innerHTML.trim().replace(/^\d+\.\s+/, ""));
+      continue;
+    }
+    flush();
+    if (/^h\d$/i.test(el.tagName)) out.push(`<h2>${text.replace(/:$/, "")}</h2>`);
+    else out.push(el.outerHTML);
+  }
+  flush();
+  return sanitizeRichHtml(rewriteLinks(out.join("\n")));
+}
+
+report.source.products = wpProducts.length;
+const productRows = wpProducts.map((p, i) => {
+  const seo = yoastSeo(p);
+  return {
+    slug: decodeURIComponent(p.slug),
+    title: decode(p.title.rendered),
+    summary: decode(p.excerpt?.rendered ?? "").slice(0, 600),
+    body: productBody(p.content.rendered),
+    // WooCommerce showed USD 3,000.00 (almost certainly misconfigured): the owner sets the price in Admin → Shop.
+    priceLabel: "",
+    format: "eBook",
+    featuredImageId: p.featured_media ? (mediaId.get(p.featured_media) ?? null) : null,
+    sortOrder: i + 1,
+    status: "published" as const,
+    publishedAt: new Date(`${p.date_gmt}Z`),
+    seo,
+    wpId: p.id as number,
+  };
+});
+for (const p of wpProducts) report.review.push({ type: "product", wpId: p.id, url: p.link, reason: "Price not imported (WooCommerce showed USD 3,000.00): set the price and payment link in Admin → Shop" });
+// Price, payment link and copy are edited in the admin: later runs only refresh slug, SEO and the cover.
+const productsImported = await upsertBy(s.products, productRows, s.products.wpId, ["slug", "seo", "featuredImageId"]);
+report.imported.products = productsImported.length;
+
 // ---------------------------------------------------------------- testimonials (published on the live homepage)
 
 const TESTIMONIALS = [
@@ -408,6 +461,7 @@ const PAGES: { wpId: number; path: string; title: string; template: string; summ
   { wpId: 53, path: "service", title: "Service", template: "index", summary: "Legal services for entrepreneurs, startups and corporate organisations in Nigeria and abroad.", blocks: LIVE_BLOCKS[53] },
   { wpId: 9083, path: "legal-forms", title: "Legal Forms", template: "index", summary: "Start a corporate filing or request a legal agreement online. Each questionnaire goes straight to our legal team.", blocks: [] },
   { wpId: 9079, path: "corporate-filings", title: "Corporate Filings", template: "index", summary: "Company, business name, trademark, copyright and tax filings handled by our lawyers.", blocks: [] },
+  { wpId: 1884, path: "shop", title: "Shop", template: "index", summary: "Practical guides from our lawyers for businesses in Nigeria.", blocks: [] },
 ];
 report.source.pages = wpPages.length;
 const pageRows = PAGES.map((p) => ({
@@ -429,11 +483,11 @@ const handled = new Set([...PAGES.map((p) => p.wpId), ...servicePages.map((p) =>
 const PAGE_SKIP_REASON: Record<string, string> = {
   "/home-full-width/": "2017 theme demo with raw shortcodes; 301 to /",
   "/practice-areas/": "2016 page with raw shortcodes; 301 to /service/",
-  "/shop/": "WooCommerce: awaiting decision on the ebook shop",
-  "/cart/": "WooCommerce: awaiting decision on the ebook shop",
-  "/checkout/": "WooCommerce: awaiting decision on the ebook shop",
-  "/my-account-2/": "WooCommerce: awaiting decision on the ebook shop",
+  "/cart/": "WooCommerce cart (no cart on the new site); 301 to /shop/",
+  "/checkout/": "WooCommerce checkout (payment links per product); 301 to /shop/",
+  "/my-account-2/": "WooCommerce customer accounts (none on the new site); 301 to /shop/",
 };
+const SHOP_PAGES = new Set(["/cart/", "/checkout/", "/my-account-2/"]);
 for (const p of wpPages.filter((p) => !handled.has(p.id))) {
   report.skipped.push({ type: "page", wpId: p.id, url: p.link, reason: PAGE_SKIP_REASON[pathOf(p.link)] ?? "Not mapped — review" });
 }
@@ -443,7 +497,8 @@ for (const p of wpPages.filter((p) => !handled.has(p.id))) {
 const legacy = [
   ...wpPosts.map((p) => ({ wpId: p.id, wpType: "post", path: pathOf(p.link) })),
   ...wpPages.filter((p) => handled.has(p.id)).map((p) => ({ wpId: p.id, wpType: "page", path: pathOf(p.link) })),
-  ...wpPages.filter((p) => !handled.has(p.id)).map((p) => ({ wpId: p.id, wpType: "page", path: pathOf(p.link) === "/home-full-width/" ? "/" : pathOf(p.link) === "/practice-areas/" ? "/service/" : "/" })),
+  ...wpPages.filter((p) => !handled.has(p.id)).map((p) => ({ wpId: p.id, wpType: "page", path: pathOf(p.link) === "/home-full-width/" ? "/" : pathOf(p.link) === "/practice-areas/" ? "/service/" : SHOP_PAGES.has(pathOf(p.link)) ? "/shop/" : "/" })),
+  ...wpProducts.map((p) => ({ wpId: p.id, wpType: "product", path: pathOf(p.link) })),
 ];
 for (let i = 0; i < legacy.length; i += 200) {
   await db.insert(s.legacyIds).values(legacy.slice(i, i + 200)).onConflictDoUpdate({ target: s.legacyIds.wpId, set: { path: sql`excluded.path`, wpType: sql`excluded.wp_type` } });
@@ -456,6 +511,12 @@ const REDIRECTS = [
   { source: "/author/blueinchost/", destination: "/blog/", note: "Admin account with no posts" },
   // Linked from two posts; already a dead link on the WordPress site.
   { source: "/appointment-booking/", destination: "/book-appointment/", note: "Dead link in old posts" },
+  // WooCommerce: the shop has one product and no cart or customer accounts.
+  { source: "/cart/", destination: "/shop/", note: "WooCommerce cart" },
+  { source: "/checkout/", destination: "/shop/", note: "WooCommerce checkout" },
+  { source: "/my-account-2/", destination: "/shop/", note: "WooCommerce customer account" },
+  { source: "/product-category/books/", destination: "/shop/", note: "WooCommerce product category" },
+  { source: "/product-tag/essential-tax-guide/", destination: "/shop/", note: "WooCommerce product tag" },
 ];
 await db.insert(s.redirects).values(REDIRECTS).onConflictDoNothing();
 
@@ -464,6 +525,11 @@ await db.insert(s.redirects).values(REDIRECTS).onConflictDoNothing();
 const MENUS = liveMenus(serviceRows, docRows);
 // Menus are editable: only create them if missing.
 await db.insert(s.menus).values(MENUS).onConflictDoNothing();
+// The live footer links to the shop ("Our Shop"); add it to menus created before the shop existed.
+const [footerPages] = await db.select({ items: s.menus.items }).from(s.menus).where(eq(s.menus.key, "footer-company"));
+if (footerPages && !footerPages.items.some((i) => i.href === "/shop/")) {
+  await db.update(s.menus).set({ items: [...footerPages.items, { id: "f-shop", label: "Our Shop", href: "/shop/" }] }).where(eq(s.menus.key, "footer-company"));
+}
 
 for (const [key, value] of Object.entries(DEFAULT_SETTINGS)) {
   await db.insert(s.settings).values({ key, value }).onConflictDoNothing();
