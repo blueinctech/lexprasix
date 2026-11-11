@@ -45,7 +45,9 @@ export function RichTextEditor({ name, initialHtml, label = "Content", minHeight
       <MediaBrowser
         open={pickerOpen}
         onClose={() => setPickerOpen(false)}
-        onPick={(m) => editor?.chain().focus().setImage({ src: m.url, alt: m.alt }).run()}
+        onPick={(m) => {
+          if (editor?.chain().focus().setImage({ src: m.url, alt: m.alt }).run()) editor.commands.createParagraphNear();
+        }}
       />
     </div>
   );
@@ -81,13 +83,15 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
   const youtube = () => {
     const url = window.prompt("Paste the YouTube video link (e.g. https://www.youtube.com/watch?v=… or https://youtu.be/…)");
     if (!url?.trim()) return;
-    if (!c().setYoutubeVideo({ src: url.trim() }).run()) window.alert("That doesn't look like a YouTube video link. Copy it from the Share button under the video on YouTube.");
+    // Move to a new line after the video, so the next insert doesn't replace it.
+    if (c().setYoutubeVideo({ src: url.trim() }).run()) editor.commands.createParagraphNear();
+    else window.alert("That doesn't look like a YouTube video link. Copy it from the Share button under the video on YouTube.");
   };
   const imageByUrl = () => {
     const url = window.prompt("Image URL");
     if (!url) return;
     const alt = window.prompt("Describe the image for screen readers (alt text)") ?? "";
-    c().setImage({ src: url, alt }).run();
+    if (c().setImage({ src: url, alt }).run()) editor.commands.createParagraphNear();
   };
   return (
     <div role="toolbar" aria-label="Formatting" className="flex flex-wrap items-center gap-0.5 border-b border-slate-200 bg-slate-50 px-1.5 py-1">
