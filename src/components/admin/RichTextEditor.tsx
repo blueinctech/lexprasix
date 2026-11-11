@@ -2,6 +2,7 @@
 
 import Image from "@tiptap/extension-image";
 import { TableKit } from "@tiptap/extension-table";
+import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor, useEditorState, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useState, type ReactNode } from "react";
@@ -19,6 +20,8 @@ export function RichTextEditor({ name, initialHtml, label = "Content", minHeight
       StarterKit.configure({ heading: { levels: [2, 3, 4] }, link: { openOnClick: false, autolink: true, defaultProtocol: "https" } }),
       Image.configure({ inline: false }),
       TableKit.configure({ table: { resizable: false } }),
+      // YouTube videos: inserted with the toolbar button, and kept when older articles with videos are edited.
+      Youtube.configure({ nocookie: true, controls: true, modestBranding: true, width: 640, height: 360 }),
     ],
     content: initialHtml,
     editorProps: { attributes: { class: "prose-lp max-w-none px-4 py-3 focus:outline-none", "aria-label": label, role: "textbox", "aria-multiline": "true" } },
@@ -75,6 +78,11 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
     const external = /^https?:\/\//.test(url) && !/lexpraxisng\.com/.test(url);
     c().extendMarkRange("link").setLink({ href: url.trim(), target: external ? "_blank" : null }).run();
   };
+  const youtube = () => {
+    const url = window.prompt("Paste the YouTube video link (e.g. https://www.youtube.com/watch?v=… or https://youtu.be/…)");
+    if (!url?.trim()) return;
+    if (!c().setYoutubeVideo({ src: url.trim() }).run()) window.alert("That doesn't look like a YouTube video link. Copy it from the Share button under the video on YouTube.");
+  };
   const imageByUrl = () => {
     const url = window.prompt("Image URL");
     if (!url) return;
@@ -102,6 +110,7 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
       <Sep />
       <T label="Image from media library" onClick={onImage}>Image</T>
       <T label="Image from URL" onClick={imageByUrl}>Img URL</T>
+      <T label="YouTube video" onClick={youtube}>▶ YouTube</T>
       {!s.table ? (
         <T label="Insert table" onClick={() => c().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}>Table</T>
       ) : (

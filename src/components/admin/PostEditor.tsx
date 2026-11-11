@@ -4,9 +4,11 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { deletePost, savePost } from "@/app/admin/_actions/posts";
 import type { SeoFields } from "@/db/schema";
+import { ContentAnalysis } from "./ContentAnalysis";
 import { SeoPanel, StatusFields, TitleSlugFields } from "./EditorFields";
 import { MediaField, type PickedMedia } from "./MediaPicker";
 import { RichTextEditor } from "./RichTextEditor";
+import { UnsavedChangesGuard } from "./UnsavedChangesGuard";
 import { ActionForm, btn, Card, Select, SubmitButton, TextArea, TextInput } from "./ui";
 
 export type PostEditorData = {
@@ -48,6 +50,7 @@ export function PostEditor({
     <div className="grid gap-6">
       <ActionForm action={savePost}>
         {post.id && <input type="hidden" name="id" value={post.id} />}
+        <UnsavedChangesGuard />
         <div className="grid gap-6 xl:grid-cols-[1fr_22rem]">
           <div className="grid min-w-0 content-start gap-6">
             <Card>
@@ -76,7 +79,16 @@ export function PostEditor({
             <StatusFields status={post.status} publishedAtInput={post.publishedAtInput} canPublish={canPublish} />
             <div className="flex flex-wrap gap-2">
               <SubmitButton>{post.id ? "Save changes" : "Create article"}</SubmitButton>
-              {post.id && (
+              {post.status !== "published" ? (
+                <>
+                  <SubmitButton variant="secondary" name="intent" value="draft" pendingLabel="Saving…">
+                    Save draft
+                  </SubmitButton>
+                  <SubmitButton variant="secondary" name="intent" value="preview" pendingLabel="Saving…">
+                    Save &amp; preview
+                  </SubmitButton>
+                </>
+              ) : (
                 <Link href={`/admin/preview/post/${post.id}/`} target="_blank" className={btn("secondary")}>
                   Preview
                 </Link>
@@ -87,6 +99,7 @@ export function PostEditor({
                 </a>
               )}
             </div>
+            <ContentAnalysis initialKeyphrase={post.seo.focusKeyphrase ?? ""} />
             <Card title="Details">
               <div className="grid gap-4">
                 {canChooseAuthor ? (

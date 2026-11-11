@@ -74,6 +74,7 @@ export function parseSeo(form: Record<string, unknown>, existing?: SeoFields | n
     ogTitle: t("ogTitle", 200),
     ogDescription: t("ogDescription", 400),
     ogImageId: uuidOrNull(str(form.seo_ogImageId)),
+    focusKeyphrase: t("focusKeyphrase", 120),
     ...(existing?.legacy ? { legacy: existing.legacy } : {}),
   };
 }

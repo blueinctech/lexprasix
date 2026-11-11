@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
+import { finalizeMediaUpload } from "@/app/admin/_actions/media";
+import { signAndPut } from "./MediaLibrary";
 import { btn } from "./ui";
 
 export type PickedMedia = { id: string; url: string; alt: string; width?: number | null; height?: number | null; filename?: string };
@@ -15,7 +17,36 @@ export function MediaBrowser({ open, onClose, onPick }: { open: boolean; onClose
   const [page, setPage] = useState(1);
   const [data, setData] = useState<Result | null>(null);
   const [error, setError] = useState("");
+  const [uploading, setUploading] = useState("");
+  const fileInput = useRef<HTMLInputElement>(null);
   const titleId = useId();
+
+  // Upload straight from the picker, so writers never have to leave an unsaved article.
+  async function uploadAndPick(file: File) {
+    setError("");
+    setUploading(file.name);
+    try {
+      const signed = await signAndPut(file);
+      if (!signed.ok || !signed.key) throw new Error(signed.error || "Upload failed.");
+      const result = await finalizeMediaUpload({ key: signed.key, filename: file.name });
+      if (result.status !== "ok") throw new Error(result.message || "Upload failed.");
+      const res = await fetch(`/admin/api/media/?q=${encodeURIComponent(signed.key.split("/").pop()!.replace(/\.[^.]+$/, ""))}&page=1`, { cache: "no-store" });
+      const found = (await res.json()) as Result;
+      const item = found.items.find((m) => signed.key!.endsWith(m.filename)) ?? found.items[0];
+      if (item) {
+        onPick(item);
+        onClose();
+      } else {
+        setQ("");
+        void load("", 1);
+      }
+    } catch (err) {
+      setError(err instanceof Error && err.message ? err.message : "Upload failed.");
+    } finally {
+      setUploading("");
+      if (fileInput.current) fileInput.current.value = "";
+    }
+  }
 
   useEffect(() => {
     const d = ref.current;
@@ -52,6 +83,13 @@ export function MediaBrowser({ open, onClose, onPick }: { open: boolean; onClose
         </button>
       </div>
       <div className="p-5">
+        <div className="mb-4 flex flex-wrap items-center gap-3">
+          <input ref={fileInput} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden" onChange={(e) => e.target.files?.[0] && void uploadAndPick(e.target.files[0])} />
+          <button type="button" disabled={!!uploading} onClick={() => fileInput.current?.click()} className={btn("primary", true)}>
+            {uploading ? `Uploading ${uploading}…` : "Upload new image"}
+          </button>
+          <span className="text-xs text-slate-500">JPG, PNG, WebP or GIF, up to 15 MB. It is inserted straight away.</span>
+        </div>
         <input
           type="search"
           value={q}
@@ -97,7 +135,7 @@ export function MediaBrowser({ open, onClose, onPick }: { open: boolean; onClose
                 </button>
               </span>
             </div>
-            <p className="mt-3 text-xs text-slate-500">Upload new files in the Media library, then pick them here.</p>
+            <p className="mt-3 text-xs text-slate-500">Pick an image above, or upload a new one with the button at the top. Add alt text for it later in the Media library.</p>
           </>
         )}
       </div>

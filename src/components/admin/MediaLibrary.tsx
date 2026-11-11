@@ -10,7 +10,7 @@ type Item = { name: string; status: "uploading" | "done" | "error"; message?: st
 
 type Signed = { ok: boolean; error?: string; key?: string; uploadKey?: string; url?: string; headers?: Record<string, string> };
 
-async function signAndPut(file: File, mediaId?: string): Promise<Signed> {
+export async function signAndPut(file: File, mediaId?: string): Promise<Signed> {
   const res = await fetch("/admin/api/media/upload/", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

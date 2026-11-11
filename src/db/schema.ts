@@ -45,6 +45,8 @@ export type SeoFields = {
   ogTitle?: string;
   ogDescription?: string;
   ogImageId?: string | null;
+  /** Focus keyphrase for the live SEO analysis in the editor (not shown on the site). */
+  focusKeyphrase?: string;
   /** Yoast values as imported, kept for the SEO comparison report. */
   legacy?: Record<string, unknown>;
 };

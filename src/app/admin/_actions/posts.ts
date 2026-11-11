@@ -54,6 +54,9 @@ export async function savePost(_prev: ActionState, fd: FormData): Promise<Action
     const prev = existing?.row ?? null;
 
     const canPublish = can(user.role, "posts.publish");
+    // "Save draft" / "Save & preview" keep an unpublished article as a draft, whatever the status menu says.
+    const intent = formString(form.intent);
+    if ((intent === "draft" || intent === "preview") && prev?.status !== "published") form.status = "draft";
     const st = parseStatus(form, { canPublish, existing: prev ?? undefined });
     if (!st.ok) return fail(st.error, { status: st.error });
 
@@ -120,6 +123,7 @@ export async function savePost(_prev: ActionState, fd: FormData): Promise<Action
     await audit({ userId: user.id, action, entityType: "post", entityId: postId, details: { title: values.title, slug, status: st.status } });
     refreshPublic("posts", "taxonomies", "authors", `post:${slug}`, ...(prev && prev.slug !== slug ? [`post:${prev.slug}`, "redirects"] : []));
 
+    if (intent === "preview") redirect(`/admin/preview/post/${postId}/`);
     if (!prev) redirect(`/admin/posts/${postId}/?created=1`);
     return ok(st.status === "published" ? "Saved and live on the website." : st.status === "scheduled" ? "Saved. It will publish automatically at the scheduled time." : "Draft saved.");
   });
