@@ -36,6 +36,13 @@
       "when": 1794208470741,
       "tag": "0004_two_factor",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794407838253,
+      "tag": "0005_comments",
+      "breakpoints": true
     }
   ]
 }

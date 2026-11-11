@@ -400,7 +400,7 @@ export const posts = pgTable(
     publishedAt: publishedAt(),
     /** Last meaningful content update shown to readers. */
     contentUpdatedAt: timestamp("content_updated_at", { withTimezone: true }),
-    commentsOpen: boolean("comments_open").notNull().default(false),
+    commentsOpen: boolean("comments_open").notNull().default(true),
     readingMinutes: integer("reading_minutes").notNull().default(1),
     seo: seo(),
     wpId: wpId(),
@@ -454,6 +454,9 @@ export const comments = pgTable(
     authorName: text("author_name").notNull(),
     /** Sanitised HTML. Commenter emails are not imported. */
     html: text("html").notNull(),
+    /** Visitor's email for staff follow-up; never shown on the site. */
+    authorEmail: text("author_email"),
+    ipHash: text("ip_hash"),
     isStaffReply: boolean("is_staff_reply").notNull().default(false),
     status: commentStatus("status").notNull().default("approved"),
     wpId: wpId(),

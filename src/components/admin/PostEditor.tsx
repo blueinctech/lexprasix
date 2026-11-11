@@ -27,6 +27,7 @@ export type PostEditorData = {
   tags: string;
   readingMinutes: number;
   comments: number;
+  commentsOpen: boolean;
 };
 
 export function PostEditor({
@@ -124,10 +125,17 @@ export function PostEditor({
                     ))}
                   </div>
                 </fieldset>
+                <label className="flex items-start gap-2 text-sm text-slate-800">
+                  <input type="checkbox" name="commentsOpen" defaultChecked={post.commentsOpen} className="mt-0.5 size-4 accent-navy-900" />
+                  <span>
+                    Allow comments
+                    <span className="block text-xs text-slate-500">Readers can comment; you approve each one under Comments.</span>
+                  </span>
+                </label>
                 <TextInput label="Tags" name="tags" defaultValue={post.tags} hint="Comma separated. New tags are created automatically." />
                 {post.id && (
                   <p className="text-xs text-slate-500">
-                    {post.readingMinutes} min read · {post.comments} archived comment{post.comments === 1 ? "" : "s"} (read-only)
+                    {post.readingMinutes} min read · {post.comments} approved comment{post.comments === 1 ? "" : "s"}
                   </p>
                 )}
               </div>

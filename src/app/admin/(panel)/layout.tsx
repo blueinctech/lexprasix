@@ -6,7 +6,7 @@ import { AdminNav, type NavItem } from "@/components/admin/ui";
 import { Icon } from "@/components/ui/Icon";
 import { LogoMark } from "@/components/ui/Logo";
 import { getDb } from "@/db";
-import { emailOutbox, submissions } from "@/db/schema";
+import { comments, emailOutbox, submissions } from "@/db/schema";
 import { requireUserPage } from "@/lib/auth/current";
 import { can, ROLE_LABELS, type Permission } from "@/lib/auth/permissions";
 
@@ -20,6 +20,7 @@ const NAV: (NavItem & { permission: Permission })[] = [
   { href: "/admin/", label: "Dashboard", icon: "home", permission: "dashboard.view" },
   { href: "/admin/submissions/", label: "Enquiries", icon: "mail", permission: "submissions.view", group: "Clients" },
   { href: "/admin/posts/", label: "Blog posts", icon: "file-text", permission: "posts.edit_own", group: "Content" },
+  { href: "/admin/comments/", label: "Comments", icon: "comment", permission: "comments.manage", group: "Content" },
   { href: "/admin/pages/", label: "Pages", icon: "file-text", permission: "pages.manage", group: "Content" },
   { href: "/admin/services/", label: "Services", icon: "scale", permission: "services.manage", group: "Content" },
   { href: "/admin/documents/", label: "Legal documents", icon: "contract", permission: "documents.manage", group: "Content" },
@@ -40,16 +41,17 @@ const NAV: (NavItem & { permission: Permission })[] = [
 export default async function PanelLayout({ children }: { children: ReactNode }) {
   const user = await requireUserPage();
   const db = await getDb();
-  const [[{ n: newEnquiries }], [{ n: failedEmails }]] = await Promise.all([
+  const [[{ n: newEnquiries }], [{ n: failedEmails }], [{ n: pendingComments }]] = await Promise.all([
     can(user.role, "submissions.view") ? db.select({ n: count() }).from(submissions).where(eq(submissions.status, "new")) : Promise.resolve([{ n: 0 }]),
     can(user.role, "email.view") ? db.select({ n: count() }).from(emailOutbox).where(eq(emailOutbox.status, "failed")) : Promise.resolve([{ n: 0 }]),
+    can(user.role, "comments.manage") ? db.select({ n: count() }).from(comments).where(eq(comments.status, "pending")) : Promise.resolve([{ n: 0 }]),
   ]);
   const items = NAV.filter((i) => can(user.role, i.permission)).map((i) => ({
     href: i.href,
     label: i.label,
     icon: i.icon,
     group: i.group,
-    count: i.href === "/admin/submissions/" ? newEnquiries : i.href === "/admin/emails/" ? failedEmails : undefined,
+    count: i.href === "/admin/submissions/" ? newEnquiries : i.href === "/admin/emails/" ? failedEmails : i.href === "/admin/comments/" ? pendingComments : undefined,
   }));
 
   return (

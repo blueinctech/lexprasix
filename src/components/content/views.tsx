@@ -29,6 +29,7 @@ import { Icon } from "@/components/ui/Icon";
 import { ButtonLink, Container, formatDate } from "@/components/ui/primitives";
 import { BlogSidebar } from "./blog";
 import { JsonLd, PageHeader, PostMeta, Prose } from "./common";
+import { CommentForm, ReplyButton } from "./CommentForm";
 import { ShareLinks } from "./ShareLinks";
 
 // Data shapes passed in come from the cached queries; these views are reused
@@ -142,19 +143,22 @@ export async function PostView({ post }: { post: Post }) {
               </div>
             </div>
           )}
-          {comments.length > 0 && (
+          {(comments.length > 0 || post.commentsOpen) && (
             <section
               className="mt-14 border-t border-[#e6e6e6] pt-10"
               aria-labelledby="comments"
             >
-              <h2 id="comments" className="text-[1.75rem] font-semibold">
-                {post.comments.length} Comment
-                {post.comments.length === 1 ? "" : "s"}
-              </h2>
+              {comments.length > 0 && (
+                <h2 id="comments" className="text-[1.75rem] font-semibold">
+                  {post.comments.length} Comment
+                  {post.comments.length === 1 ? "" : "s"}
+                </h2>
+              )}
               <ol className="mt-8 space-y-8">
                 {comments.map((c) => (
                   <li key={c.id}>
                     <Comment c={c} />
+                    {post.commentsOpen && <ReplyButton id={c.id} name={c.authorName} />}
                     {replies(c.id).length > 0 && (
                       <ol className="mt-6 space-y-6 border-l border-[#e6e6e6] pl-6">
                         {replies(c.id).map((r) => (
@@ -167,6 +171,9 @@ export async function PostView({ post }: { post: Post }) {
                   </li>
                 ))}
               </ol>
+              {post.commentsOpen ? (
+                <CommentForm postId={post.id} />
+              ) : (
               <p className="mt-8 text-[0.875rem] text-ink">
                 Comments are closed. Questions?{" "}
                 <Link
@@ -177,6 +184,7 @@ export async function PostView({ post }: { post: Post }) {
                 </Link>
                 .
               </p>
+              )}
             </section>
           )}
         </article>

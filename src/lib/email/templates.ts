@@ -130,7 +130,7 @@ function withoutLeadingThanks(text: string): string {
   return text.replace(/^\s*thank you[^.!]*[.!]\s*/i, "").trim();
 }
 
-export type TemplateName = "submission.staff" | "submission.client" | "auth.invite" | "auth.reset";
+export type TemplateName = "submission.staff" | "submission.client" | "auth.invite" | "auth.reset" | "comment.staff";
 
 export type Rendered = { html: string; text: string };
 
@@ -169,6 +169,30 @@ ${panel([
 <p style="margin:22px 0 0">Kind regards,<br><strong>The ${escapeHtml(FIRM.name)} team</strong></p>`;
       const text = `Dear ${name || "Sir/Madam"},\n\nThank you for contacting ${FIRM.name}. Your request has reached our team.\n\nYour reference: ${p.reference}\nRequest: ${p.formTitle}\n\n${next}\n\nNeed to add something? Reply to this email and quote your reference, or call us on ${FIRM.phones[0]}.\n\nKind regards,\nThe ${FIRM.name} team${textFooter("client")}`;
       return { html: layout({ title: "We've received your request", preheader: `Your reference is ${p.reference}. Keep it for your records.`, body }), text };
+    }
+    case "comment.staff": {
+      const title = "New comment awaiting approval";
+      const body = `${panel([
+        ["Article", String(p.postTitle)],
+        ["From", `${p.name} (${p.email})`],
+      ])}
+<p style="margin:0 0 6px;font-size:13px;color:${MUTED}">Comment:</p>
+<p style="margin:0 0 16px;padding:12px 14px;border:1px solid #ece8df;border-radius:6px;white-space:pre-wrap">${escapeHtml(p.excerpt)}</p>
+<p style="margin:0">It won't appear on the article until you approve it. Reply to this email to answer the reader privately.</p>
+${button(String(p.adminUrl), "Review comments")}
+<p style="margin:0;font-size:13px;color:${MUTED}">Article: <a href="${escapeHtml(p.postUrl)}" style="color:${NAVY}">${escapeHtml(p.postUrl)}</a></p>`;
+      return {
+        html: layout({ title, preheader: `${p.name} commented on ${p.postTitle}`, body, audience: "staff" }),
+        text: `New comment awaiting approval
+
+Article: ${p.postTitle}
+From: ${p.name} (${p.email})
+
+${p.excerpt}
+
+Review: ${p.adminUrl}
+Article: ${p.postUrl}${textFooter("staff")}`,
+      };
     }
     case "auth.invite": {
       const link = String(p.link);

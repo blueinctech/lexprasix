@@ -86,6 +86,7 @@ export async function savePost(_prev: ActionState, fd: FormData): Promise<Action
       // Readers see "Updated" when the body of a live article changes.
       contentUpdatedAt: prev?.status === "published" && bodyChanged ? now : (prev?.contentUpdatedAt ?? st.publishedAt),
       readingMinutes: readingMinutes(html),
+      commentsOpen: form.commentsOpen === "on",
       seo: parseSeo(form, prev?.seo),
       updatedById: user.id,
     };

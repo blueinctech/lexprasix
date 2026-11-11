@@ -24,6 +24,8 @@ export const RATE_LIMITS = {
   accountVerifyByUser: { limit: 10, windowSeconds: 15 * 60 },
   formSubmitByIp: { limit: 8, windowSeconds: 10 * 60 },
   formUploadByIp: { limit: 40, windowSeconds: 60 * 60 },
+  commentByIp: { limit: 5, windowSeconds: 10 * 60 },
+  commentByEmail: { limit: 10, windowSeconds: 24 * 60 * 60 },
   clientEmailByRecipient: { limit: 3, windowSeconds: 24 * 60 * 60 },
   clientEmailAll: { limit: 100, windowSeconds: 60 * 60 },
 } as const satisfies Record<string, { limit: number; windowSeconds: number }>;
