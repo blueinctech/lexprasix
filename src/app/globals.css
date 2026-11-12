@@ -52,6 +52,12 @@
   .prose-lp > * + * {
     margin-top: 1.25em;
   }
+  /* Admin editor only: text highlighted by an SEO & readability "eye" button. */
+  .lp-analysis-mark {
+    background: #fde68a;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px #fcd34d;
+  }
   .prose-lp h2 {
     margin-top: 2.2em;
     font-size: 1.85rem;

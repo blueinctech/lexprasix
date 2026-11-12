@@ -48,3 +48,42 @@ test("an editor writes with live analysis, a YouTube video and an uploaded image
   await page.getByRole("link", { name: /Back to editor/ }).click();
   await expect(page.getByLabel("Focus keyphrase")).toHaveValue("register a company in Nigeria", { timeout: 30_000 });
 });
+
+test("eye buttons highlight the sentences a check is about, without saving the highlight", async ({ page }) => {
+  test.setTimeout(180_000);
+  await page.goto("/admin/login/");
+  await page.getByLabel("Email").fill(admin().email);
+  await page.getByLabel(/^Password/).fill(admin().password);
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await expect(page).toHaveURL(/\/admin\/$/, { timeout: 30_000 });
+
+  await page.goto("/admin/posts/new/");
+  await page.getByLabel("Title").first().fill("Company registration in Nigeria");
+  await page.getByLabel("Article").click();
+  await page.keyboard.type(
+    "Company registration in Nigeria is simple. The forms were signed by the directors. The fee was paid by the company. The documents were filed by the lawyer. The name was approved by the registry.",
+  );
+
+  const panel = page.locator("div").filter({ has: page.getByRole("heading", { name: "SEO & readability" }) }).filter({ has: page.getByRole("tablist") }).last();
+  await panel.getByRole("tab", { name: /Readability/ }).click();
+  const passive = panel.locator("li").filter({ hasText: /Passive voice/ });
+  await expect(passive).toBeVisible({ timeout: 60_000 });
+  await passive.getByRole("button", { name: /Highlight/ }).click();
+  const marks = page.locator(".ProseMirror .lp-analysis-mark");
+  await expect(marks.first()).toBeVisible();
+  await expect(marks.filter({ hasText: "The forms were signed by the directors." })).toHaveCount(1);
+  await expect(marks.filter({ hasText: "Company registration in Nigeria is simple." })).toHaveCount(0);
+  // Highlights never reach the saved article.
+  expect(await page.locator('input[name="html"]').inputValue()).not.toContain("lp-analysis-mark");
+  await passive.getByRole("button", { name: /Hide the highlights/ }).click();
+  await expect(marks).toHaveCount(0);
+
+  // SEO: the keyphrase is shaded where it appears.
+  await panel.getByRole("tab", { name: /SEO/ }).click();
+  await panel.getByLabel("Focus keyphrase").fill("company registration in Nigeria");
+  const density = panel.locator("li").filter({ hasText: /Keyphrase density/ });
+  await expect(density).toBeVisible({ timeout: 30_000 });
+  await density.getByRole("button", { name: /Highlight/ }).click();
+  await expect(marks.first()).toBeVisible();
+  await expect(page.locator(".ProseMirror .lp-analysis-mark", { hasText: "Company registration" })).not.toHaveCount(0);
+});

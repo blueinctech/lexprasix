@@ -5,7 +5,8 @@ import { TableKit } from "@tiptap/extension-table";
 import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor, useEditorState, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AnalysisHighlight, applyHighlights, HIGHLIGHT_EVENT, type HighlightDetail } from "./analysisHighlight";
 import { MediaBrowser } from "./MediaPicker";
 
 // Rich-text editor for articles and page text. Writes HTML into a hidden input
@@ -14,6 +15,7 @@ import { MediaBrowser } from "./MediaPicker";
 export function RichTextEditor({ name, initialHtml, label = "Content", minHeight = "18rem", onChange }: { name?: string; initialHtml: string; label?: string; minHeight?: string; onChange?: (html: string) => void }) {
   const [html, setHtml] = useState(initialHtml);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const wrap = useRef<HTMLDivElement>(null);
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
@@ -24,6 +26,8 @@ export function RichTextEditor({ name, initialHtml, label = "Content", minHeight
       TableKit.configure({ table: { resizable: false } }),
       // YouTube videos: inserted with the toolbar button, and kept when older articles with videos are edited.
       Youtube.configure({ nocookie: true, controls: true, modestBranding: true, width: 640, height: 360 }),
+      // Shading for the SEO & readability panel's "eye" buttons (never saved).
+      AnalysisHighlight,
     ],
     content: initialHtml,
     editorProps: { attributes: { class: "prose-lp max-w-none px-4 py-3 focus:outline-none", "aria-label": label, role: "textbox", "aria-multiline": "true" } },
@@ -34,8 +38,20 @@ export function RichTextEditor({ name, initialHtml, label = "Content", minHeight
     },
   });
 
+  // The SEO & readability panel in the same form asks for highlights with an event.
+  useEffect(() => {
+    const form = wrap.current?.closest("form");
+    if (!form || !editor || name !== "html") return;
+    const onHighlight = (e: Event) => {
+      const { needles, scroll } = (e as CustomEvent<HighlightDetail>).detail;
+      applyHighlights(editor.view, needles, scroll);
+    };
+    form.addEventListener(HIGHLIGHT_EVENT, onHighlight);
+    return () => form.removeEventListener(HIGHLIGHT_EVENT, onHighlight);
+  }, [editor, name]);
+
   return (
-    <div data-field className="grid gap-1.5">
+    <div ref={wrap} data-field className="grid gap-1.5">
       <span className="text-sm font-medium text-slate-800">{label}</span>
       {name && <input type="hidden" name={name} value={html} />}
       <div className="overflow-hidden rounded-lg border border-slate-300 bg-white focus-within:border-navy-700 focus-within:ring-2 focus-within:ring-navy-700/15">

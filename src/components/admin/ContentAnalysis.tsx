@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { highlightInEditor } from "./analysisHighlight";
 
 const cx = (...c: (string | false | null | undefined)[]) => c.filter(Boolean).join(" ");
 const inputCls = "block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/15";
@@ -12,7 +13,7 @@ const inputCls = "block w-full rounded-lg border border-slate-300 bg-white px-3 
 // as they change. Advisory only: it never blocks saving or publishing.
 
 type Rating = "good" | "ok" | "bad" | "na";
-type Item = { id: string; rating: Rating; html: string };
+type Item = { id: string; rating: Rating; html: string; marks: string[] };
 type Result = { seo: { score: number; items: Item[] } | null; read: { score: number; items: Item[] } };
 
 const DOT: Record<Rating, string> = { good: "bg-emerald-500", ok: "bg-amber-400", bad: "bg-red-500", na: "bg-slate-300" };
@@ -50,19 +51,49 @@ async function analyse(s: Snapshot, titleSuffix: string): Promise<Result> {
     permalink: `https://lexpraxisng.com/${s.slug}/`,
   });
   const researcher = new Researcher(paper);
-  const marker = { marker: () => undefined };
-  const collect = (a: { assess: (p: unknown) => void; getValidResults: () => { getScore(): number; getText(): string; getIdentifier(): string }[]; calculateOverallScore: () => number }) => {
+  // Yoast hands each check's marks to this function; they become the eye-button highlights.
+  let captured: YoastMark[] = [];
+  const marker = { marker: (_paper: unknown, marks: YoastMark[]) => void (captured = marks ?? []) };
+  const marksOf = (r: YoastResult): string[] => {
+    if (!r.hasMarks()) return [];
+    captured = [];
+    try {
+      r.getMarker()();
+    } catch {
+      return [];
+    }
+    const out = captured.map((m) => {
+      const pos = m.getPosition?.();
+      // Newer checks point at a range of the article's HTML; older ones give the sentence itself.
+      const source = pos && pos.endOffset > pos.startOffset ? html.slice(pos.startOffset, pos.endOffset) : m.getOriginal();
+      return plain(source);
+    });
+    return [...new Set(out.filter((t) => t.length > 1))];
+  };
+  const collect = (a: { assess: (p: unknown) => void; getValidResults: () => YoastResult[]; calculateOverallScore: () => number }) => {
     a.assess(paper);
     const items = a
       .getValidResults()
       .filter((r) => r.getText())
-      .map((r) => ({ id: r.getIdentifier(), rating: itemRating(r.getScore()), html: r.getText() }))
+      .map((r) => ({ id: r.getIdentifier(), rating: itemRating(r.getScore()), html: r.getText(), marks: marksOf(r) }))
       .sort((x, y) => ORDER[x.rating] - ORDER[y.rating]);
     return { score: a.calculateOverallScore() ?? 0, items };
   };
   const read = collect(new assessors.ContentAssessor(researcher, marker) as never);
   const seo = s.keyword ? collect(new assessors.SEOAssessor(researcher, marker) as never) : null;
   return { seo, read };
+}
+
+type YoastMark = { getOriginal(): string; getPosition?(): { startOffset: number; endOffset: number } | undefined };
+type YoastResult = { getScore(): number; getText(): string; getIdentifier(): string; hasMarks(): boolean; getMarker(): () => void };
+
+/** HTML fragment to the plain text the editor shows. */
+function plain(html: string): string {
+  const text = html.replace(/<[^>]*>/g, "").replace(/<[^>]*$/, "").replace(/^[^<]*>/, "");
+  if (typeof document === "undefined") return text.replace(/\s+/g, " ").trim();
+  const t = document.createElement("textarea");
+  t.innerHTML = text;
+  return t.value.replace(/\s+/g, " ").trim();
 }
 
 /** Pixel width of the title as Google shows it (Arial 20px), like Yoast's title width check. */
@@ -85,6 +116,9 @@ export function ContentAnalysis({ initialKeyphrase, titleSuffix = " - Lexpraxis 
   const [result, setResult] = useState<Result | null>(null);
   const [failed, setFailed] = useState(false);
   const [tab, setTab] = useState<"seo" | "read">("seo");
+  // The check whose sentences are highlighted in the article ("seo:keyphraseDensity").
+  const [shown, setShown] = useState<string | null>(null);
+  const sent = useRef("");
 
   useEffect(() => {
     const form = box.current?.closest("form");
@@ -119,6 +153,18 @@ export function ContentAnalysis({ initialKeyphrase, titleSuffix = " - Lexpraxis 
       clearInterval(timer);
     };
   }, [titleSuffix]);
+
+  // Keep the highlights in step with the article as it is edited and re-analysed.
+  const shownItem = shown ? (shown.startsWith("seo:") ? result?.seo : result?.read)?.items.find((i) => i.id === shown.slice(shown.indexOf(":") + 1)) : undefined;
+  const needles = shownItem?.marks ?? [];
+  const needlesKey = JSON.stringify(needles);
+  useEffect(() => {
+    const form = box.current?.closest("form");
+    if (!form || needlesKey === sent.current) return;
+    const first = sent.current === "" || sent.current === "[]";
+    sent.current = needlesKey;
+    highlightInEditor(form, JSON.parse(needlesKey) as string[], first);
+  }, [needlesKey]);
 
   const current = tab === "seo" ? result?.seo : result?.read;
   return (
@@ -167,12 +213,39 @@ export function ContentAnalysis({ initialKeyphrase, titleSuffix = " - Lexpraxis 
             {current?.items.map((i) => (
               <li key={i.id} className="flex gap-2.5 text-sm leading-snug text-slate-700">
                 <span className={cx("mt-1.5 size-2.5 shrink-0 rounded-full", DOT[i.rating])} aria-label={LABEL[i.rating]} role="img" />
-                <span dangerouslySetInnerHTML={{ __html: messageHtml(i.html) }} />
+                <span className="flex-1" dangerouslySetInnerHTML={{ __html: messageHtml(i.html) }} />
+                {i.marks.length > 0 && (
+                  <EyeButton
+                    on={shown === `${tab}:${i.id}`}
+                    count={i.marks.length}
+                    onClick={() => setShown((s) => (s === `${tab}:${i.id}` ? null : `${tab}:${i.id}`))}
+                  />
+                )}
               </li>
             ))}
           </ul>
         )}
       </div>
     </div>
+  );
+}
+
+/** Yoast's eye button: highlights the sentences a check is about in the article. */
+function EyeButton({ on, count, onClick }: { on: boolean; count: number; onClick: () => void }) {
+  const label = on ? "Hide the highlights in the article" : `Highlight ${count === 1 ? "this" : `these ${count}`} in the article`;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      title={label}
+      aria-label={label}
+      aria-pressed={on}
+      className={cx("-mt-0.5 grid size-7 shrink-0 place-items-center rounded-md border", on ? "border-navy-900 bg-navy-900 text-white" : "border-slate-300 text-slate-600 hover:bg-slate-100")}
+    >
+      <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    </button>
   );
 }
