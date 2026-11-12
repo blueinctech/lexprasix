@@ -23,19 +23,24 @@ const itemRating = (score: number): Rating => (score > 7 ? "good" : score > 4 ? 
 const overallRating = (score: number): Rating => (score > 70 ? "good" : score > 40 ? "ok" : "bad");
 const ORDER: Record<Rating, number> = { bad: 0, ok: 1, good: 2, na: 3 };
 
-type Snapshot = { html: string; keyword: string; title: string; seoTitle: string; description: string; excerpt: string; slug: string };
+type Snapshot = { html: string; featured: { url: string; alt: string } | null; keyword: string; title: string; seoTitle: string; description: string; excerpt: string; slug: string };
 
 function read(form: HTMLFormElement): Snapshot {
   const fd = new FormData(form);
   const v = (k: string) => String(fd.get(k) ?? "");
-  return { html: v("html"), keyword: v("seo_focusKeyphrase").trim(), title: v("title"), seoTitle: v("seo_title"), description: v("seo_description"), excerpt: v("excerpt"), slug: v("slug") };
+  const fi = form.querySelector<HTMLInputElement>("input[name=featuredImageId]");
+  const featured = fi?.value && fi.dataset.url ? { url: fi.dataset.url, alt: fi.dataset.alt ?? "" } : null;
+  return { html: v("html"), featured, keyword: v("seo_focusKeyphrase").trim(), title: v("title"), seoTitle: v("seo_title"), description: v("seo_description"), excerpt: v("excerpt"), slug: v("slug") };
 }
 
 async function analyse(s: Snapshot, titleSuffix: string): Promise<Result> {
   const [{ Paper, assessors }, researcherMod] = await Promise.all([import("yoastseo"), import("yoastseo/build/languageProcessing/languages/en/Researcher")]);
   const Researcher = (researcherMod as unknown as { default: new (p: unknown) => unknown }).default;
   const title = (s.seoTitle || `${s.title}${titleSuffix}`).trim();
-  const paper = new Paper(s.html, {
+  // Like Yoast on WordPress, the featured image counts towards the image checks.
+  const esc = (t: string) => t.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+  const html = s.featured ? `${s.html}<img src="${esc(s.featured.url)}" alt="${esc(s.featured.alt)}">` : s.html;
+  const paper = new Paper(html, {
     keyword: s.keyword,
     title,
     titleWidth: measure(title),

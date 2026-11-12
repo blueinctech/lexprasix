@@ -7,6 +7,38 @@ import { Card, Checkbox, cx } from "./ui";
 
 // Shared editor fields: slug, publication status, SEO panel and small list editors.
 
+// Date box + time dropdown (every 15 minutes, 12-hour clock) instead of the
+// browser's date-time picker, whose time list is hard to scroll on some laptops.
+// Submits "YYYY-MM-DDTHH:mm" (Lagos time) in a hidden input, like before.
+const TIMES = Array.from({ length: 96 }, (_, i) => {
+  const h = Math.floor(i / 4);
+  const m = (i % 4) * 15;
+  const value = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+  const label = `${h % 12 || 12}:${String(m).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
+  return { value, label };
+});
+
+function DateTimeField({ id, name, initial, required }: { id: string; name: string; initial: string; required?: boolean }) {
+  const [date, setDate] = useState(initial.slice(0, 10));
+  const initTime = initial.slice(11, 16);
+  const [time, setTime] = useState(initTime || "09:00");
+  // Keep a time that isn't on the 15-minute grid (e.g. imported posts) selectable.
+  const options = initTime && !TIMES.some((t) => t.value === initTime) ? [{ value: initTime, label: initTime }, ...TIMES] : TIMES;
+  return (
+    <div className="grid grid-cols-[1fr_8.5rem] gap-2">
+      <input type="hidden" name={name} value={date ? `${date}T${time}` : ""} />
+      <input id={id} type="date" value={date} onChange={(e) => setDate(e.target.value)} required={required} aria-label="Date" className={inputCls} />
+      <select value={time} onChange={(e) => setTime(e.target.value)} aria-label="Time" className={inputCls}>
+        {options.map((t) => (
+          <option key={t.value} value={t.value}>
+            {t.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
 const inputCls =
   "block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/15 aria-[invalid=true]:border-red-600";
 
@@ -95,7 +127,7 @@ export function StatusFields({ status, publishedAtInput, canPublish, note }: { s
             <label htmlFor={`${id}-d`} className="text-sm font-medium text-slate-800">
               {value === "scheduled" ? "Publish on" : "Publication date"} <span className="font-normal text-slate-500">(Lagos time)</span>
             </label>
-            <input id={`${id}-d`} type="datetime-local" name="publishedAt" defaultValue={publishedAtInput} required={value === "scheduled"} className={inputCls} />
+            <DateTimeField id={`${id}-d`} name="publishedAt" initial={publishedAtInput} required={value === "scheduled"} />
             {value === "published" && <span className="text-xs text-slate-500">Leave as is to keep the original date. Empty means now.</span>}
           </div>
         )}

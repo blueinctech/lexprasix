@@ -33,6 +33,9 @@ export function sanitizeRichHtml(html: string): string {
       h1: "h2",
       a: (_tag, attribs) => {
         const external = attribs.target === "_blank";
+        // The editor used to add rel="noopener noreferrer nofollow" to every link (TipTap's
+        // default), which hides links from Google. Drop that exact default; deliberate rels stay.
+        if (attribs.rel && attribs.rel.trim().split(/\s+/).sort().join(" ") === "nofollow noopener noreferrer") delete attribs.rel;
         return {
           tagName: "a",
           attribs: {

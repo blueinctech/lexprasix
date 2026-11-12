@@ -57,6 +57,12 @@ export async function savePost(_prev: ActionState, fd: FormData): Promise<Action
     // "Save draft" / "Save & preview" keep an unpublished article as a draft, whatever the status menu says.
     const intent = formString(form.intent);
     if ((intent === "draft" || intent === "preview") && prev?.status !== "published") form.status = "draft";
+    // "Publish now": live immediately, dated now (a date left over from a schedule is ignored).
+    const publishNow = intent === "publish" && prev?.status !== "published";
+    if (publishNow) {
+      form.status = "published";
+      form.publishedAt = "";
+    }
     const st = parseStatus(form, { canPublish, existing: prev ?? undefined });
     if (!st.ok) return fail(st.error, { status: st.error });
 
@@ -82,9 +88,9 @@ export async function savePost(_prev: ActionState, fd: FormData): Promise<Action
       authorId,
       featuredImageId: uuidOrNull(form.featuredImageId),
       status: st.status,
-      publishedAt: st.publishedAt,
+      publishedAt: publishNow ? now : st.publishedAt,
       // Readers see "Updated" when the body of a live article changes.
-      contentUpdatedAt: prev?.status === "published" && bodyChanged ? now : (prev?.contentUpdatedAt ?? st.publishedAt),
+      contentUpdatedAt: prev?.status === "published" && bodyChanged ? now : (prev?.contentUpdatedAt ?? (publishNow ? now : st.publishedAt)),
       readingMinutes: readingMinutes(html),
       commentsOpen: form.commentsOpen === "on",
       seo: parseSeo(form, prev?.seo),

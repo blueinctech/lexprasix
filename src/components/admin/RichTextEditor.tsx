@@ -17,7 +17,9 @@ export function RichTextEditor({ name, initialHtml, label = "Content", minHeight
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit.configure({ heading: { levels: [2, 3, 4] }, link: { openOnClick: false, autolink: true, defaultProtocol: "https" } }),
+      // TipTap adds rel="noopener noreferrer nofollow" to every link by default; nofollow tells
+      // Google to ignore the link, so links get no rel here (new-tab links get noopener on save).
+      StarterKit.configure({ heading: { levels: [2, 3, 4] }, link: { openOnClick: false, autolink: true, defaultProtocol: "https", HTMLAttributes: { rel: null } } }),
       Image.configure({ inline: false }),
       TableKit.configure({ table: { resizable: false } }),
       // YouTube videos: inserted with the toolbar button, and kept when older articles with videos are edited.
@@ -67,6 +69,7 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
       quote: e.isActive("blockquote"),
       link: e.isActive("link"),
       table: e.isActive("table"),
+      image: e.isActive("image"),
       canUndo: e.can().undo(),
       canRedo: e.can().redo(),
     }),
@@ -86,6 +89,13 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
     // Move to a new line after the video, so the next insert doesn't replace it.
     if (c().setYoutubeVideo({ src: url.trim() }).run()) editor.commands.createParagraphNear();
     else window.alert("That doesn't look like a YouTube video link. Copy it from the Share button under the video on YouTube.");
+  };
+  // Alt text lives on each image in the article (copied from the media library when inserted).
+  const altText = () => {
+    const prev = (editor.getAttributes("image").alt as string | undefined) ?? "";
+    const alt = window.prompt("Describe this image for search engines and screen readers (alt text). Include your keyphrase where it fits naturally.", prev);
+    if (alt === null) return;
+    c().updateAttributes("image", { alt: alt.trim() }).run();
   };
   const imageByUrl = () => {
     const url = window.prompt("Image URL");
@@ -115,6 +125,7 @@ function Toolbar({ editor, onImage }: { editor: Editor; onImage: () => void }) {
       <T label="Image from media library" onClick={onImage}>Image</T>
       <T label="Image from URL" onClick={imageByUrl}>Img URL</T>
       <T label="YouTube video" onClick={youtube}>▶ YouTube</T>
+      {s.image && <T label="Alt text for the selected image" onClick={altText}>Alt text</T>}
       {!s.table ? (
         <T label="Insert table" onClick={() => c().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}>Table</T>
       ) : (

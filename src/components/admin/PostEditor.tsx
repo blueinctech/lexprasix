@@ -79,7 +79,12 @@ export function PostEditor({
           <div className="grid content-start gap-6">
             <StatusFields status={post.status} publishedAtInput={post.publishedAtInput} canPublish={canPublish} />
             <div className="flex flex-wrap gap-2">
-              <SubmitButton>{post.id ? "Save changes" : "Create article"}</SubmitButton>
+              {canPublish && post.status !== "published" && (
+                <SubmitButton name="intent" value="publish" pendingLabel="Publishing…" confirm="Publish this article on the website now?">
+                  Publish now
+                </SubmitButton>
+              )}
+              <SubmitButton variant={canPublish && post.status !== "published" ? "secondary" : "primary"}>{post.id ? "Save changes" : "Create article"}</SubmitButton>
               {post.status !== "published" ? (
                 <>
                   <SubmitButton variant="secondary" name="intent" value="draft" pendingLabel="Saving…">

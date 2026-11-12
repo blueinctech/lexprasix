@@ -154,7 +154,8 @@ export function MediaField({ name, label, initial, hint, onChange }: { name?: st
   return (
     <div data-field className="grid gap-1.5">
       <span className="text-sm font-medium text-slate-800">{label}</span>
-      {name && <input type="hidden" name={name} value={value?.id ?? ""} />}
+      {/* data-* lets the editor's SEO analysis see the chosen image and its alt text. */}
+      {name && <input type="hidden" name={name} value={value?.id ?? ""} data-url={value?.url ?? ""} data-alt={value?.alt ?? ""} />}
       <div className="flex items-center gap-4 rounded-lg border border-dashed border-slate-300 p-3">
         {value ? (
           // eslint-disable-next-line @next/next/no-img-element
