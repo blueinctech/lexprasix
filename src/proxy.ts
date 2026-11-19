@@ -151,7 +151,7 @@ let lastPublishCheck = 0;
 function publishDueInBackground(request: NextRequest, event: NextFetchEvent) {
   if (Date.now() - lastPublishCheck < PUBLISH_CHECK_MS) return;
   lastPublishCheck = Date.now();
-  event.waitUntil(fetch(new URL("/api/publish-due", request.url), { method: "POST", cache: "no-store" }).then(() => undefined, () => undefined));
+  event.waitUntil(fetch(new URL("/api/publish-due/", request.url), { method: "POST", cache: "no-store" }).then(() => undefined, () => undefined));
 }
 
 export async function proxy(request: NextRequest, event: NextFetchEvent) {

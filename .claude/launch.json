@@ -27,6 +27,126 @@
       "env": {
         "NEXT_PUBLIC_MEDIA_URL": "/media"
       }
+    },
+    {
+      "name": "spotlight-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/DELL/spotlight",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3200"
+      ],
+      "port": 3200
+    },
+    {
+      "name": "stephenlegal-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/DELL/stephenlegal/web",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3400"
+      ],
+      "port": 3400,
+      "env": {
+        "NODE_OPTIONS": "--experimental-strip-types --no-warnings"
+      }
+    },
+    {
+      "name": "bridgeandvalue-dev-fake-ses",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/DELL/bridgeandvalue",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3500"
+      ],
+      "port": 3500,
+      "env": {
+        "SES_REGION": "us-east-1",
+        "SES_ACCESS_KEY_ID": "AKIAFAKEFAKEFAKEFAKE",
+        "SES_SECRET_ACCESS_KEY": "fakefakefakefakefakefakefakefakefakefake"
+      }
+    },
+    {
+      "name": "bridgeandvalue-dev-s3-media",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "C:/Users/DELL/bridgeandvalue", "run", "dev", "--", "--port", "3500"],
+      "port": 3500,
+      "env": { "S3_MEDIA_BUCKET": "bridgeandvalue-com", "S3_REGION": "us-east-1" }
+    },
+    {
+      "name": "stephenlegal-dev-as-live-domain",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/DELL/stephenlegal/web",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3400"
+      ],
+      "port": 3400,
+      "env": {
+        "NODE_OPTIONS": "--experimental-strip-types --no-warnings",
+        "NEXT_PUBLIC_SITE_URL": "https://stephenlegal.ng"
+      }
+    },
+    {
+      "name": "thelordschosen-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/DELL/thelordschosen",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3600"
+      ],
+      "port": 3600
+    },
+    {
+      "name": "email-preview",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "3300",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "C:/Users/DELL/AppData/Local/Temp/claude/c3e3b120eac590c5/16ec5520-b48b-4c83-b987-f39990ce28a6/scratchpad"
+      ],
+      "port": 3300
+    },
+    {
+      "name": "rhagf-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "C:/Users/DELL/rhagf",
+        "run",
+        "dev",
+        "--",
+        "--port",
+        "3700"
+      ],
+      "port": 3700,
+      "env": {
+        "NODE_OPTIONS": "--experimental-strip-types --no-warnings"
+      }
     }
   ]
 }
