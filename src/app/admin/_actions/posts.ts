@@ -72,7 +72,7 @@ export async function savePost(_prev: ActionState, fd: FormData): Promise<Action
 
     let authorId = uuidOrNull(form.authorId);
     if (!can(user.role, "posts.edit_any")) {
-      if (!user.authorId) return fail("Your account isn't linked to an author profile. Ask an administrator to link it.");
+      if (!user.authorId) return fail("Your account isn't linked to an author profile. Ask an administrator to open Users, click your name and set \"Writes as\" to \"Create a profile with their name\".");
       authorId = user.authorId;
     }
 

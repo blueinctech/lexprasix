@@ -6,6 +6,8 @@ import { ActionForm, Select, SubmitButton, TextArea, TextInput } from "./ui";
 
 type Option = { value: string; label: string };
 
+const NEW_PROFILE: Option = { value: "new", label: "➕ Create a profile with their name" };
+
 const ROLE_OPTIONS: Option[] = (["administrator", "editor", "author"] as const).map((r) => ({ value: r, label: `${ROLE_LABELS[r]} — ${ROLE_DESCRIPTIONS[r]}` }));
 
 export function InviteUserForm({ authors }: { authors: Option[] }) {
@@ -15,7 +17,7 @@ export function InviteUserForm({ authors }: { authors: Option[] }) {
         <TextInput label="Full name" name="name" required maxLength={100} />
         <TextInput label="Work email" name="email" type="email" required />
         <Select label="Role" name="role" defaultValue="editor" options={ROLE_OPTIONS} />
-        <Select label="Writes as (author profile)" name="authorId" defaultValue="" options={[{ value: "", label: "None" }, ...authors]} hint="Authors need a profile to write articles under their name." />
+        <Select label="Writes as (author profile)" name="authorId" defaultValue="new" options={[NEW_PROFILE, { value: "", label: "None (doesn't write articles)" }, ...authors]} hint="Anyone who writes articles needs an author profile; their name then appears in the article's Author list." />
       </div>
       <div>
         <SubmitButton pendingLabel="Inviting…">Send invitation</SubmitButton>
@@ -32,7 +34,13 @@ export function EditUserForm({ user, authors, isSelf }: { user: { id: string; na
         <TextInput label="Full name" name="name" defaultValue={user.name} required maxLength={100} />
         <Select label="Role" name="role" defaultValue={user.role} options={ROLE_OPTIONS} disabled={isSelf} hint={isSelf ? "You can't change your own role." : "Changing the role signs them out so the new permissions apply."} />
         {isSelf && <input type="hidden" name="role" value={user.role} />}
-        <Select label="Writes as (author profile)" name="authorId" defaultValue={user.authorId ?? ""} options={[{ value: "", label: "None" }, ...authors]} />
+        <Select
+          label="Writes as (author profile)"
+          name="authorId"
+          defaultValue={user.authorId ?? ""}
+          options={[{ value: "", label: "None (doesn't write articles)" }, ...(user.authorId ? [] : [NEW_PROFILE]), ...authors]}
+          hint={user.authorId ? undefined : "Not linked yet. Choose \"Create a profile with their name\" so they can write, and so their name appears in the article's Author list."}
+        />
       </div>
       <div>
         <SubmitButton>Save</SubmitButton>

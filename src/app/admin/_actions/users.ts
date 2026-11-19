@@ -20,6 +20,24 @@ const optionalUuid = z
   .transform((v) => v || null)
   .pipe(z.uuid().nullable());
 
+/** "Writes as": an existing author profile, none, or "new" to create one with the person's name. */
+const authorChoice = z.union([z.literal("new"), optionalUuid]);
+
+/** Creates a public author profile named after the user (unique URL), for "Create a profile with their name". */
+async function createAuthorProfile(name: string): Promise<string> {
+  const db = await getDb();
+  const base = slugify(name) || "author";
+  let slug = base;
+  for (let i = 2; ; i++) {
+    const [clash] = await db.select({ id: authors.id }).from(authors).where(eq(authors.slug, slug));
+    if (!clash) break;
+    slug = `${base}-${i}`;
+  }
+  const [row] = await db.insert(authors).values({ name, slug }).returning({ id: authors.id });
+  refreshPublic("authors", "posts");
+  return row.id;
+}
+
 /** Active administrators other than `exceptId`. */
 async function otherActiveAdmins(exceptId: string): Promise<number> {
   const db = await getDb();
@@ -34,14 +52,15 @@ export async function inviteUser(_prev: ActionState, fd: FormData): Promise<Acti
         name: z.string().trim().min(2, { error: "Enter the person's name" }).max(100),
         email: z.email({ error: "Enter a valid email" }).max(254).transform((v) => v.toLowerCase().trim()),
         role,
-        authorId: optionalUuid,
+        authorId: authorChoice,
       })
       .safeParse(Object.fromEntries(fd));
     if (!parsed.success) return invalid(parsed.error);
     const db = await getDb();
     const [exists] = await db.select({ id: users.id }).from(users).where(eq(users.email, parsed.data.email));
     if (exists) return fail("A user with this email already exists.", { email: "Already a user" });
-    const [user] = await db.insert(users).values({ ...parsed.data, invitedById: me.id }).returning({ id: users.id });
+    const authorId = parsed.data.authorId === "new" ? await createAuthorProfile(parsed.data.name) : parsed.data.authorId;
+    const [user] = await db.insert(users).values({ ...parsed.data, authorId, invitedById: me.id }).returning({ id: users.id });
     const { link } = await sendInvite(user.id, { id: me.id, name: me.name });
     await audit({ userId: me.id, action: "user.invite", entityType: "user", entityId: user.id, details: { role: parsed.data.role } });
     return ok(`Invitation sent to ${parsed.data.email}. If it doesn't arrive, copy this one-time link and send it to them yourself (valid 7 days):`, { link, id: user.id });
@@ -50,17 +69,21 @@ export async function inviteUser(_prev: ActionState, fd: FormData): Promise<Acti
 
 export async function updateUser(_prev: ActionState, fd: FormData): Promise<ActionState> {
   return adminAction("users.manage", async (me) => {
-    const parsed = z.object({ id: z.uuid(), name: z.string().trim().min(2).max(100), role, authorId: optionalUuid }).safeParse(Object.fromEntries(fd));
+    const parsed = z.object({ id: z.uuid(), name: z.string().trim().min(2).max(100), role, authorId: authorChoice }).safeParse(Object.fromEntries(fd));
     if (!parsed.success) return invalid(parsed.error);
-    const { id, ...values } = parsed.data;
+    const { id, authorId: choice, ...rest } = parsed.data;
     const db = await getDb();
     const [target] = await db.select().from(users).where(eq(users.id, id));
     if (!target) return fail("User not found.");
+    const values = { ...rest, authorId: choice };
     if (target.role === "administrator" && values.role !== "administrator") {
       if (id === me.id) return fail("You can't remove your own administrator role. Ask another administrator.");
       if (target.isActive && (await otherActiveAdmins(id)) === 0) return fail("This is the only active administrator. Make someone else an administrator first.");
     }
-    await db.update(users).set(values).where(eq(users.id, id));
+    const createdProfile = choice === "new";
+    const authorId = createdProfile ? await createAuthorProfile(values.name) : choice;
+    await db.update(users).set({ ...values, authorId }).where(eq(users.id, id));
+    if (createdProfile && authorId) await audit({ userId: me.id, action: "author.create", entityType: "author", entityId: authorId });
     if (values.role !== target.role) {
       // New permissions apply from a fresh sign-in.
       await revokeAllSessions(id);
@@ -68,7 +91,8 @@ export async function updateUser(_prev: ActionState, fd: FormData): Promise<Acti
     } else {
       await audit({ userId: me.id, action: "user.update", entityType: "user", entityId: id });
     }
-    return ok(values.role !== target.role ? "Saved. They'll need to sign in again for the new role to apply." : "Saved.");
+    const note = createdProfile ? ` An author profile "${values.name}" was created; articles can now be published under this name.` : "";
+    return ok((values.role !== target.role ? "Saved. They'll need to sign in again for the new role to apply." : "Saved.") + note);
   });
 }
 

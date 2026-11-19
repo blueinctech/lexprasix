@@ -15,7 +15,7 @@ export default async function NewPost() {
     <>
       <PageTitle title="New article" back={{ href: "/admin/posts/", label: "All articles" }} />
       {!editAny && !user.authorId && (
-        <p className="mb-5 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900">Your account isn&apos;t linked to an author profile yet, so you can&apos;t save articles. Ask an administrator to link it.</p>
+        <p className="mb-5 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900">Your account isn&apos;t linked to an author profile yet, so you can&apos;t save articles. Ask an administrator to open Users, click your name, set &ldquo;Writes as&rdquo; to &ldquo;Create a profile with their name&rdquo; and save. Then reload this page.</p>
       )}
       <PostEditor
         post={{ id: null, title: "", slug: "", excerpt: "", html: "", status: "draft", publishedAtInput: "", authorId: user.authorId, featuredImage: null, ogImage: null, seo: {}, categoryIds: [], tags: "", readingMinutes: 0, comments: 0, commentsOpen: true }}
