@@ -145,8 +145,18 @@ function withHeaders(res: NextResponse, admin = false, host = "") {
   return res;
 }
 
+/** Scheduled articles: ask the site to publish anything now due, at most once a minute per instance (see /api/publish-due). */
+const PUBLISH_CHECK_MS = 60_000;
+let lastPublishCheck = 0;
+function publishDueInBackground(request: NextRequest, event: NextFetchEvent) {
+  if (Date.now() - lastPublishCheck < PUBLISH_CHECK_MS) return;
+  lastPublishCheck = Date.now();
+  event.waitUntil(fetch(new URL("/api/publish-due", request.url), { method: "POST", cache: "no-store" }).then(() => undefined, () => undefined));
+}
+
 export async function proxy(request: NextRequest, event: NextFetchEvent) {
   const { pathname, searchParams } = request.nextUrl;
+  if (request.method === "GET" && !pathname.startsWith("/api/")) publishDueInBackground(request, event);
 
   if (pathname === "/admin" || pathname.startsWith("/admin/")) {
     if (!PUBLIC_ADMIN.test(pathname) && !request.cookies.has(SESSION_COOKIE)) {
